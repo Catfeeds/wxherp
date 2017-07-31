@@ -1,0 +1,62 @@
+<?php
+
+namespace common\models;
+
+/**
+ * This is the model class for table "{{%link}}".
+ *
+ * @property string $c_id
+ * @property string $c_title
+ * @property string $c_url
+ * @property string $c_picture
+ * @property string $c_note
+ * @property integer $c_type
+ * @property integer $c_status
+ * @property string $c_sort
+ * @property string $c_hits
+ * @property string $c_create_time
+ * @property string $c_update_time
+ */
+class Link extends _CommonModel {
+
+    /**
+     * @inheritdoc
+     */
+    public static function tableName() {
+        return '{{%link}}';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules() {
+        return [
+            [['c_title'], 'required'],
+            [['c_type', 'c_status', 'c_sort', 'c_hits', 'c_create_time'], 'integer'],
+            [['c_update_time'], 'safe'],
+            [['c_title'], 'string', 'max' => 50],
+            [['c_url', 'c_picture'], 'string', 'max' => 255],
+            [['c_note'], 'string', 'max' => 1000],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels() {
+        return [
+            'c_id' => 'ID',
+            'c_title' => '标题',
+            'c_url' => '链接',
+            'c_picture' => '图片',
+            'c_note' => '备注',
+            'c_type' => '链接类型 1友情链接 2常用网址 3媒体合作',
+            'c_status' => '状态 1已审核 2待审核 3审核失败',
+            'c_sort' => '排序',
+            'c_hits' => '点击次数',
+            'c_create_time' => '创建时间',
+            'c_update_time' => '最后更新时间',
+        ];
+    }
+
+}
