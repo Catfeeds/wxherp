@@ -6,7 +6,6 @@ use Yii;
 use yii\web\IdentityInterface;
 use common\extensions\Util;
 use common\messages\Common;
-use common\extensions\String;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -37,6 +36,7 @@ use common\extensions\String;
  */
 class User extends _CommonModel implements IdentityInterface {
 
+    private $_system_route;
     //登录密码
     public $old_password;
     public $new_password;
@@ -119,8 +119,8 @@ class User extends _CommonModel implements IdentityInterface {
             'c_access_token' => 'api 通过access_token参数登录',
             'c_user_name' => '用户名',
             'c_email' => '邮箱',
-            'c_user_group_id' => '用户组ID',
-            'c_system_group_id' => '管理组ID',
+            'c_user_group_id' => '用户组',
+            'c_system_group_id' => '管理组',
             'c_mobile_verify' => '手机验证', // 1已验证 2未绑定 3待验证
             'c_email_verify' => '邮箱验证', // 1已验证 2未绑定 3待验证
             'c_status' => '用户登录状态', // 1正常 2无效
@@ -132,17 +132,23 @@ class User extends _CommonModel implements IdentityInterface {
             'c_last_ip' => '最后登录IP',
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
+            'old_password' => '原登录密码',
+            'new_password' => '新登录密码',
+            'new_password_confirm' => '确认登录密码',
+            'old_pay_password' => '原支付密码',
+            'new_pay_password' => '新支付密码',
+            'new_pay_password_confirm' => '确认支付密码',
         ];
     }
 
     public function scenarios() {
         $scenarios = parent::scenarios();
         //用户手机注册
-        $scenarios['mobile_register'] = ['c_user_name', 'c_mobile', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_mobile_verify', 'c_user_group_id', 'c_status', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
+        $scenarios['mobile_register'] = ['c_user_name', 'c_mobile', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_mobile_verify', 'c_user_group_id', 'c_status', 'c_create_type', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
         //用户邮箱注册
-        $scenarios['email_register'] = ['c_user_name', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_email_verify', 'c_user_group_id', 'c_status', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
+        $scenarios['email_register'] = ['c_user_name', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_email_verify', 'c_user_group_id', 'c_status', 'c_create_type', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
         //管理员新增用户
-        $scenarios['system_register'] = ['c_user_name', 'c_mobile', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_mobile_verify', 'c_email_verify', 'c_user_group_id', 'c_system_group_id', 'c_status', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
+        $scenarios['system_register'] = ['c_user_name', 'c_mobile', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_mobile_verify', 'c_email_verify', 'c_user_group_id', 'c_system_group_id', 'c_status', 'c_create_type', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
         //设置登录密码
         $scenarios['setting-password'] = ['new_password', 'new_password_confirm'];
         //验证原登录密码 再设置新登录密码
@@ -170,6 +176,38 @@ class User extends _CommonModel implements IdentityInterface {
                 $this->addError($attribute, '原支付密码验证失败');
             }
         }
+    }
+
+    public function getSystemRoute() {
+        if ($this->_system_route) {
+            return $this->_system_route;
+        }
+        $data = static::getDb()->cache(function ($db) {
+            $sql = 'SELECT c.c_route FROM t_system_group AS a LEFT JOIN t_system_group_node AS b ON a.c_id=b.c_group_id LEFT JOIN t_system_route AS c ON b.c_route_id=c.c_id WHERE a.c_status=1 AND b.c_status=1 AND a.c_id=' . $this->c_system_group_id;
+            return $db->createCommand($sql)->queryAll();
+        });
+        $array = [];
+        foreach ($data as $v) {
+            $array[] = $v['c_route'];
+        }
+        $this->_system_route = $array;
+        return $array;
+    }
+
+    public function getSystemGroup() {
+        return $this->hasOne(SystemGroup::className(), ['c_id' => 'c_system_group_id']);
+    }
+
+    public function getUserGroup() {
+        return $this->hasOne(UserGroup::className(), ['c_id' => 'c_user_group_id']);
+    }
+
+    public function getUserAcount() {
+        return $this->hasOne(UserAcount::className(), ['c_user_id' => 'c_id']);
+    }
+
+    public function getUserProfile() {
+        return $this->hasOne(UserProfile::className(), ['c_user_id' => 'c_id']);
     }
 
     /**
@@ -311,10 +349,11 @@ class User extends _CommonModel implements IdentityInterface {
     }
 
     public static function findIdentityByAccessToken($token, $type = null) {
-        if ($type) {
-            //TODO
+        if (static::apiTokenIsValid($token)) {
+            return User::findOne(['c_access_token' => $token, 'c_status' => self::STATUS_YES]);
+        } else {
+            throw new \yii\web\UnauthorizedHttpException('token is invalid.');
         }
-        return static::findOne(['c_access_token' => $token]);
     }
 
     public function getId() {
@@ -330,4 +369,42 @@ class User extends _CommonModel implements IdentityInterface {
     }
 
     /* end 抽象方法 */
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            if (in_array($this->scenario, ['system_register'])) {
+                if ($this->c_email) {
+                    if ($this->c_email_verify == self::STATUS_NO) {
+                        $this->c_email_verify = self::STATUS_WAIT;
+                    }
+                } else {
+                    $this->c_email_verify = self::STATUS_NO;
+                }
+                if ($this->c_mobile) {
+                    if ($this->c_mobile_verify == self::STATUS_NO) {
+                        $this->c_mobile_verify = self::STATUS_WAIT;
+                    }
+                } else {
+                    $this->c_mobile_verify = self::STATUS_NO;
+                }
+                $this->c_create_type = self::CREATE_ADMIN; //后台创建用户
+                $this->c_reg_date = strtotime(date('Y-m-d'));
+                $this->c_reg_ip = ip2long(Yii::$app->getRequest()->getUserIP());
+                $this->c_last_login_time = time();
+                $this->c_create_time = time();
+                $this->settingLoginPassword();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        if ($insert) {
+            UserAcount::addUserAcount($this->c_id);
+            UserProfile::addUserProfile($this->c_id);
+        }
+    }
+
 }

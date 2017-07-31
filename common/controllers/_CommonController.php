@@ -39,7 +39,7 @@ class _CommonController extends Controller {
      * @param type $user_type 平台用户类型
      * @return boolean
      */
-    protected function commonCreate($model, $data, $user_type = _CommonModel::TYPE_USER) {
+    protected function commonCreate($model, $data = null, $user_type = _CommonModel::TYPE_ADMIN) {
         if (is_null($data)) {
             $data = Yii::$app->request->post();
         }
@@ -82,7 +82,7 @@ class _CommonController extends Controller {
      * @param type $user_type 平台用户类型
      * @return boolean
      */
-    protected function commonUpdate($model, $data, $user_type = _CommonModel::TYPE_USER) {
+    protected function commonUpdate($model, $data = null, $user_type = _CommonModel::TYPE_ADMIN) {
         $data_before = $model->attributes; //在本次更新之前的数据
         if (is_null($data)) {
             $data = Yii::$app->request->post();
@@ -124,7 +124,7 @@ class _CommonController extends Controller {
      * @param type $user_type 平台用户类型
      * @return boolean
      */
-    protected function commonUpdateField($model_name, $update, $where, $user_type = _CommonModel::TYPE_USER) {
+    protected function commonUpdateField($model_name, $update, $where, $user_type = _CommonModel::TYPE_ADMIN) {
         $result = $model_name::updateAll($update, $where);
 
         $log['c_type'] = _CommonModel::OPERATION_UPDATE;
@@ -151,7 +151,7 @@ class _CommonController extends Controller {
      * @param type $user_type 平台用户类型
      * @return boolean
      */
-    protected function commonDelete($model_name, $id, $user_type = _CommonModel::TYPE_USER) {
+    protected function commonDelete($model_name, $id = null, $user_type = _CommonModel::TYPE_ADMIN) {
         if ($id === null) {
             $id = explode(',', Yii::$app->request->post('id'));
         } else {
@@ -282,7 +282,7 @@ class _CommonController extends Controller {
      * 公共图片上传文件
      * @param type $user_type 用户类型 1后台 2前台
      */
-    protected function pictureUpload($user_type = _CommonModel::TYPE_USER) {
+    protected function pictureUpload($user_type = _CommonModel::TYPE_ADMIN) {
         try {
             if (Yii::$app->request->isPost) {
                 $object_id = (int) Yii::$app->request->post('object_id'); //对象ID
@@ -332,7 +332,7 @@ class _CommonController extends Controller {
      * 公共上传文件
      * @param type $user_type 用户类型 1后台 2前台
      */
-    protected function fileUpload($user_type = _CommonModel::TYPE_USER) {
+    protected function fileUpload($user_type = _CommonModel::TYPE_ADMIN) {
         try {
             if (Yii::$app->request->isPost) {
                 $dir = Yii::$app->request->get('dir'); //获取编辑器上传允许的目录  $config['editor_dir'] = ['image', 'flash', 'media', 'file'];

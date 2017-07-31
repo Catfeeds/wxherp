@@ -62,7 +62,7 @@ class CheckRule {
 
     //检测权限
     public static function checkRole($url) {
-        return self::isSuperUser() || self::checkAllowUrl($url) || (self::isLogin() && in_array($url, Yii::$app->user->identity->getRole()));
+        return self::isSuperUser() || self::checkAllowUrl($url) || (self::isLogin() && in_array($url, Yii::$app->user->identity->getSystemRoute()));
     }
 
 }

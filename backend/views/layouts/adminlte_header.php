@@ -20,7 +20,7 @@ use yii\helpers\Url;
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-user"></i>
-                                <?= isset(Yii::$app->user->identity->c_admin_name) ? Yii::$app->user->identity->c_admin_name : '游客'; ?> <span class="caret"></span>
+                                <?= isset(Yii::$app->user->identity->c_user_name) ? Yii::$app->user->identity->c_user_name : '游客'; ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="<?= Url::to(['site/my-profile']) ?>" data-method="post"><i class="fa fa-user"></i> 个人资料</a></li>

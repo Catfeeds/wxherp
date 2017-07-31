@@ -65,8 +65,8 @@ class UserOperationLog extends _CommonModel {
     public static function add($data) {
         $model = new UserOperationLog();
         $model->attributes = $data;
-        $model->c_user_id = Yii::$app->user->identity->c_id;
-        $model->c_user_name = Yii::$app->user->identity->c_user_name;
+        $model->c_user_id = isset(Yii::$app->user->identity->c_id) ? Yii::$app->user->identity->c_id : 0;
+        $model->c_user_name = isset(Yii::$app->user->identity->c_user_name) ? Yii::$app->user->identity->c_user_name : '';
         $model->c_create_time = time();
         return $model->save();
     }
