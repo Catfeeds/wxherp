@@ -11,7 +11,7 @@ $config['editor_dir'] = ['image', 'flash', 'media', 'file'];
 //前台登录失败次数超过多少会显示验证码
 $config['login_max_count'] = 6;
 //超级管理员 可以设置多个
-$config['super_user_array'] = [10];
+$config['super_user_array'] = [1];
 //API token 过期时间 1天
 $config['api_token_expire'] = 7 * 24 * 3600;
 //user.apiTokenExpire

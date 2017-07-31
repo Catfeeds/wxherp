@@ -41,30 +41,15 @@ class SiteController extends _BackendController {
         return $this->goHome();
     }
 
-    public function actionMyProfile() {
-        $model = Yii::$app->user->identity;
-        $model->setScenario('my-profile');
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                $this->flashSuccess();
-                return $this->refresh();
-            } else {
-                $this->flashError($model);
-            }
-        }
-
-        return $this->render('my-profile', ['model' => $model]);
-    }
-
     public function actionMyPassword() {
         $model = Yii::$app->user->identity;
-        $model->setScenario('my-password');
+        $model->setScenario('change-password');
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->updatePassword()) {
+            if ($model->updateLoginPassword()) {
                 $this->flashSuccess();
                 return $this->refresh();
             } else {
-                $this->flashError($model);
+                $this->flashError('修改密码失败', $model);
             }
         }
 

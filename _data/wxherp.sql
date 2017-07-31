@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-07-31 11:45:17
+Date: 2017-07-31 17:44:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -77,7 +77,7 @@ CREATE TABLE `t_areas` (
   PRIMARY KEY (`c_id`),
   KEY `c_parent_id` (`c_parent_id`) USING BTREE,
   KEY `c_sort` (`c_sort`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3195 DEFAULT CHARSET=utf8 COMMENT='区域';
+) ENGINE=InnoDB AUTO_INCREMENT=3195 DEFAULT CHARSET=utf8 COMMENT='地区表';
 
 -- ----------------------------
 -- Records of t_areas
@@ -3922,8 +3922,7 @@ INSERT INTO `t_system_route` VALUES ('5103', '短信日志', 'sms-log/index', ''
 INSERT INTO `t_system_route` VALUES ('5104', '邮件日志', 'email-log/index', '', '51', '93', '1', '1482396033', '2017-04-14 15:48:43');
 INSERT INTO `t_system_route` VALUES ('6000', '后台首页', 'site/index', 'home', '60', '99', '1', '1431423162', '2017-04-14 15:48:44');
 INSERT INTO `t_system_route` VALUES ('6001', '网站设置', 'config/index', 'sitemap', '60', '98', '1', '1431423162', '2017-04-14 15:48:47');
-INSERT INTO `t_system_route` VALUES ('6002', '个人资料编辑', 'site/my-profile', 'address-card', '60', '97', '1', '1431423162', '2017-07-19 16:58:44');
-INSERT INTO `t_system_route` VALUES ('6003', '登录密码修改', 'site/my-password', 'lock', '60', '96', '1', '1431423162', '2017-07-19 16:59:26');
+INSERT INTO `t_system_route` VALUES ('6002', '密码修改', 'site/my-password', 'lock', '60', '96', '1', '1431423162', '2017-07-19 16:59:26');
 INSERT INTO `t_system_route` VALUES ('6100', '支付方式列表', 'payment/index', '', '61', '99', '1', '1431423162', '2017-04-14 15:48:48');
 INSERT INTO `t_system_route` VALUES ('6101', '支付方式编辑', 'payment/update', '', '61', '98', '2', '1431423162', '2016-02-26 16:44:13');
 INSERT INTO `t_system_route` VALUES ('6200', 'oauth授权列表', 'oauth/index', '', '62', '99', '1', '1431423162', '2017-04-14 15:48:49');
@@ -4037,11 +4036,12 @@ CREATE TABLE `t_user` (
   KEY `c_mobile` (`c_mobile`),
   KEY `c_email` (`c_email`),
   KEY `c_user_name` (`c_user_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
+INSERT INTO `t_user` VALUES ('1', 'BYkS', '', '', '429ca7cd50faade894447065b4292f0a', '', '', '', 'sushipai', '', '1', '0', '2', '2', '1', '9', '2', '1501493915', '1501430400', '2130706433', '2130706433', '1501492448', '2017-07-31 17:38:35');
 
 -- ----------------------------
 -- Table structure for `t_user_acount`
@@ -4063,6 +4063,7 @@ CREATE TABLE `t_user_acount` (
 -- ----------------------------
 -- Records of t_user_acount
 -- ----------------------------
+INSERT INTO `t_user_acount` VALUES ('1', '0.00', '0.00', '0', '0', '1', '1501492449', '2017-07-31 17:14:09');
 
 -- ----------------------------
 -- Table structure for `t_user_acount_log`
@@ -4301,6 +4302,7 @@ CREATE TABLE `t_user_profile` (
 -- ----------------------------
 -- Records of t_user_profile
 -- ----------------------------
+INSERT INTO `t_user_profile` VALUES ('1', '', '', '', '', '', '', '', '3', '0', '0', '0', '0', '1501492449', '2017-07-31 17:14:09');
 
 -- ----------------------------
 -- Table structure for `t_user_recharge`
