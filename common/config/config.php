@@ -1,8 +1,8 @@
 <?php return array (
-  'domian_frontend' => 'http://127.0.0.1/ssm/frontend/web',
-  'domian_backend' => 'http://127.0.0.1/ssm/backend/web',
-  'domian_file' => 'http://127.0.0.1/ssm/upload',
-  'domian_api' => 'http://127.0.0.1/ssm/api/web',
+  'domian_frontend' => 'http://127.0.0.1/wxherp/frontend/web',
+  'domian_backend' => 'http://127.0.0.1/wxherp/backend/web',
+  'domian_file' => 'http://127.0.0.1/wxherp/upload',
+  'domian_api' => 'http://127.0.0.1/wxherp/api/web',
   'site_title' => '网站名称',
   'site_seo' => '网站附加标题',
   'site_keywords' => '网站首页关键词',
@@ -36,7 +36,7 @@
   'email_safe' => '1',
   'email_smtp' => 'smtp.mxhichina.com',
   'smtp_user' => 'wuxh@kangliyixue.com',
-  'smtp_password' => 'Wufeifan827',
+  'smtp_password' => 'Mirror00o',
   'smtp_port' => '465',
   'email_expire' => '86400',
   'email_send_time' => '60',
@@ -63,6 +63,4 @@
   'user_login_status' => '1',
   'system_site_close_msg' => '',
   'user_log_status' => '1',
-  'system_log_status' => '1',
-  'system_template' => 'default',
 );

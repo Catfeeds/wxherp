@@ -17,7 +17,7 @@ common\assets\BackendAsset::overrideSystemConfirm();
         <link rel="shortcut icon" href="<?= Yii::$app->params['domian_backend']; ?>/favicon.ico" type="image/x-icon">
         <link rel="icon" href="<?= Yii::$app->params['domian_backend']; ?>/favicon.ico" type="image/x-icon">
         <?= Html::csrfMetaTags() ?>
-        <title>后台管理系统</title>
+        <title>ERP管理中心</title>
         <?php $this->head() ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">

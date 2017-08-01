@@ -65,9 +65,9 @@ function showError(msg) {
 function showDialog(msg, type, url, status) {
     var icon = 0;//对话框图标
     if (arguments.length === 4) {
-        if (status === 1) {//成功
+        if (status === 0) {//成功
             icon = 6;
-        } else if (status === 0) {//失败
+        } else if (status === 1) {//失败
             icon = 5;
         }
     } else if (arguments.length === 1) {//如果只有一个参数则type=1
