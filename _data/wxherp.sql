@@ -3796,17 +3796,21 @@ CREATE TABLE `t_system_route` (
 -- Records of t_system_route
 -- ----------------------------
 INSERT INTO `t_system_route` VALUES ('1', '系统', '/site/index', '', '0', '9', '1', '1501565750', '2017-08-01 14:20:16');
+
 INSERT INTO `t_system_route` VALUES ('2', '组件', '/component/index', '', '0', '8', '1', '1501565750', '2017-08-01 14:20:16');
 
 
 INSERT INTO `t_system_route` VALUES ('10', '系统管理', '', '', '1', '99', '1', '1501565750', '2017-08-01 14:20:16');
 
 INSERT INTO `t_system_route` VALUES ('11', '用户管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('12', '用户组管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('13', '管理组管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('14', '路由管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('12', '用户组管理', '', '', '1', '97', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('13', '管理组管理', '', '', '1', '96', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('14', '路由管理', '', '', '1', '95', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('15', '地区管理', '', '', '1', '94', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('16', '消息模板', '', '', '1', '93', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('17', '用户日志', '', '', '1', '92', '1', '1501565750', '2017-08-01 14:20:16');
 
-INSERT INTO `t_system_route` VALUES ('20', '组件管理', '', '', '2', '99', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('20', '组件管理', '', '', '2', '93', '1', '1501565750', '2017-08-01 14:20:16');
 
 
 
@@ -3838,6 +3842,20 @@ INSERT INTO `t_system_route` VALUES ('140', '路由列表', '/system-route/index
 INSERT INTO `t_system_route` VALUES ('141', '路由新增', '/system-route/create', '', '14', '8', '1', '1436167704', '2017-08-01 14:34:51');
 INSERT INTO `t_system_route` VALUES ('142', '路由编辑', '/system-route/update', '', '14', '7', '2', '1436167646', '2016-04-10 23:00:40');
 INSERT INTO `t_system_route` VALUES ('143', '路由删除', '/system-route/delete', '', '14', '6', '2', '1436167681', '2016-04-10 23:00:55');
+
+INSERT INTO `t_system_route` VALUES ('150', '地区列表', '/areas/areas/index', '', '15', '9', '1', '1431423162', '2017-04-14 15:49:06');
+INSERT INTO `t_system_route` VALUES ('151', '地区新增', '/areas/areas/create', '', '15', '8', '1', '1431423162', '2016-02-26 16:44:13');
+INSERT INTO `t_system_route` VALUES ('152', '地区编辑', '/areas/areas/update', '', '15', '7', '2', '1436164311', '2016-03-20 20:51:44');
+INSERT INTO `t_system_route` VALUES ('153', '地区删除', '/areas/areas/delete', '', '15', '6', '2', '1436164328', '2015-09-25 14:28:52');
+INSERT INTO `t_system_route` VALUES ('154', '地区生成静态JS文件', '/areas/areas/make', '', '15', '5', '2', '1436164328', '2015-09-25 14:28:52');
+
+INSERT INTO `t_system_route` VALUES ('160', '消息模板列表', 'notity/notity-template/index', '', '16', '9', '1', '0', '2017-04-14 15:49:12');
+INSERT INTO `t_system_route` VALUES ('161', '消息模板新增', 'notity/notity-template/create', '', '16', '8', '1', '0', '2017-03-17 10:38:30');
+INSERT INTO `t_system_route` VALUES ('162', '消息模板编辑', 'notity/notity-template/update', '', '16', '7', '2', '0', '2017-03-17 10:38:52');
+
+INSERT INTO `t_system_route` VALUES ('170', '用户资金记录', '/user/user-acount-log/index', '', '17', '9', '1', '1482396033', '2017-04-14 15:48:38');
+INSERT INTO `t_system_route` VALUES ('171', '用户积分记录', '/user/user-point-log/index', '', '17', '8', '1', '1482396033', '2017-04-14 15:48:39');
+INSERT INTO `t_system_route` VALUES ('172', '用户操作记录', '/user/user-operation-log/index', '', '17', '7', '1', '1482396033', '2017-04-14 15:48:40');
 
 
 INSERT INTO `t_system_route` VALUES ('200', '组件设置', '/component/index', '', '20', '9', '1', '1501565777', '2017-08-01 14:14:46');
@@ -4096,7 +4114,7 @@ DROP TABLE IF EXISTS `t_user_operation_log`;
 CREATE TABLE `t_user_operation_log` (
   `c_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `c_user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户名',
-  `c_route` varchar(100) NOT NULL DEFAULT '' COMMENT '路由名称',
+  `c_route` varchar(100) NOT NULL DEFAULT '' COMMENT '路由地址',
   `c_data_before` text COMMENT '更新或删除之前的数据',
   `c_data_add` text COMMENT '新增的数据',
   `c_create_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '来源类型 1PC 2H5 3IOS 4Andriod 8其他 9平台',

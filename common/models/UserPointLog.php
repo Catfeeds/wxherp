@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use Yii;
+
 /**
  * This is the model class for table "{{%user_point_log}}".
  *
@@ -25,9 +27,15 @@ namespace common\models;
  */
 class UserPointLog extends _CommonModel {
 
+    const ACOUNT_ADMIN_ADD = 90; //管理员增加
+    const ACOUNT_ADMIN_SUB = 91; //管理员减少
+    const ACOUNT_USER_ORDER_SUCCESS = 11; //订单完成赠送
+    const ACOUNT_USER_REFUNDMENT = 12; //退款扣除积分经验值
+
     /**
      * @inheritdoc
      */
+
     public static function tableName() {
         return '{{%user_point_log}}';
     }
@@ -54,7 +62,7 @@ class UserPointLog extends _CommonModel {
             'c_order_no' => '订单号',
             'c_system_name' => '管理员用户名',
             'c_note' => '备注说明',
-            'c_type' => '日志类型 1进账 2出账',
+            'c_type' => '日志类型', // 1进账 2出账
             'c_point_old' => '修改前积分',
             'c_point' => '修改积分',
             'c_point_new' => '修改后积分',
@@ -68,6 +76,31 @@ class UserPointLog extends _CommonModel {
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public function getUser() {
+        return $this->hasOne(User::className(), ['c_id' => 'c_user_id']);
+    }
+
+    public static function getNote($type = null) {
+        $array = [
+            self::ACOUNT_ADMIN_ADD => '管理员增加',
+            self::ACOUNT_ADMIN_SUB => '管理员减少',
+            self::ACOUNT_USER_ORDER_SUCCESS => '订单完成赠送',
+            self::ACOUNT_USER_REFUNDMENT => '退款扣除积分经验值',
+        ];
+        return self::getCommonStatus($array, $type);
+    }
+
+    public static function add($data, $create_type = self::CREATE_ADMIN) {
+        $model = new UserPointLog();
+        if ($create_type == self::CREATE_ADMIN) {
+            $model->c_system_id = Yii::$app->user->identity->c_id;
+            $model->c_system_name = Yii::$app->user->identity->c_user_name;
+        }
+        $model->attributes = $data;
+        $model->c_create_time = time();
+        return $model->save();
     }
 
 }

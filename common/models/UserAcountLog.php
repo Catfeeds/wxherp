@@ -27,10 +27,14 @@ use Yii;
  */
 class UserAcountLog extends _CommonModel {
 
-    const ACOUNT_ADMIN_ADD = 90; //管理员增加
-    const ACOUNT_ADMIN_SUB = 91; //管理员减少
-    const ACOUNT_USER_ORDER_SUCCESS = 11; //订单完成赠送
-    const ACOUNT_USER_REFUNDMENT = 12; //退款扣除积分经验值
+    const ACOUNT_ADMIN_ADD = 90; //管理员充值
+    const ACOUNT_ADMIN_SUB = 91; //管理员扣除
+    const ACOUNT_ADMIN_PAY_ORDER = 92; //管理员协助用户支付订单
+    const ACOUNT_USER_ONLINE = 10; //用户在线充值
+    const ACOUNT_USER_PAY_ORDER = 11; //用户支付订单
+    const ACOUNT_USER_REFUNDMENT = 12; //用户退款
+    const ACOUNT_USER_WITHDRAWALS = 13; //用户提现
+    const ACOUNT_USER_CANCEL_ORDER = 14; //用户取消已支付未发货订单
 
     /**
      * @inheritdoc
@@ -83,19 +87,28 @@ class UserAcountLog extends _CommonModel {
         return $this->hasOne(User::className(), ['c_id' => 'c_user_id']);
     }
 
+    public static function getType($type = null) {
+        $array = [self::STATUS_YES => '进账', self::STATUS_NO => '出账'];
+        return self::getCommonStatus($array, $type);
+    }
+
     public static function getNote($type = null) {
         $array = [
-            self::ACOUNT_ADMIN_ADD => '管理员增加',
-            self::ACOUNT_ADMIN_SUB => '管理员减少',
-            self::ACOUNT_USER_ORDER_SUCCESS => '订单完成赠送',
-            self::ACOUNT_USER_REFUNDMENT => '退款扣除积分经验值',
+            self::ACOUNT_ADMIN_ADD => '管理员充值',
+            self::ACOUNT_ADMIN_SUB => '管理员扣除',
+            self::ACOUNT_ADMIN_PAY_ORDER => '管理员协助用户支付订单',
+            self::ACOUNT_USER_ONLINE => '用户在线充值',
+            self::ACOUNT_USER_PAY_ORDER => '用户支付订单',
+            self::ACOUNT_USER_CANCEL_ORDER => '用户取消已支付未发货订单',
+            self::ACOUNT_USER_REFUNDMENT => '用户退款',
+            self::ACOUNT_USER_WITHDRAWALS => '用户提现',
         ];
         return self::getCommonStatus($array, $type);
     }
 
-    public static function add($data, $user_type = self::CREATE_ADMIN) {
-        $model = new UserPointLog();
-        if ($user_type == self::CREATE_ADMIN) {
+    public static function add($data, $create_type = self::CREATE_ADMIN) {
+        $model = new UserAcountLog();
+        if ($create_type == self::CREATE_ADMIN) {
             $model->c_system_id = Yii::$app->user->identity->c_id;
             $model->c_system_name = Yii::$app->user->identity->c_user_name;
         }

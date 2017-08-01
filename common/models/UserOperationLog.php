@@ -49,12 +49,12 @@ class UserOperationLog extends _CommonModel {
         return [
             'c_id' => 'ID',
             'c_user_name' => '用户名',
-            'c_route' => '路由名称',
+            'c_route' => '路由地址',
             'c_data_before' => '更新或删除之前的数据',
             'c_data_add' => '新增的数据',
-            'c_create_type' => '来源类型',// 1PC 2H5 3IOS 4Andriod 8其他 9平台
-            'c_type' => '操作类型 1新增 2编辑 3删除',
-            'c_status' => '状态 1成功 2失败',
+            'c_create_type' => '来源类型', // 1PC 2H5 3IOS 4Andriod 8其他 9平台
+            'c_type' => '操作类型', // 1新增 2编辑 3删除
+            'c_status' => '状态', // 1成功 2失败
             'c_user_id' => '用户ID',
             'c_object_id' => '操作的对象ID',
             'c_create_time' => '创建时间',
