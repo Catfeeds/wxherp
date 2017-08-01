@@ -3,9 +3,9 @@
 namespace backend\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\AdminRoute;
+use common\models\SystemRoute;
 
-class AdminRouteSearch extends AdminRoute {
+class SystemRouteSearch extends SystemRoute {
 
     public $pagesize = 10;
     public $keyword;
@@ -19,7 +19,7 @@ class AdminRouteSearch extends AdminRoute {
     }
 
     public function search($params) {
-        $query = AdminRoute::find();
+        $query = SystemRoute::find();
 
         $provider_params = [
             'query' => $query,

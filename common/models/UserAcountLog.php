@@ -9,7 +9,7 @@ use Yii;
  *
  * @property string $c_id
  * @property string $c_order_no
- * @property string $c_admin_name
+ * @property string $c_system_name
  * @property string $c_note
  * @property string $c_amount_old
  * @property string $c_amount
@@ -20,7 +20,7 @@ use Yii;
  * @property integer $c_type
  * @property string $c_note_type
  * @property string $c_user_id
- * @property string $c_admin_id
+ * @property string $c_system_id
  * @property string $c_order_id
  * @property string $c_create_time
  * @property string $c_update_time
@@ -46,10 +46,10 @@ class UserAcountLog extends _CommonModel {
     public function rules() {
         return [
             [['c_amount_old', 'c_amount', 'c_amount_new', 'c_frozen_amount_old', 'c_frozen_amount', 'c_frozen_amount_new'], 'number'],
-            [['c_type', 'c_note_type', 'c_user_id', 'c_admin_id', 'c_order_id', 'c_create_time'], 'integer'],
+            [['c_type', 'c_note_type', 'c_user_id', 'c_system_id', 'c_order_id', 'c_create_time'], 'integer'],
             [['c_update_time'], 'safe'],
             [['c_order_no'], 'string', 'max' => 20],
-            [['c_admin_name'], 'string', 'max' => 50],
+            [['c_system_name'], 'string', 'max' => 50],
             [['c_note'], 'string', 'max' => 255],
         ];
     }
@@ -61,7 +61,7 @@ class UserAcountLog extends _CommonModel {
         return [
             'c_id' => 'ID',
             'c_order_no' => '订单号',
-            'c_admin_name' => '管理员用户名',
+            'c_system_name' => '管理员用户名',
             'c_note' => '备注说明',
             'c_amount_old' => '账户修改前金额',
             'c_amount' => '修改金额',
@@ -72,7 +72,7 @@ class UserAcountLog extends _CommonModel {
             'c_type' => '日志类型', // 1进账 2出账
             'c_note_type' => '备注类型',
             'c_user_id' => '用户ID',
-            'c_admin_id' => '管理员ID',
+            'c_system_id' => '管理员ID',
             'c_order_id' => '订单ID',
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
@@ -96,8 +96,8 @@ class UserAcountLog extends _CommonModel {
     public static function add($data, $user_type = self::CREATE_ADMIN) {
         $model = new UserPointLog();
         if ($user_type == self::CREATE_ADMIN) {
-            $model->c_admin_id = Yii::$app->user->identity->c_id;
-            $model->c_admin_name = Yii::$app->user->identity->c_user_name;
+            $model->c_system_id = Yii::$app->user->identity->c_id;
+            $model->c_system_name = Yii::$app->user->identity->c_user_name;
         }
         $model->attributes = $data;
         $model->c_create_time = time();

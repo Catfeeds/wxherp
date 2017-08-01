@@ -22,6 +22,35 @@ $config = [
             'name' => '_backend_session',
         ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'backend\modules\user\Module',
+        ],
+        'shop' => [
+            'class' => 'backend\modules\shop\Module',
+        ],
+        'link' => [
+            'class' => 'backend\modules\link\Module',
+        ],
+        'article' => [
+            'class' => 'backend\modules\article\Module',
+        ],
+        'adManage' => [
+            'class' => 'backend\modules\adManage\Module',
+        ],
+        'notity' => [
+            'class' => 'backend\modules\notity\Module',
+        ],
+        'areas' => [
+            'class' => 'backend\modules\areas\Module',
+        ],
+        'payment' => [
+            'class' => 'backend\modules\payment\Module',
+        ],
+        'upload' => [
+            'class' => 'backend\modules\upload\Module',
+        ],
+    ],
     'params' => $params,
 ];
 return $config;

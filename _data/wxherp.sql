@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-08-01 08:58:55
+Date: 2017-08-01 15:13:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3438,7 +3438,7 @@ INSERT INTO `t_config` VALUES ('3', 'shop', '{\"number_prefix\":\"JJ\",\"usernam
 INSERT INTO `t_config` VALUES ('4', 'email', '{\"email_send_type\":\"1\",\"smtp_type\":\"1\",\"email_send\":\"wuxh@kangliyixue.com\",\"email_safe\":\"1\",\"email_smtp\":\"smtp.mxhichina.com\",\"smtp_user\":\"wuxh@kangliyixue.com\",\"smtp_password\":\"Mirror00o\",\"smtp_port\":\"465\",\"email_expire\":\"86400\",\"email_send_time\":\"60\",\"email_ip_count\":\"50\",\"email_send_count\":\"50\",\"email_test\":\"42344344@qq.com\"}');
 INSERT INTO `t_config` VALUES ('5', 'sms', '{\"sms_send_type\":\"1\",\"sms_sign_name\":\"素食猫\",\"sms_app_key\":\"23422561\",\"sms_app_secret\":\"fef33e9af31c09dee78339bef34ea195\",\"sms_expire\":\"86400\",\"sms_send_time\":\"60\",\"sms_ip_count\":\"50\",\"sms_send_count\":\"50\"}');
 INSERT INTO `t_config` VALUES ('6', 'plugin', '{\"qq_open\":\"2\",\"qq_list\":\"\",\"player_open\":\"2\",\"player_url\":\"\",\"notice_open\":\"2\",\"notice_message\":\"\"}');
-INSERT INTO `t_config` VALUES ('7', 'system', '{\"mobile_register_status\":\"1\",\"email_register_status\":\"1\",\"system_site_open\":\"1\",\"user_login_status\":\"1\",\"system_site_close_msg\":\"\",\"user_log_status\":\"1\",\"system_log_status\":\"1\",\"system_template\":\"default\"}');
+INSERT INTO `t_config` VALUES ('7', 'system', '{\"mobile_register_status\":\"1\",\"email_register_status\":\"1\",\"system_site_open\":\"1\",\"user_login_status\":\"1\",\"system_site_close_msg\":\"\",\"user_log_status\":\"1\"}');
 
 -- ----------------------------
 -- Table structure for `t_email_log`
@@ -3547,9 +3547,9 @@ DROP TABLE IF EXISTS `t_feedback`;
 CREATE TABLE `t_feedback` (
   `c_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `c_mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机号',
-  `c_user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户账号',
+  `c_user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户名',
   `c_full_name` varchar(20) NOT NULL DEFAULT '' COMMENT '姓名',
-  `c_admin_name` varchar(20) NOT NULL DEFAULT '' COMMENT '回复人用户名',
+  `c_system_name` varchar(20) NOT NULL DEFAULT '' COMMENT '管理员用户名',
   `c_email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
   `c_phone` varchar(50) NOT NULL DEFAULT '' COMMENT '联系电话',
   `c_title` varchar(50) NOT NULL DEFAULT '' COMMENT '主题',
@@ -3560,7 +3560,7 @@ CREATE TABLE `t_feedback` (
   `c_status` tinyint(1) unsigned NOT NULL DEFAULT '2' COMMENT '状态 1已处理 2未处理 3处理中',
   `c_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '类型',
   `c_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `c_admin_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员ID',
+  `c_system_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员用户ID',
   `c_reply_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '回复时间',
   `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
@@ -3790,191 +3790,41 @@ CREATE TABLE `t_system_route` (
   `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7308 DEFAULT CHARSET=utf8 COMMENT='权限路由表';
+) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8 COMMENT='权限路由表';
 
 -- ----------------------------
 -- Records of t_system_route
 -- ----------------------------
-INSERT INTO `t_system_route` VALUES ('1', '商品', 'goods/index', 'heart', '0', '9', '1', '1484882155', '2017-04-14 15:44:02');
-INSERT INTO `t_system_route` VALUES ('2', '用户', 'user/index', 'user', '0', '8', '1', '1484882155', '2017-04-14 15:44:04');
-INSERT INTO `t_system_route` VALUES ('3', '订单', 'order/index', 'th', '0', '7', '1', '1436167620', '2017-04-14 15:44:30');
-INSERT INTO `t_system_route` VALUES ('4', '营销', 'market-activity/index', 'bullhorn', '0', '6', '1', '1436167620', '2017-04-14 15:44:43');
-INSERT INTO `t_system_route` VALUES ('5', '统计', 'market-statistics/register', 'calendar', '0', '5', '1', '1436167620', '2017-04-14 15:45:34');
-INSERT INTO `t_system_route` VALUES ('6', '系统', 'site/index', 'cog', '0', '4', '1', '1443409950', '2017-04-14 19:08:46');
-INSERT INTO `t_system_route` VALUES ('7', '工具', 'article/index', 'wrench', '0', '3', '1', '1443409950', '2017-04-14 15:45:52');
-INSERT INTO `t_system_route` VALUES ('10', '商品管理', '', 'heart', '1', '9', '1', '1484882155', '2017-04-14 15:45:54');
-INSERT INTO `t_system_route` VALUES ('11', '商品类别', '', 'folder-open', '1', '8', '1', '1484882155', '2017-04-14 15:46:06');
-INSERT INTO `t_system_route` VALUES ('12', '商品品牌', '', 'globe', '1', '7', '1', '1436167620', '2017-04-14 15:46:15');
-INSERT INTO `t_system_route` VALUES ('13', '商品模型', '', 'road', '1', '6', '1', '1436167620', '2017-04-17 10:17:32');
-INSERT INTO `t_system_route` VALUES ('14', '商品搜索', '', 'search', '1', '5', '1', '1436167620', '2017-04-14 15:46:18');
-INSERT INTO `t_system_route` VALUES ('20', '用户管理', '', 'user', '2', '9', '1', '1484882155', '2017-04-14 15:46:20');
-INSERT INTO `t_system_route` VALUES ('21', '商户管理', '', 'user', '2', '8', '1', '1484882155', '2017-04-19 10:54:06');
-INSERT INTO `t_system_route` VALUES ('22', '网盟管理', '', 'user', '2', '7', '1', '1436167620', '2017-04-19 10:55:31');
-INSERT INTO `t_system_route` VALUES ('23', '信息处理', '', 'book', '2', '6', '1', '1436167620', '2017-04-19 10:55:11');
-INSERT INTO `t_system_route` VALUES ('30', '订单管理', '', '', '3', '9', '1', '1484882155', '2017-04-14 15:47:04');
-INSERT INTO `t_system_route` VALUES ('32', '发货地址', '', '', '32', '7', '1', '1436167620', '2017-03-09 22:12:52');
-INSERT INTO `t_system_route` VALUES ('40', '促销活动', '', '', '4', '9', '1', '1484882155', '2017-04-14 15:47:07');
-INSERT INTO `t_system_route` VALUES ('41', '营销活动', '', '', '4', '8', '1', '1484882155', '2017-04-14 15:47:08');
-INSERT INTO `t_system_route` VALUES ('42', '代金券管理', '', '', '4', '7', '1', '1436167620', '2016-09-19 13:52:59');
-INSERT INTO `t_system_route` VALUES ('50', '基础数据统计', '', '', '5', '9', '1', '1484882155', '2017-04-14 15:47:11');
-INSERT INTO `t_system_route` VALUES ('51', '日志操作记录', '', 'calendar', '5', '8', '1', '1484882155', '2017-04-14 15:47:15');
-INSERT INTO `t_system_route` VALUES ('52', '商户数据统计', '', '', '5', '7', '1', '1436167620', '2016-09-19 13:52:59');
-INSERT INTO `t_system_route` VALUES ('53', '网盟数据统计', '', '', '5', '6', '1', '1436167620', '2016-09-19 13:52:59');
-INSERT INTO `t_system_route` VALUES ('60', '网站管理', '', 'cog', '6', '9', '1', '1484882155', '2017-04-14 15:47:17');
-INSERT INTO `t_system_route` VALUES ('61', '支付管理', '', 'globe', '6', '8', '1', '1484882155', '2017-04-14 15:47:20');
-INSERT INTO `t_system_route` VALUES ('62', '第三方平台', '', 'cloud', '6', '7', '1', '1436167620', '2017-04-14 15:47:21');
-INSERT INTO `t_system_route` VALUES ('63', '配送管理', '', 'print', '6', '6', '1', '1436167620', '2017-04-14 15:47:24');
-INSERT INTO `t_system_route` VALUES ('64', '区域管理', '', 'globe', '6', '5', '1', '1436167620', '2017-04-14 15:47:25');
-INSERT INTO `t_system_route` VALUES ('65', '权限管理', '', 'user', '6', '4', '1', '1436167620', '2017-04-19 10:56:28');
-INSERT INTO `t_system_route` VALUES ('66', '消息模板', '', 'volume-up', '6', '3', '1', '0', '2017-04-19 10:57:35');
-INSERT INTO `t_system_route` VALUES ('71', '文章管理', '', 'book', '7', '8', '1', '1484882155', '2017-07-30 16:53:45');
-INSERT INTO `t_system_route` VALUES ('72', '广告管理', '', '', '7', '7', '1', '1436167620', '2017-04-14 15:47:45');
-INSERT INTO `t_system_route` VALUES ('73', '链接管理', '', 'sitemap', '7', '7', '1', '1436167620', '2017-04-14 15:47:47');
-INSERT INTO `t_system_route` VALUES ('74', '网站地图', '', 'globe', '7', '6', '1', '1436167620', '2017-04-14 15:47:49');
-INSERT INTO `t_system_route` VALUES ('1000', '商品列表', 'goods/index', '', '10', '99', '1', '1484882192', '2017-04-14 15:47:51');
-INSERT INTO `t_system_route` VALUES ('1001', '商品新增', 'goods/create', '', '10', '98', '1', '1484882228', '2017-04-14 15:47:54');
-INSERT INTO `t_system_route` VALUES ('1002', '商品编辑', 'goods/update', '', '10', '97', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('1004', '商品上架设置', 'goods/online', '', '10', '95', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('1005', '商品下架设置', 'goods/offline', '', '10', '94', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('1006', '商品待审设置', 'goods/check', '', '10', '93', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('1007', '商品标签设置', 'goods/label', '', '10', '92', '2', '1436164328', '2017-01-30 16:58:35');
-INSERT INTO `t_system_route` VALUES ('1008', '商品批量设置', 'goods/setting', '', '10', '91', '2', '1436164328', '2017-01-30 16:58:35');
-INSERT INTO `t_system_route` VALUES ('1100', '商品类别列表', 'goods-category/index', '', '11', '99', '1', '1443409950', '2017-04-14 15:48:02');
-INSERT INTO `t_system_route` VALUES ('1101', '商品类别新增', 'goods-category/create', '', '11', '98', '2', '1436171413', '2017-02-11 15:33:11');
-INSERT INTO `t_system_route` VALUES ('1102', '商品类别编辑', 'goods-category/update', '', '11', '97', '2', '1436171520', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1103', '商品类别删除', 'goods-category/delete', '', '11', '96', '2', '1436171551', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1200', '商品品牌列表', 'goods-brand/index', '', '12', '99', '1', '1443409950', '2017-04-14 15:48:03');
-INSERT INTO `t_system_route` VALUES ('1201', '商品品牌新增', 'goods-brand/create', '', '12', '98', '2', '1436171413', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1202', '商品品牌编辑', 'goods-brand/update', '', '12', '97', '2', '1436171520', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1203', '商品品牌删除', 'goods-brand/delete', '', '12', '96', '2', '1436171551', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1204', '品牌类别列表', 'goods-brand-category/index', '', '12', '95', '1', '1443409950', '2017-04-14 15:48:05');
-INSERT INTO `t_system_route` VALUES ('1205', '品牌类别新增', 'goods-brand-category/create', '', '12', '94', '2', '1436171413', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1206', '品牌类别编辑', 'goods-brand-category/update', '', '12', '93', '2', '1436171520', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1207', '品牌类别删除', 'goods-brand-category/delete', '', '12', '92', '2', '1436171551', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1300', '商品模型列表', 'goods-model/index', '', '13', '99', '1', '1443409950', '2017-04-14 15:48:07');
-INSERT INTO `t_system_route` VALUES ('1301', '商品模型新增', 'goods-model/create', '', '13', '98', '2', '1436171413', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1302', '商品模型编辑', 'goods-model/update', '', '13', '97', '2', '1436171520', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('1303', '商品模型删除', 'goods-model/delete', '', '13', '96', '2', '1436171551', '2017-02-11 15:33:12');
-INSERT INTO `t_system_route` VALUES ('2000', '用户列表', 'user/index', '', '20', '99', '1', '1443409950', '2017-04-14 15:48:11');
-INSERT INTO `t_system_route` VALUES ('2001', '用户新增', 'user/create', '', '20', '98', '2', '1436160659', '2017-01-26 19:51:20');
-INSERT INTO `t_system_route` VALUES ('2002', '用户编辑', 'user/update', '', '20', '97', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('2003', '用户禁用', 'user/delete', '', '20', '96', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('2004', '用户查看', 'user/view', '', '65', '85', '2', '1436167203', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('2005', '用户账户管理', 'user/amount', '', '20', '95', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('2006', '用户扣款', 'user/subtract', '', '20', '94', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('2007', '用户密码修改', 'user/update-password', '', '20', '93', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('2100', '用户组列表', 'user-group/index', '', '20', '89', '1', '1443409950', '2017-04-14 15:48:12');
-INSERT INTO `t_system_route` VALUES ('2101', '用户组新增', 'user-group/create', '', '20', '88', '2', '1436160659', '2017-01-26 19:52:18');
-INSERT INTO `t_system_route` VALUES ('2102', '用户组编辑', 'user-group/update', '', '20', '87', '2', '1436167171', '2017-01-26 19:52:30');
-INSERT INTO `t_system_route` VALUES ('2103', '用户组禁用', 'user-group/delete', '', '20', '86', '2', '1436167203', '2017-01-26 19:52:49');
-INSERT INTO `t_system_route` VALUES ('2200', '管理组列表', 'admin-group/index', 'briefcase', '65', '79', '1', '1431327174', '2017-04-19 10:59:00');
-INSERT INTO `t_system_route` VALUES ('2201', '管理组新增', 'admin-group/create', '', '65', '78', '2', '1436160847', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('2202', '管理组编辑', 'admin-group/update', '', '65', '77', '2', '1436167503', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('2203', '管理组删除', 'admin-group/delete', '', '65', '76', '2', '1436167524', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('2300', '反馈列表', 'feedback/index', '', '23', '99', '1', '1433243513', '2017-04-14 15:48:15');
-INSERT INTO `t_system_route` VALUES ('2301', '反馈查看', 'feedback/view', '', '23', '98', '2', '1436163983', '2017-01-26 16:43:55');
-INSERT INTO `t_system_route` VALUES ('2302', '反馈处理', 'feedback/operation', '', '23', '97', '2', '1436164003', '2017-01-26 16:43:55');
-INSERT INTO `t_system_route` VALUES ('3000', '订单列表', 'order/index', '', '30', '99', '1', '1443409950', '2017-04-14 15:48:16');
-INSERT INTO `t_system_route` VALUES ('3001', '订单新增', 'order/create', '', '30', '98', '1', '1436160216', '2017-04-14 15:48:17');
-INSERT INTO `t_system_route` VALUES ('3002', '订单编辑', 'order/update', '', '30', '97', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('3003', '订单查看', 'order/view', '', '30', '96', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('3004', '订单支付', 'order/pay', '', '30', '95', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('3005', '订单发货', 'order/delivery', '', '30', '94', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('3006', '订单退款', 'order/refundment', '', '30', '93', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('3007', '订单完成', 'order/finish', '', '30', '92', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('3008', '订单取消', 'order/cancel', '', '30', '91', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('3009', '订单导入', 'order/import', '', '30', '90', '1', '1436164328', '2017-04-14 15:48:20');
-INSERT INTO `t_system_route` VALUES ('4000', '促销活动列表', 'market-activity/index', '', '40', '99', '1', '1482396033', '2017-04-14 15:48:27');
-INSERT INTO `t_system_route` VALUES ('4001', '促销活动新增', 'market-activity/create', '', '40', '98', '2', '1436160659', '2017-02-21 23:10:58');
-INSERT INTO `t_system_route` VALUES ('4002', '促销活动编辑', 'market-activity/update', '', '40', '97', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('4003', '促销活动删除', 'market-activity/delete', '', '40', '96', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('4100', '限时抢购列表', 'market-speed/index', '', '41', '89', '1', '1482396033', '2017-04-14 15:48:30');
-INSERT INTO `t_system_route` VALUES ('4101', '限时抢购新增', 'market-speed/create', '', '41', '88', '2', '1436160659', '2017-02-21 23:11:51');
-INSERT INTO `t_system_route` VALUES ('4102', '限时抢购编辑', 'market-speed/update', '', '41', '87', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('4103', '限时抢购删除', 'market-speed/delete', '', '41', '86', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('4110', '团购列表', 'market-group/index', '', '41', '79', '1', '1482396033', '2017-04-14 15:48:31');
-INSERT INTO `t_system_route` VALUES ('4111', '团购新增', 'market-group/create', '', '41', '78', '2', '1436160659', '2017-02-21 23:16:30');
-INSERT INTO `t_system_route` VALUES ('4112', '团购编辑', 'market-group/update', '', '41', '77', '2', '1436167171', '2017-02-21 23:16:41');
-INSERT INTO `t_system_route` VALUES ('4113', '团购删除', 'market-group/delete', '', '41', '76', '2', '1436167203', '2017-02-21 23:16:52');
-INSERT INTO `t_system_route` VALUES ('4120', '特价活动列表', 'market-sale/index', '', '41', '69', '1', '1482396033', '2017-04-14 15:48:32');
-INSERT INTO `t_system_route` VALUES ('4121', '特价活动新增', 'market-sale/create', '', '41', '68', '2', '1436160659', '2017-02-21 23:11:28');
-INSERT INTO `t_system_route` VALUES ('4122', '特价活动编辑', 'market-sale/update', '', '41', '67', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('4123', '特价活动删除', 'market-sale/delete', '', '41', '66', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('4130', '代金券列表', 'market-ticket/index', '', '42', '59', '1', '1482396033', '2017-04-14 15:48:35');
-INSERT INTO `t_system_route` VALUES ('4131', '代金券新增', 'market-ticket/create', '', '42', '58', '2', '1436160659', '2017-03-05 13:31:21');
-INSERT INTO `t_system_route` VALUES ('4132', '代金券编辑', 'market-ticket/update', '', '42', '57', '2', '1436167171', '2017-03-05 13:31:39');
-INSERT INTO `t_system_route` VALUES ('4133', '代金券删除', 'market-ticket/delete', '', '42', '56', '2', '1436167203', '2017-03-05 13:31:53');
-INSERT INTO `t_system_route` VALUES ('4134', '代金券导出', 'market-ticket/export', '', '42', '55', '2', '1436167203', '2017-03-05 13:32:13');
-INSERT INTO `t_system_route` VALUES ('4135', '代金券新增卡号', 'market-ticket/add', '', '42', '54', '2', '1436167203', '2017-03-05 13:32:13');
-INSERT INTO `t_system_route` VALUES ('4140', '卡号列表', 'market-card/index', '', '42', '49', '2', '1482396033', '2017-04-14 15:48:36');
-INSERT INTO `t_system_route` VALUES ('4141', '卡号发放', 'market-card/send', '', '42', '48', '2', '1482396033', '2017-03-05 13:38:02');
-INSERT INTO `t_system_route` VALUES ('4142', '卡号禁用', 'market-card/used', '', '42', '47', '2', '1482396033', '2017-03-05 13:34:26');
-INSERT INTO `t_system_route` VALUES ('4143', '卡号删除', 'market-card/delete', '', '42', '46', '2', '1482396033', '2017-03-05 13:34:18');
-INSERT INTO `t_system_route` VALUES ('4144', '批量卡号发放', 'market-card/send-all', '', '42', '48', '2', '1482396033', '2017-03-05 13:38:02');
-INSERT INTO `t_system_route` VALUES ('4145', '批量卡号禁用', 'market-card/used-all', '', '42', '47', '2', '1482396033', '2017-03-05 13:34:26');
-INSERT INTO `t_system_route` VALUES ('4146', '批量卡号删除', 'market-card/delete-all', '', '42', '46', '2', '1482396033', '2017-03-05 13:34:18');
-INSERT INTO `t_system_route` VALUES ('5000', '用户注册统计', 'market-statistics/register', '', '50', '99', '1', '1482396033', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('5001', '销售额统计', 'market-statistics/sales', '', '50', '98', '1', '1482396033', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('5100', '资金操作记录', 'user-acount-log/index', '', '51', '97', '1', '1482396033', '2017-04-14 15:48:38');
-INSERT INTO `t_system_route` VALUES ('5101', '积分操作记录', 'user-point-log/index', '', '51', '96', '1', '1482396033', '2017-04-14 15:48:39');
-INSERT INTO `t_system_route` VALUES ('5102', '后台操作记录', 'admin-operation-log/index', '', '51', '95', '1', '1482396033', '2017-04-14 15:48:40');
-INSERT INTO `t_system_route` VALUES ('5103', '短信日志', 'sms-log/index', '', '51', '94', '1', '1482396033', '2017-04-14 15:48:41');
-INSERT INTO `t_system_route` VALUES ('5104', '邮件日志', 'email-log/index', '', '51', '93', '1', '1482396033', '2017-04-14 15:48:43');
-INSERT INTO `t_system_route` VALUES ('6000', '后台首页', 'site/index', 'home', '60', '99', '1', '1431423162', '2017-04-14 15:48:44');
-INSERT INTO `t_system_route` VALUES ('6001', '网站设置', 'config/index', 'sitemap', '60', '98', '1', '1431423162', '2017-04-14 15:48:47');
-INSERT INTO `t_system_route` VALUES ('6002', '密码修改', 'site/my-password', 'lock', '60', '96', '1', '1431423162', '2017-07-19 16:59:26');
-INSERT INTO `t_system_route` VALUES ('6100', '支付方式列表', 'payment/index', '', '61', '99', '1', '1431423162', '2017-04-14 15:48:48');
-INSERT INTO `t_system_route` VALUES ('6101', '支付方式编辑', 'payment/update', '', '61', '98', '2', '1431423162', '2016-02-26 16:44:13');
-INSERT INTO `t_system_route` VALUES ('6200', 'oauth授权列表', 'oauth/index', '', '62', '99', '1', '1431423162', '2017-04-14 15:48:49');
-INSERT INTO `t_system_route` VALUES ('6201', 'oauth授权编辑', 'oauth/update', '', '62', '98', '2', '1431423162', '2016-02-26 16:44:13');
-INSERT INTO `t_system_route` VALUES ('6300', '配送方式列表', 'delivery/index', '', '63', '99', '1', '1431423162', '2017-04-14 15:49:02');
-INSERT INTO `t_system_route` VALUES ('6301', '配送方式新增', 'delivery/create', '', '63', '98', '2', '1431423162', '2016-02-26 16:44:13');
-INSERT INTO `t_system_route` VALUES ('6302', '配送方式编辑', 'delivery/update', '', '63', '97', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('6310', '物流公司列表', 'freight-company/index', '', '63', '89', '1', '1431423162', '2017-04-14 15:49:04');
-INSERT INTO `t_system_route` VALUES ('6311', '物流公司新增', 'freight-company/create', '', '63', '88', '2', '1431423162', '2016-02-26 16:44:13');
-INSERT INTO `t_system_route` VALUES ('6312', '物流公司编辑', 'freight-company/update', '', '63', '87', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('6320', '自提点列表', 'takeself/index', '', '63', '79', '1', '1431423162', '2017-04-19 10:52:33');
-INSERT INTO `t_system_route` VALUES ('6321', '自提点新增', 'takeself/create', '', '63', '78', '2', '1431423162', '2016-02-26 16:44:13');
-INSERT INTO `t_system_route` VALUES ('6322', '自提点编辑', 'takeself/update', '', '63', '77', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('6401', '地区列表', 'areas/index', '', '64', '69', '1', '1431423162', '2017-04-14 15:49:06');
-INSERT INTO `t_system_route` VALUES ('6402', '地区新增', 'areas/create', '', '64', '68', '2', '1431423162', '2016-02-26 16:44:13');
-INSERT INTO `t_system_route` VALUES ('6403', '地区编辑', 'areas/update', '', '64', '67', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('6404', '地区删除', 'areas/delete', '', '64', '66', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('6405', '地区生成静态JS文件', 'areas/make', '', '64', '65', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('6520', '路由列表', 'admin-route/index', '', '65', '69', '1', '1443409950', '2017-04-14 15:49:09');
-INSERT INTO `t_system_route` VALUES ('6521', '路由新增', 'admin-route/create', '', '65', '68', '2', '1436167704', '2016-04-10 23:00:24');
-INSERT INTO `t_system_route` VALUES ('6522', '路由编辑', 'admin-route/update', '', '65', '67', '2', '1436167646', '2016-04-10 23:00:40');
-INSERT INTO `t_system_route` VALUES ('6523', '路由删除', 'admin-route/delete', '', '65', '66', '2', '1436167681', '2016-04-10 23:00:55');
-INSERT INTO `t_system_route` VALUES ('6601', '消息模板列表', 'notity-template/index', '', '66', '0', '1', '0', '2017-04-14 15:49:12');
-INSERT INTO `t_system_route` VALUES ('6602', '消息模板新增', 'notity-template/create', '', '66', '0', '2', '0', '2017-03-17 10:38:30');
-INSERT INTO `t_system_route` VALUES ('6603', '消息模板编辑', 'notity-template/update', '', '66', '0', '2', '0', '2017-03-17 10:38:52');
-INSERT INTO `t_system_route` VALUES ('6900', '图片上传', 'uploader/picture', '', '65', '59', '2', '1436169223', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('6901', '附件上传', 'uploader/file', '', '65', '58', '2', '1436169223', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('6902', '附件删除', 'uploader/delete', '', '65', '57', '2', '1436169223', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('7100', '文章列表', 'article/index', '', '71', '99', '1', '1443409950', '2017-04-14 15:49:13');
-INSERT INTO `t_system_route` VALUES ('7101', '文章新增', 'article/create', '', '71', '98', '2', '1436160216', '2017-07-30 16:54:05');
-INSERT INTO `t_system_route` VALUES ('7102', '文章编辑', 'article/update', '', '71', '97', '2', '1436164311', '2016-03-20 20:51:44');
-INSERT INTO `t_system_route` VALUES ('7103', '文章删除', 'article/delete', '', '71', '96', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('7120', '文章类别列表', 'article-category/index', '', '71', '79', '1', '1443409950', '2017-04-14 15:49:17');
-INSERT INTO `t_system_route` VALUES ('7121', '文章类别新增', 'article-category/create', '', '71', '78', '2', '1436171413', '2017-01-26 21:44:27');
-INSERT INTO `t_system_route` VALUES ('7122', '文章类别编辑', 'article-category/update', '', '71', '77', '2', '1436171520', '2017-01-26 16:45:30');
-INSERT INTO `t_system_route` VALUES ('7123', '文章类别删除', 'article-category/delete', '', '71', '76', '2', '1436171551', '2017-01-26 16:45:30');
-INSERT INTO `t_system_route` VALUES ('7200', '广告列表', 'ad-manage/index', '', '72', '99', '1', '1431511278', '2017-04-14 15:49:19');
-INSERT INTO `t_system_route` VALUES ('7201', '广告新增', 'ad-manage/create', '', '72', '98', '2', '1436161840', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7202', '广告编辑', 'ad-manage/update', '', '72', '97', '2', '1436168158', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7203', '广告删除', 'ad-manage/delete', '', '72', '96', '2', '1436168187', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7210', '广告位列表', 'ad-position/index', '', '72', '89', '1', '1431511278', '2017-04-14 15:49:20');
-INSERT INTO `t_system_route` VALUES ('7211', '广告位新增', 'ad-position/create', '', '72', '88', '2', '1436161840', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7212', '广告位编辑', 'ad-position/update', '', '72', '87', '2', '1436168158', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7213', '广告位删除', 'ad-position/delete', '', '72', '86', '2', '1436168187', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7300', '链接列表', 'link/index', '', '73', '99', '1', '1443409950', '2017-04-14 15:49:23');
-INSERT INTO `t_system_route` VALUES ('7301', '链接新增', 'link/create', '', '73', '98', '2', '1436161069', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7302', '链接编辑', 'link/update', '', '73', '97', '2', '1436167798', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7303', '链接删除', 'link/delete', '', '73', '96', '2', '1436167820', '2017-01-26 16:43:12');
-INSERT INTO `t_system_route` VALUES ('7304', '单据管理', '', 'bookmark', '3', '0', '1', '0', '2017-04-14 15:49:24');
-INSERT INTO `t_system_route` VALUES ('7305', '收款单', 'collection-doc/index', '', '7304', '0', '1', '0', '2017-04-14 15:49:25');
-INSERT INTO `t_system_route` VALUES ('7306', '退款单', 'refundment-doc/index', '', '7304', '0', '1', '0', '2017-04-14 15:49:27');
-INSERT INTO `t_system_route` VALUES ('7307', '发货单', 'delivery-doc/index', '', '7304', '0', '1', '0', '2017-04-14 15:49:28');
+INSERT INTO `t_system_route` VALUES ('1', '系统', '/site/index', '', '0', '99', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('2', '组件', '/component/index', '', '0', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('10', '系统管理', '', '', '1', '99', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('11', '路由管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('20', '组件管理', '', '', '2', '99', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('21', '用户管理', '', '', '2', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('100', '欢迎页面', '/site/index', '', '10', '99', '1', '1501565777', '2017-08-01 14:14:46');
+INSERT INTO `t_system_route` VALUES ('101', '我的密码修改', '/site/my-password', 'lock', '10', '98', '1', '1501565813', '2017-08-01 14:14:24');
+INSERT INTO `t_system_route` VALUES ('102', '系统设置', '/config/index', '', '10', '97', '1', '1501568318', '2017-08-01 14:18:38');
+INSERT INTO `t_system_route` VALUES ('110', '路由列表', '/system-route/index', '', '11', '99', '1', '1443409950', '2017-04-14 15:49:09');
+INSERT INTO `t_system_route` VALUES ('111', '路由新增', '/system-route/create', '', '11', '98', '1', '1436167704', '2017-08-01 14:34:51');
+INSERT INTO `t_system_route` VALUES ('112', '路由编辑', '/system-route/update', '', '11', '97', '2', '1436167646', '2016-04-10 23:00:40');
+INSERT INTO `t_system_route` VALUES ('113', '路由删除', '/system-route/delete', '', '11', '96', '2', '1436167681', '2016-04-10 23:00:55');
+INSERT INTO `t_system_route` VALUES ('200', '组件设置', '/component/index', '', '20', '9', '1', '1501565777', '2017-08-01 14:14:46');
+INSERT INTO `t_system_route` VALUES ('210', '用户列表', 'user/user/index', '', '21', '99', '1', '1443409950', '2017-04-14 15:48:11');
+INSERT INTO `t_system_route` VALUES ('211', '用户新增', 'user/user/create', '', '21', '98', '2', '1436160659', '2017-01-26 19:51:20');
+INSERT INTO `t_system_route` VALUES ('212', '用户编辑', 'user/user/update', '', '21', '97', '2', '1436167171', '2017-01-26 19:51:31');
+INSERT INTO `t_system_route` VALUES ('213', '用户禁用', 'user/user/delete', '', '21', '96', '2', '1436167203', '2017-01-26 19:51:53');
+INSERT INTO `t_system_route` VALUES ('214', '用户查看', 'user/user/view', '', '21', '95', '2', '1436167203', '2017-01-26 16:40:44');
+INSERT INTO `t_system_route` VALUES ('215', '用户账户管理', 'user/user/amount', '', '21', '94', '2', '1436167171', '2017-01-26 19:51:31');
+INSERT INTO `t_system_route` VALUES ('216', '用户扣款', 'user/user/subtract', '', '21', '93', '2', '1436167203', '2017-01-26 19:51:53');
+INSERT INTO `t_system_route` VALUES ('217', '用户密码修改', 'user/user/update-password', '', '21', '92', '2', '1436167203', '2017-01-26 19:51:53');
+INSERT INTO `t_system_route` VALUES ('220', '用户组列表', 'user/user-group/index', '', '21', '89', '1', '1443409950', '2017-04-14 15:48:12');
+INSERT INTO `t_system_route` VALUES ('221', '用户组新增', 'user/user-group/create', '', '21', '88', '2', '1436160659', '2017-01-26 19:52:18');
+INSERT INTO `t_system_route` VALUES ('222', '用户组编辑', 'user/user-group/update', '', '21', '87', '2', '1436167171', '2017-01-26 19:52:30');
+INSERT INTO `t_system_route` VALUES ('223', '用户组禁用', 'user/user-group/delete', '', '21', '86', '2', '1436167203', '2017-01-26 19:52:49');
+INSERT INTO `t_system_route` VALUES ('230', '管理组列表', 'user/system-group/index', 'briefcase', '21', '79', '1', '1431327174', '2017-04-19 10:59:00');
+INSERT INTO `t_system_route` VALUES ('231', '管理组新增', 'user/system-group/create', '', '21', '78', '2', '1436160847', '2017-01-26 16:40:44');
+INSERT INTO `t_system_route` VALUES ('232', '管理组编辑', 'user/system-group/update', '', '21', '77', '2', '1436167503', '2017-01-26 16:40:44');
+INSERT INTO `t_system_route` VALUES ('233', '管理组删除', 'user/system-group/delete', '', '21', '76', '2', '1436167524', '2017-01-26 16:40:44');
 
 -- ----------------------------
 -- Table structure for `t_upload`
@@ -4041,7 +3891,7 @@ CREATE TABLE `t_user` (
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'BYkS', '', '', '429ca7cd50faade894447065b4292f0a', '', '', '', 'sushipai', '', '1', '0', '2', '2', '1', '9', '2', '1501493915', '1501430400', '2130706433', '2130706433', '1501492448', '2017-07-31 17:38:35');
+INSERT INTO `t_user` VALUES ('1', 'gi_4', '', '', 'ecc2062dd8742205a01e2f5864801083', '', '', '', 'sushipai', '', '1', '0', '2', '2', '1', '9', '7', '1501550198', '1501430400', '2130706433', '2130706433', '1501492448', '2017-08-01 09:16:38');
 
 -- ----------------------------
 -- Table structure for `t_user_acount`
@@ -4072,7 +3922,7 @@ DROP TABLE IF EXISTS `t_user_acount_log`;
 CREATE TABLE `t_user_acount_log` (
   `c_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `c_order_no` char(20) NOT NULL DEFAULT '' COMMENT '订单号',
-  `c_admin_name` varchar(50) NOT NULL DEFAULT '' COMMENT '管理员用户名',
+  `c_system_name` varchar(50) NOT NULL DEFAULT '' COMMENT '管理员用户名',
   `c_note` varchar(255) NOT NULL DEFAULT '' COMMENT '备注说明',
   `c_amount_old` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '账户修改前金额',
   `c_amount` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '修改金额',
@@ -4083,7 +3933,7 @@ CREATE TABLE `t_user_acount_log` (
   `c_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '日志类型 1进账 2出账',
   `c_note_type` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '备注类型',
   `c_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `c_admin_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员ID',
+  `c_system_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员ID',
   `c_order_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单ID',
   `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
@@ -4254,7 +4104,7 @@ DROP TABLE IF EXISTS `t_user_point_log`;
 CREATE TABLE `t_user_point_log` (
   `c_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `c_order_no` char(20) NOT NULL DEFAULT '' COMMENT '订单号',
-  `c_admin_name` varchar(50) NOT NULL DEFAULT '' COMMENT '管理员用户名',
+  `c_system_name` varchar(50) NOT NULL DEFAULT '' COMMENT '管理员用户名',
   `c_note` varchar(255) NOT NULL DEFAULT '' COMMENT '备注说明',
   `c_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '日志类型 1进账 2出账',
   `c_point_old` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改前积分',
@@ -4265,7 +4115,7 @@ CREATE TABLE `t_user_point_log` (
   `c_exp_new` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '修改后经验值',
   `c_note_type` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '备注类型',
   `c_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `c_admin_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员ID',
+  `c_system_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员ID',
   `c_order_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单ID',
   `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',

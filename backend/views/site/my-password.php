@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use backend\widgets\ActiveForm;
 
-$this->title = '登录密码修改';
+$this->title = '我的密码修改';
 ?>
 <div class="box box-primary">
     <?php $form = ActiveForm::begin(); ?>

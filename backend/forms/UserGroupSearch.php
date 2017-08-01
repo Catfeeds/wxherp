@@ -3,28 +3,27 @@
 namespace backend\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\Admin;
+use common\models\AdminRole;
 
-class AdminSearch extends Admin {
+class UserGroupSearch extends AdminRole {
 
     public $pagesize = 10;
     public $keyword;
     public $status;
-    public $role_id;
 
     public function rules() {
         return [
             ['keyword', 'filter', 'filter' => 'trim'],
-            [['pagesize', 'status', 'role_id'], 'integer'],
+            [['pagesize', 'status'], 'integer'],
         ];
     }
 
     public function search($params) {
-        $query = Admin::find()->with('adminRole');
+        $query = AdminRole::find();
 
         $provider_params = [
             'query' => $query,
-            'sort' => ['defaultOrder' => ['c_id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['c_sort' => SORT_DESC, 'c_id' => SORT_DESC]],
             'pagination' => ['pageSize' => $this->pagesize],
         ];
 
@@ -33,14 +32,8 @@ class AdminSearch extends Admin {
             if ($this->keyword) {
                 $query->andWhere([
                     'or',
-                    ['like', 'c_admin_name', $this->keyword],
-                    ['like', 'c_mobile', $this->keyword],
-                    ['like', 'c_email', $this->keyword]
+                    ['like', 'c_title', $this->keyword]
                 ]);
-            }
-
-            if ($this->role_id) {
-                $query->andWhere(['c_role_id' => $this->role_id]);
             }
 
             if ($this->status) {

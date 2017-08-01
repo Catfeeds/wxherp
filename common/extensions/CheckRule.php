@@ -55,8 +55,8 @@ class CheckRule {
 
     //固定URL检测
     public static function checkAllowUrl($url) {
-        $allow_url = ['site/login', 'site/test', 'site/error', 'site/captcha']; //不用登录可访问
-        $login_url = ['site/index', 'site/logout', 'site/my-profile', 'site/my-password']; //必须登录可访问
+        $allow_url = ['/site/login', '/site/test', '/site/error', '/site/captcha']; //不用登录可访问
+        $login_url = ['/site/index', '/site/logout', '/site/my-password']; //必须登录可访问
         return in_array($url, $allow_url) || (self::isLogin() && in_array($url, $login_url));
     }
 

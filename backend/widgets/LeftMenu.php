@@ -11,7 +11,7 @@ use common\models\SystemRoute;
 class LeftMenu extends Widget {
 
     public function run() {
-        $route = Yii::$app->controller->getRoute();
+        $route = (Yii::$app->controller->module->uniqueId ? '' : '/') . Yii::$app->controller->getRoute(); // 没有模块 需路路由前加上/以便在没有模块的URL跳转
         $menu = SystemRoute::getTreeCache();
         $html = '';
         foreach ($menu as $v) {
