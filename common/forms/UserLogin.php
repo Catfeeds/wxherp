@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use common\messages\Common;
 use common\extensions\Util;
+use common\extensions\CheckRule;
 use common\models\User;
 use common\models\UserLoginLog;
 
@@ -46,6 +47,11 @@ class UserLogin extends Model {
             if ($model) {
                 if ($model->c_status == User::STATUS_NO) {
                     $this->addError($attribute, Yii::t('common', Common::ACCOUNTS_STATUS_ERROR));
+                }
+                if ($this->create_type == User::CREATE_ADMIN) {
+                    if (empty($model->c_system_group_id) && !CheckRule::checkSuperUser($model->c_id)) {
+                        $this->addError($attribute, Yii::t('common', Common::ACCOUNTS_SYSTEM_ERROR));
+                    }
                 }
                 if ($model->c_login_password == User::generatePassword($this->password, $model->c_login_random)) {
                     $data['c_status'] = User::STATUS_YES;

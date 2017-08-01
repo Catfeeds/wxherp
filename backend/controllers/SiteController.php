@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\extensions\Util;
 use common\forms\UserLogin;
+use common\models\_CommonModel;
 
 class SiteController extends _BackendController {
 
@@ -26,6 +27,7 @@ class SiteController extends _BackendController {
         }
 
         $model = new UserLogin();
+        $model->create_type = _CommonModel::CREATE_ADMIN;
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {

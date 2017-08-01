@@ -9,9 +9,6 @@ use common\extensions\Tree;
 
 class _CommonModel extends \yii\db\ActiveRecord {
 
-    //平台用户类型
-    const TYPE_USER = 1; //用户
-    const TYPE_ADMIN = 2; //管理员
     //上传文件字段名
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';
     const UPLOAD_FILE_FIELD_NAME = 'file';
@@ -39,7 +36,7 @@ class _CommonModel extends \yii\db\ActiveRecord {
     const CREATE_ANDRIOD = 4; // Andriod
     const CREATE_API = 7; // API
     const CREATE_OTHER = 8; // 其他
-    const CREATE_ADMIN = 9; // 后台
+    const CREATE_ADMIN = 9; // 平台
     //分割字符串
     const SELECT_STRING = ' ├ ';
 
@@ -299,7 +296,7 @@ class _CommonModel extends \yii\db\ActiveRecord {
             self::CREATE_ANDRIOD => 'Andriod',
             self::CREATE_API => 'API',
             self::CREATE_OTHER => '其他',
-            self::CREATE_ADMIN => '后台'
+            self::CREATE_ADMIN => '平台'
         ];
         return self::getCommonStatus($array, $type);
     }

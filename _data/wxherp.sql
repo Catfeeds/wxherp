@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-07-31 17:44:01
+Date: 2017-08-01 08:58:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4233,7 +4233,7 @@ CREATE TABLE `t_user_operation_log` (
   `c_route` varchar(100) NOT NULL DEFAULT '' COMMENT '路由名称',
   `c_data_before` text COMMENT '更新或删除之前的数据',
   `c_data_add` text COMMENT '新增的数据',
-  `c_user_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '用户类型 1用户 2管理员',
+  `c_create_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '来源类型 1PC 2H5 3IOS 4Andriod 8其他 9平台',
   `c_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '操作类型 1新增 2编辑 3删除',
   `c_status` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '状态 1成功 2失败',
   `c_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',

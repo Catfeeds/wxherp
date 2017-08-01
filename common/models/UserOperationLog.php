@@ -12,7 +12,7 @@ use Yii;
  * @property string $c_route
  * @property string $c_data_before
  * @property string $c_data_add
- * @property integer $c_user_type
+ * @property integer $c_create_type
  * @property integer $c_type
  * @property integer $c_status
  * @property string $c_user_id
@@ -35,7 +35,7 @@ class UserOperationLog extends _CommonModel {
     public function rules() {
         return [
             [['c_data_before', 'c_data_add'], 'string'],
-            [['c_user_type', 'c_type', 'c_status', 'c_user_id', 'c_object_id', 'c_create_time'], 'integer'],
+            [['c_create_type', 'c_type', 'c_status', 'c_user_id', 'c_object_id', 'c_create_time'], 'integer'],
             [['c_update_time'], 'safe'],
             [['c_user_name'], 'string', 'max' => 20],
             [['c_route'], 'string', 'max' => 100],
@@ -52,7 +52,7 @@ class UserOperationLog extends _CommonModel {
             'c_route' => '路由名称',
             'c_data_before' => '更新或删除之前的数据',
             'c_data_add' => '新增的数据',
-            'c_user_type' => '用户类型 1用户 2管理员',
+            'c_create_type' => '来源类型',// 1PC 2H5 3IOS 4Andriod 8其他 9平台
             'c_type' => '操作类型 1新增 2编辑 3删除',
             'c_status' => '状态 1成功 2失败',
             'c_user_id' => '用户ID',

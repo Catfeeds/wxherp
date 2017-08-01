@@ -32,6 +32,5 @@ $password = [
             </div>
         </div>
         <?php ActiveForm::end(); ?>
-        <a href="mailto:19744244@qq.com">忘记密码</a><br>
     </div>
 </div>

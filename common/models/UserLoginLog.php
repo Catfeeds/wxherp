@@ -42,8 +42,8 @@ class UserLoginLog extends _CommonModel {
             'c_id' => 'ID',
             'c_login_name' => '登录名',
             'c_login_password' => '登录密码',
-            'c_status' => '登录状态 1成功 2失败',
-            'c_create_type' => '来源类型 1PC 2H5 3IOS 4Andriod 8其他 9平台',
+            'c_status' => '登录状态', // 1成功 2失败
+            'c_create_type' => '来源类型', // 1PC 2H5 3IOS 4Andriod 8其他 9平台
             'c_login_ip' => '最后登录IP',
             'c_create_time' => '创建时间',
         ];

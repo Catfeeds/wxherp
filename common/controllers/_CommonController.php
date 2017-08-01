@@ -36,10 +36,10 @@ class _CommonController extends Controller {
      * 公共模块创建
      * @param type $model 模型
      * @param type $data 自定义数据格式 [模型名称=>数据数组] 如: [Ad => ['c_title'=>'test','c_status'=>1]] 默认是接收POST数据
-     * @param type $user_type 平台用户类型
+     * @param type $create_type 来源类型
      * @return boolean
      */
-    protected function commonCreate($model, $data = null, $user_type = _CommonModel::TYPE_ADMIN) {
+    protected function commonCreate($model, $data = null, $create_type = _CommonModel::CREATE_ADMIN) {
         if (is_null($data)) {
             $data = Yii::$app->request->post();
         }
@@ -55,7 +55,7 @@ class _CommonController extends Controller {
                 $log['c_object_id'] = $model->c_id;
                 $log['c_data_add'] = json_encode($model->attributes, JSON_UNESCAPED_UNICODE);
                 $log['c_data_before'] = json_encode(null, JSON_UNESCAPED_UNICODE);
-                $log['c_user_type'] = $user_type;
+                $log['c_create_type'] = $create_type;
                 $this->userLog($log);
 
                 if ($result) {
@@ -79,10 +79,10 @@ class _CommonController extends Controller {
      * 公共模块更新
      * @param type $model 模型
      * @param type $data 自定义数据格式 [模型名称=>数据数组] 如: [Ad => ['c_title'=>'test','c_status'=>1]] 默认是接收POST数据
-     * @param type $user_type 平台用户类型
+     * @param type $create_type 来源类型
      * @return boolean
      */
-    protected function commonUpdate($model, $data = null, $user_type = _CommonModel::TYPE_ADMIN) {
+    protected function commonUpdate($model, $data = null, $create_type = _CommonModel::CREATE_ADMIN) {
         $data_before = $model->attributes; //在本次更新之前的数据
         if (is_null($data)) {
             $data = Yii::$app->request->post();
@@ -96,7 +96,7 @@ class _CommonController extends Controller {
                 $log['c_object_id'] = $model->c_id;
                 $log['c_data_add'] = json_encode($model->attributes, JSON_UNESCAPED_UNICODE);
                 $log['c_data_before'] = json_encode($data_before, JSON_UNESCAPED_UNICODE);
-                $log['c_user_type'] = $user_type;
+                $log['c_create_type'] = $create_type;
                 $this->userLog($log);
 
                 if ($result) {
@@ -121,10 +121,10 @@ class _CommonController extends Controller {
      * @param type $model_name 模型名称
      * @param type $update 更新数组
      * @param type $where 查询条件数组
-     * @param type $user_type 平台用户类型
+     * @param type $create_type 来源类型
      * @return boolean
      */
-    protected function commonUpdateField($model_name, $update, $where, $user_type = _CommonModel::TYPE_ADMIN) {
+    protected function commonUpdateField($model_name, $update, $where, $create_type = _CommonModel::CREATE_ADMIN) {
         $result = $model_name::updateAll($update, $where);
 
         $log['c_type'] = _CommonModel::OPERATION_UPDATE;
@@ -132,7 +132,7 @@ class _CommonController extends Controller {
         $log['c_object_id'] = 0;
         $log['c_data_add'] = json_encode(ArrayHelper::merge($update, $where), JSON_UNESCAPED_UNICODE);
         $log['c_data_before'] = json_encode(null, JSON_UNESCAPED_UNICODE);
-        $log['c_user_type'] = $user_type;
+        $log['c_create_type'] = $create_type;
         $this->userLog($log);
 
         if ($result) {
@@ -148,10 +148,10 @@ class _CommonController extends Controller {
      * 删除操作 可批量删除
      * @param type $model_name 模型名称
      * @param type $id 
-     * @param type $user_type 平台用户类型
+     * @param type $create_type 来源类型
      * @return boolean
      */
-    protected function commonDelete($model_name, $id = null, $user_type = _CommonModel::TYPE_ADMIN) {
+    protected function commonDelete($model_name, $id = null, $create_type = _CommonModel::CREATE_ADMIN) {
         if ($id === null) {
             $id = explode(',', Yii::$app->request->post('id'));
         } else {
@@ -167,7 +167,7 @@ class _CommonController extends Controller {
                 $log['c_object_id'] = $model->c_id;
                 $log['c_data_add'] = json_encode($model->attributes, JSON_UNESCAPED_UNICODE);
                 $log['c_data_before'] = json_encode(null, JSON_UNESCAPED_UNICODE);
-                $log['c_user_type'] = $user_type;
+                $log['c_create_type'] = $create_type;
                 $this->userLog($log);
 
                 if ($model->getErrors()) {
@@ -280,9 +280,9 @@ class _CommonController extends Controller {
 
     /**
      * 公共图片上传文件
-     * @param type $user_type 用户类型 1后台 2前台
+     * @param type $create_type 用户类型 1后台 2前台
      */
-    protected function pictureUpload($user_type = _CommonModel::TYPE_ADMIN) {
+    protected function pictureUpload($create_type = _CommonModel::CREATE_ADMIN) {
         try {
             if (Yii::$app->request->isPost) {
                 $object_id = (int) Yii::$app->request->post('object_id'); //对象ID
@@ -310,7 +310,7 @@ class _CommonController extends Controller {
                         $data['c_extension'] = $model->picture->extension;
                         $data['c_object_id'] = $object_id;
                         $data['c_object_type'] = $object_type;
-                        $data['c_user_type'] = $user_type;
+                        $data['c_create_type'] = $create_type;
                         $data['c_type'] = 1; //文件类型 1图片 2附件
                         Upload::add($data);
                         self::jsonEcho(['error' => 0, 'thumb' => Upload::getThumb($file_url), 'fileurl' => $file_url]);
@@ -330,9 +330,9 @@ class _CommonController extends Controller {
 
     /**
      * 公共上传文件
-     * @param type $user_type 用户类型 1后台 2前台
+     * @param type $create_type 用户类型 1后台 2前台
      */
-    protected function fileUpload($user_type = _CommonModel::TYPE_ADMIN) {
+    protected function fileUpload($create_type = _CommonModel::CREATE_ADMIN) {
         try {
             if (Yii::$app->request->isPost) {
                 $dir = Yii::$app->request->get('dir'); //获取编辑器上传允许的目录  $config['editor_dir'] = ['image', 'flash', 'media', 'file'];
@@ -368,7 +368,7 @@ class _CommonController extends Controller {
                         $data['c_extension'] = $model->file->extension;
                         $data['c_object_id'] = $object_id;
                         $data['c_object_type'] = $object_type;
-                        $data['c_user_type'] = $user_type; //用户类型 1后台 2前台
+                        $data['c_create_type'] = $create_type; //用户类型 1后台 2前台
                         $data['c_type'] = 2; //文件类型 1图片 2附件
                         Upload::add($data);
                         //thumb 缩略图地址 http://file.domain.com/thumb/200_200/2017/02/10/13/f944ff5cffc05852881c6a92f6b8e826.png

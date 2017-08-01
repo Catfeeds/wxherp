@@ -35,7 +35,7 @@ class Common {
     const ACCOUNTS_EXISTS = 1203; //账号已存在
     const ACCOUNTS_EMPTY = 1204; //请输入账号
     const ACCOUNTS_FORMAT_ERROR = 1205; //请输入手机号/邮箱/用户名
-
+    const ACCOUNTS_SYSTEM_ERROR = 1206; //非管理员禁止登录
     /**
      * 密码错误1300-1399
      */
