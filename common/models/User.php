@@ -63,25 +63,25 @@ class User extends _CommonModel implements IdentityInterface {
             /* 过滤空格 */
             [['c_user_name', 'c_mobile', 'c_email', 'old_password', 'new_password', 'old_pay_password', 'new_pay_password'], 'trim'],
             //用户名
-            ['c_user_name', 'required', 'on' => ['mobile_register', 'email_register', 'system_register']],
-            ['c_user_name', 'string', 'length' => [3, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['mobile_register', 'email_register', 'system_register']],
-            ['c_user_name', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'email_register', 'system_register']],
+            ['c_user_name', 'required', 'on' => ['mobile_register', 'email_register', 'system_create']],
+            ['c_user_name', 'string', 'length' => [3, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['mobile_register', 'email_register', 'system_create']],
+            ['c_user_name', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'email_register', 'system_create']],
             //手机号
-            ['c_mobile', 'match', 'pattern' => '/^1[3578][0-9]{9}$/', 'message' => '{attribute}格式错误', 'on' => ['mobile_register', 'system_register']],
-            ['c_mobile', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'system_register']],
+            ['c_mobile', 'match', 'pattern' => '/^1[3578][0-9]{9}$/', 'message' => '{attribute}格式错误', 'on' => ['mobile_register', 'system_create','system_update']],
+            ['c_mobile', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'system_create','system_update']],
             //邮箱
-            ['c_email', 'email', 'message' => '{attribute}格式错误', 'on' => ['email_register', 'system_register']],
-            ['c_email', 'unique', 'message' => '{attribute}已存在', 'on' => ['email_register', 'system_register']],
+            ['c_email', 'email', 'message' => '{attribute}格式错误', 'on' => ['email_register', 'system_create','system_update']],
+            ['c_email', 'unique', 'message' => '{attribute}已存在', 'on' => ['email_register', 'system_create','system_update']],
             //原登录密码
             ['old_password', 'required', 'on' => ['change-password', 'setting-pay-password', 'validate-password']],
             ['old_password', 'string', 'length' => [6, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['change-password', 'setting-pay-password', 'validate-password']],
             ['old_password', 'validateLoginPassword', 'on' => ['change-password', 'setting-pay-password', 'validate-password']],
             //登录密码
-            ['new_password', 'required', 'on' => ['mobile_register', 'email_register', 'system_register', 'setting-password']],
-            ['new_password', 'string', 'length' => [6, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['mobile_register', 'email_register', 'system_register', 'setting-password']],
+            ['new_password', 'required', 'on' => ['mobile_register', 'email_register', 'system_create', 'setting-password']],
+            ['new_password', 'string', 'length' => [6, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['mobile_register', 'email_register', 'system_create', 'setting-password']],
             //确认登录密码
-            ['new_password_confirm', 'required', 'on' => ['mobile_register', 'email_register', 'system_register', 'setting-password']],
-            ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password', 'message' => '两次设置的登录密码不一致', 'on' => ['mobile_register', 'email_register', 'system_register', 'setting-password']],
+            ['new_password_confirm', 'required', 'on' => ['mobile_register', 'email_register', 'system_create', 'setting-password']],
+            ['new_password_confirm', 'compare', 'compareAttribute' => 'new_password', 'message' => '两次设置的登录密码不一致', 'on' => ['mobile_register', 'email_register', 'system_create', 'setting-password']],
             //原支付密码
             ['old_pay_password', 'required', 'on' => ['change-pay-password']],
             ['old_pay_password', 'string', 'length' => [6, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['change-pay-password']],
@@ -148,7 +148,9 @@ class User extends _CommonModel implements IdentityInterface {
         //用户邮箱注册
         $scenarios['email_register'] = ['c_user_name', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_email_verify', 'c_user_group_id', 'c_status', 'c_create_type', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
         //管理员新增用户
-        $scenarios['system_register'] = ['c_user_name', 'c_mobile', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_mobile_verify', 'c_email_verify', 'c_user_group_id', 'c_system_group_id', 'c_status', 'c_create_type', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
+        $scenarios['system_create'] = ['c_user_name', 'c_mobile', 'c_email', 'c_login_random', 'c_auth_key', 'c_access_token', 'c_mobile_verify', 'c_email_verify', 'c_user_group_id', 'c_system_group_id', 'c_status', 'c_create_type', 'c_reg_date', 'c_create_time', 'new_password', 'new_password_confirm'];
+        //管理员编辑用户
+        $scenarios['system_update'] = ['c_mobile', 'c_email', 'c_mobile_verify', 'c_email_verify', 'c_user_group_id', 'c_system_group_id', 'c_status'];
         //设置登录密码
         $scenarios['setting-password'] = ['new_password', 'new_password_confirm'];
         //验证原登录密码 再设置新登录密码
@@ -372,7 +374,7 @@ class User extends _CommonModel implements IdentityInterface {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            if (in_array($this->scenario, ['system_register'])) {
+            if (in_array($this->scenario, ['system_create', 'system_update'])) {
                 if ($this->c_email) {
                     if ($this->c_email_verify == self::STATUS_NO) {
                         $this->c_email_verify = self::STATUS_WAIT;
@@ -387,12 +389,14 @@ class User extends _CommonModel implements IdentityInterface {
                 } else {
                     $this->c_mobile_verify = self::STATUS_NO;
                 }
-                $this->c_create_type = self::CREATE_ADMIN; //后台创建用户
-                $this->c_reg_date = strtotime(date('Y-m-d'));
-                $this->c_reg_ip = ip2long(Yii::$app->getRequest()->getUserIP());
-                $this->c_last_login_time = time();
-                $this->c_create_time = time();
-                $this->settingLoginPassword();
+                if (in_array($this->scenario, [ 'system_update'])) {
+                    $this->c_create_type = self::CREATE_ADMIN; //后台创建用户
+                    $this->c_reg_date = strtotime(date('Y-m-d'));
+                    $this->c_reg_ip = ip2long(Yii::$app->getRequest()->getUserIP());
+                    $this->c_last_login_time = time();
+                    $this->c_create_time = time();
+                    $this->settingLoginPassword();
+                }
             }
             return true;
         }

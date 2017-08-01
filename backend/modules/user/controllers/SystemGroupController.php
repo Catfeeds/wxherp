@@ -4,21 +4,21 @@ namespace backend\modules\user\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use common\models\AdminRole;
-use backend\forms\AdminRoleSearch;
+use common\models\SystemGroup;
+use backend\forms\SystemGroupSearch;
 use backend\controllers\_BackendController;
 
 class SystemGroupController extends _BackendController {
 
     public function actionIndex() {
-        $searchModel = new AdminRoleSearch();
+        $searchModel = new SystemGroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
     public function actionCreate() {
-        $model = new AdminRole();
+        $model = new SystemGroup();
         if (Yii::$app->request->isPost) {
             if ($this->commonCreate($model)) {
                 return $this->refresh();
@@ -41,12 +41,12 @@ class SystemGroupController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            return $this->commonDelete(AdminRole::className(), $id);
+            return $this->commonDelete(SystemGroup::className(), $id);
         }
     }
 
     protected function findModel($id) {
-        if (($model = AdminRole::findOne($id)) !== null) {
+        if (($model = SystemGroup::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

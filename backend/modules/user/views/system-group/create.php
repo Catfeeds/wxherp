@@ -1,5 +1,5 @@
 <?php
 
-$this->title = '角色新增';
-$this->params['breadcrumbs'][] = ['label' => '角色列表', 'url' => ['index']];
+$this->title = '管理组新增';
+$this->params['breadcrumbs'][] = ['label' => '管理组列表', 'url' => ['index']];
 echo $this->render('_form', ['model' => $model]);

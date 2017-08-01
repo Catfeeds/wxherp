@@ -21,7 +21,7 @@ class UserController extends _BackendController {
 
     public function actionCreate() {
         $model = new User();
-        $model->setScenario('system_register');
+        $model->setScenario('system_create');
         if (Yii::$app->request->isPost) {
             if ($this->commonCreate($model)) {
                 return $this->refresh();
@@ -33,7 +33,7 @@ class UserController extends _BackendController {
 
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $model->setScenario('update');
+        $model->setScenario('system_update');
         if (Yii::$app->request->isPost) {
             if ($this->commonUpdate($model)) {
                 return $this->refresh();

@@ -3790,41 +3790,57 @@ CREATE TABLE `t_system_route` (
   `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=234 DEFAULT CHARSET=utf8 COMMENT='权限路由表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限路由表';
 
 -- ----------------------------
 -- Records of t_system_route
 -- ----------------------------
-INSERT INTO `t_system_route` VALUES ('1', '系统', '/site/index', '', '0', '99', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('2', '组件', '/component/index', '', '0', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('1', '系统', '/site/index', '', '0', '9', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('2', '组件', '/component/index', '', '0', '8', '1', '1501565750', '2017-08-01 14:20:16');
+
+
 INSERT INTO `t_system_route` VALUES ('10', '系统管理', '', '', '1', '99', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('11', '路由管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+
+INSERT INTO `t_system_route` VALUES ('11', '用户管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('12', '用户组管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('13', '管理组管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('14', '路由管理', '', '', '1', '98', '1', '1501565750', '2017-08-01 14:20:16');
+
 INSERT INTO `t_system_route` VALUES ('20', '组件管理', '', '', '2', '99', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('21', '用户管理', '', '', '2', '98', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('100', '欢迎页面', '/site/index', '', '10', '99', '1', '1501565777', '2017-08-01 14:14:46');
-INSERT INTO `t_system_route` VALUES ('101', '我的密码修改', '/site/my-password', 'lock', '10', '98', '1', '1501565813', '2017-08-01 14:14:24');
-INSERT INTO `t_system_route` VALUES ('102', '系统设置', '/config/index', '', '10', '97', '1', '1501568318', '2017-08-01 14:18:38');
-INSERT INTO `t_system_route` VALUES ('110', '路由列表', '/system-route/index', '', '11', '99', '1', '1443409950', '2017-04-14 15:49:09');
-INSERT INTO `t_system_route` VALUES ('111', '路由新增', '/system-route/create', '', '11', '98', '1', '1436167704', '2017-08-01 14:34:51');
-INSERT INTO `t_system_route` VALUES ('112', '路由编辑', '/system-route/update', '', '11', '97', '2', '1436167646', '2016-04-10 23:00:40');
-INSERT INTO `t_system_route` VALUES ('113', '路由删除', '/system-route/delete', '', '11', '96', '2', '1436167681', '2016-04-10 23:00:55');
+
+
+
+INSERT INTO `t_system_route` VALUES ('100', '欢迎页面', '/site/index', '', '10', '9', '1', '1501565777', '2017-08-01 14:14:46');
+INSERT INTO `t_system_route` VALUES ('101', '密码修改', '/site/my-password', 'lock', '10', '8', '1', '1501565813', '2017-08-01 14:14:24');
+INSERT INTO `t_system_route` VALUES ('102', '系统设置', '/config/index', '', '10', '7', '1', '1501568318', '2017-08-01 14:18:38');
+
+
+INSERT INTO `t_system_route` VALUES ('110', '用户列表', '/user/user/index', '', '11', '9', '1', '1443409950', '2017-04-14 15:48:11');
+INSERT INTO `t_system_route` VALUES ('111', '用户新增', '/user/user/create', '', '11', '8', '1', '1436160659', '2017-01-26 19:51:20');
+INSERT INTO `t_system_route` VALUES ('112', '用户编辑', '/user/user/update', '', '11', '7', '2', '1436167171', '2017-01-26 19:51:31');
+INSERT INTO `t_system_route` VALUES ('113', '用户禁用', '/user/user/delete', '', '11', '6', '2', '1436167203', '2017-01-26 19:51:53');
+INSERT INTO `t_system_route` VALUES ('114', '用户查看', '/user/user/view', '', '11', '5', '2', '1436167203', '2017-01-26 16:40:44');
+INSERT INTO `t_system_route` VALUES ('115', '用户账户管理', '/user/user/amount', '', '11', '4', '2', '1436167171', '2017-01-26 19:51:31');
+INSERT INTO `t_system_route` VALUES ('116', '用户扣款', '/user/user/subtract', '', '11', '3', '2', '1436167203', '2017-01-26 19:51:53');
+INSERT INTO `t_system_route` VALUES ('117', '用户密码修改', '/user/user/update-password', '', '11', '2', '2', '1436167203', '2017-01-26 19:51:53');
+
+INSERT INTO `t_system_route` VALUES ('120', '用户组列表', '/user/user-group/index', '', '12', '9', '1', '1443409950', '2017-04-14 15:48:12');
+INSERT INTO `t_system_route` VALUES ('121', '用户组新增', '/user/user-group/create', '', '12', '8', '1', '1436160659', '2017-01-26 19:52:18');
+INSERT INTO `t_system_route` VALUES ('122', '用户组编辑', '/user/user-group/update', '', '12', '7', '2', '1436167171', '2017-01-26 19:52:30');
+INSERT INTO `t_system_route` VALUES ('123', '用户组禁用', '/user/user-group/delete', '', '12', '6', '2', '1436167203', '2017-01-26 19:52:49');
+
+INSERT INTO `t_system_route` VALUES ('130', '管理组列表', '/user/system-group/index', 'briefcase', '13', '9', '1', '1431327174', '2017-04-19 10:59:00');
+INSERT INTO `t_system_route` VALUES ('131', '管理组新增', '/user/system-group/create', '', '13', '8', '1', '1436160847', '2017-01-26 16:40:44');
+INSERT INTO `t_system_route` VALUES ('132', '管理组编辑', '/user/system-group/update', '', '13', '7', '2', '1436167503', '2017-01-26 16:40:44');
+INSERT INTO `t_system_route` VALUES ('133', '管理组删除', '/user/system-group/delete', '', '13', '6', '2', '1436167524', '2017-01-26 16:40:44');
+
+INSERT INTO `t_system_route` VALUES ('140', '路由列表', '/system-route/index', '', '14', '9', '1', '1443409950', '2017-04-14 15:49:09');
+INSERT INTO `t_system_route` VALUES ('141', '路由新增', '/system-route/create', '', '14', '8', '1', '1436167704', '2017-08-01 14:34:51');
+INSERT INTO `t_system_route` VALUES ('142', '路由编辑', '/system-route/update', '', '14', '7', '2', '1436167646', '2016-04-10 23:00:40');
+INSERT INTO `t_system_route` VALUES ('143', '路由删除', '/system-route/delete', '', '14', '6', '2', '1436167681', '2016-04-10 23:00:55');
+
+
 INSERT INTO `t_system_route` VALUES ('200', '组件设置', '/component/index', '', '20', '9', '1', '1501565777', '2017-08-01 14:14:46');
-INSERT INTO `t_system_route` VALUES ('210', '用户列表', 'user/user/index', '', '21', '99', '1', '1443409950', '2017-04-14 15:48:11');
-INSERT INTO `t_system_route` VALUES ('211', '用户新增', 'user/user/create', '', '21', '98', '2', '1436160659', '2017-01-26 19:51:20');
-INSERT INTO `t_system_route` VALUES ('212', '用户编辑', 'user/user/update', '', '21', '97', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('213', '用户禁用', 'user/user/delete', '', '21', '96', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('214', '用户查看', 'user/user/view', '', '21', '95', '2', '1436167203', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('215', '用户账户管理', 'user/user/amount', '', '21', '94', '2', '1436167171', '2017-01-26 19:51:31');
-INSERT INTO `t_system_route` VALUES ('216', '用户扣款', 'user/user/subtract', '', '21', '93', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('217', '用户密码修改', 'user/user/update-password', '', '21', '92', '2', '1436167203', '2017-01-26 19:51:53');
-INSERT INTO `t_system_route` VALUES ('220', '用户组列表', 'user/user-group/index', '', '21', '89', '1', '1443409950', '2017-04-14 15:48:12');
-INSERT INTO `t_system_route` VALUES ('221', '用户组新增', 'user/user-group/create', '', '21', '88', '2', '1436160659', '2017-01-26 19:52:18');
-INSERT INTO `t_system_route` VALUES ('222', '用户组编辑', 'user/user-group/update', '', '21', '87', '2', '1436167171', '2017-01-26 19:52:30');
-INSERT INTO `t_system_route` VALUES ('223', '用户组禁用', 'user/user-group/delete', '', '21', '86', '2', '1436167203', '2017-01-26 19:52:49');
-INSERT INTO `t_system_route` VALUES ('230', '管理组列表', 'user/system-group/index', 'briefcase', '21', '79', '1', '1431327174', '2017-04-19 10:59:00');
-INSERT INTO `t_system_route` VALUES ('231', '管理组新增', 'user/system-group/create', '', '21', '78', '2', '1436160847', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('232', '管理组编辑', 'user/system-group/update', '', '21', '77', '2', '1436167503', '2017-01-26 16:40:44');
-INSERT INTO `t_system_route` VALUES ('233', '管理组删除', 'user/system-group/delete', '', '21', '76', '2', '1436167524', '2017-01-26 16:40:44');
 
 -- ----------------------------
 -- Table structure for `t_upload`

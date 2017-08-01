@@ -45,4 +45,25 @@ class SystemGroupNode extends _CommonModel {
         ];
     }
 
+    /**
+     * 新增或编辑
+     * @param type $group_id
+     * @param type $route_list
+     */
+    public static function addEdit($group_id, $route_list) {
+        static::deleteAll(['c_group_id' => $group_id]);
+        foreach ($route_list as $route_id) {
+            self::add($group_id, (int) $route_id);
+        }
+    }
+
+    private static function add($group_id, $route_id) {
+        $model = new SystemGroupNode();
+        $model->c_group_id = $group_id;
+        $model->c_route_id = $route_id;
+        $model->c_status = self::STATUS_YES;
+        $model->c_create_time = time();
+        $model->save();
+    }
+
 }
