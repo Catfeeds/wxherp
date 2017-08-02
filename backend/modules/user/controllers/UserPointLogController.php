@@ -3,7 +3,7 @@
 namespace backend\modules\user\controllers;
 
 use Yii;
-use backend\forms\UserPointLogSearch;
+use backend\modules\user\forms\UserPointLogSearch;
 use backend\controllers\_BackendController;
 
 class UserPointLogController extends _BackendController {

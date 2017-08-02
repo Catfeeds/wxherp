@@ -18,11 +18,11 @@ class _BackendController extends _CommonController {
      */
     public function beforeAction($action) {
         if (parent::beforeAction($action)) {
-            $route = Yii::$app->controller->getRoute();
+            $route = '/' . Yii::$app->controller->getRoute(); // 加上/以便路由配比
             if (CheckRule::checkRole($route)) {
                 return true;
             } else {
-                CheckRule::isLogin() ? Util::alert(Yii::t('common', Common::SYSTEM_PERMISSION_DENIED)) : $this->redirect(Url::to(['site/login']));
+                CheckRule::isLogin() ? Util::alert(Yii::t('common', Common::SYSTEM_PERMISSION_DENIED)) : $this->redirect(Url::to(['/site/login']));
             }
         }
         return false;

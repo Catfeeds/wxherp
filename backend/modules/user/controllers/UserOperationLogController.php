@@ -3,7 +3,7 @@
 namespace backend\modules\user\controllers;
 
 use Yii;
-use backend\forms\UserOperationLogSearch;
+use backend\modules\user\forms\UserOperationLogSearch;
 use backend\controllers\_BackendController;
 
 class UserOperationLogController extends _BackendController {

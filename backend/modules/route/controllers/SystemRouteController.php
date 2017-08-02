@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\controllers;
+namespace backend\modules\route\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
 use common\models\SystemRoute;
-use backend\forms\SystemRouteSearch;
+use backend\modules\route\forms\SystemRouteSearch;
 
 class SystemRouteController extends _BackendController {
 

@@ -1,12 +1,11 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\route\forms;
 
-use Yii;
 use yii\data\ActiveDataProvider;
-use common\models\Areas;
+use common\models\SystemRoute;
 
-class AreasSearch extends Areas {
+class SystemRouteSearch extends SystemRoute {
 
     public $pagesize = 10;
     public $keyword;
@@ -20,14 +19,15 @@ class AreasSearch extends Areas {
     }
 
     public function search($params) {
-        $parent_id = (int) Yii::$app->request->get('parent_id');
-        $query = Areas::find();
+        $query = SystemRoute::find();
 
         $provider_params = [
             'query' => $query,
-            'sort' => ['defaultOrder' => ['c_sort' => SORT_ASC, 'c_id' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['c_sort' => SORT_DESC, 'c_id' => SORT_DESC]],
             'pagination' => ['pageSize' => $this->pagesize],
         ];
+
+        $parent_id = isset($params['parent_id']) ? (int) $params['parent_id'] : 0;
 
         if ($this->load($params) && $this->validate()) {
 
@@ -38,7 +38,7 @@ class AreasSearch extends Areas {
                     $query->andWhere([
                         'or',
                         ['like', 'c_title', $this->keyword],
-                        ['like', 'c_postcode', $this->keyword]
+                        ['like', 'c_route', $this->keyword]
                     ]);
                 }
 

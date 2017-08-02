@@ -1,25 +1,25 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\user\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\MarketTicket;
+use common\models\UserPointLog;
 
-class MarketTicketSearch extends MarketTicket {
+class UserPointLogSearch extends UserPointLog {
 
     public $pagesize = 10;
     public $keyword;
-    public $status;
+    public $type;
 
     public function rules() {
         return [
             ['keyword', 'filter', 'filter' => 'trim'],
-            [['pagesize', 'status'], 'integer'],
+            [['pagesize', 'type'], 'integer'],
         ];
     }
 
     public function search($params) {
-        $query = MarketTicket::find();
+        $query = UserPointLog::find();
 
         $provider_params = [
             'query' => $query,
@@ -30,15 +30,20 @@ class MarketTicketSearch extends MarketTicket {
         if ($this->load($params) && $this->validate()) {
 
             if ($this->keyword) {
-                $query->andWhere([
-                    'or',
-                    ['like', 'c_title', $this->keyword],
-                    ['like', 'c_note', $this->keyword]
-                ]);
+                $keyword = $this->keyword;
+                $user = function ($query) use($keyword) {
+                    $query->andWhere([
+                        'or',
+                        ['like', 'c_user_name', $keyword],
+                        ['like', 'c_mobile', $keyword],
+                        ['like', 'c_email', $keyword]
+                    ]);
+                };
+                $query->innerJoinWith(['user' => $user]);
             }
 
-            if ($this->status) {
-                $query->andWhere(['c_status' => $this->status]);
+            if ($this->type) {
+                $query->andWhere(['c_type' => $this->type]);
             }
 
             $provider_params['pagination']['pageSize'] = $this->pagesize;

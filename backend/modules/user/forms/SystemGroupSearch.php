@@ -1,27 +1,25 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\user\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\AdManage;
+use common\models\SystemGroup;
 
-class AdManageSearch extends AdManage {
+class SystemGroupSearch extends SystemGroup {
 
     public $pagesize = 10;
     public $keyword;
     public $status;
-    public $type;
-    public $position_id;
 
     public function rules() {
         return [
             ['keyword', 'filter', 'filter' => 'trim'],
-            [['pagesize', 'status', 'type', 'position_id'], 'integer'],
+            [['pagesize', 'status'], 'integer'],
         ];
     }
 
     public function search($params) {
-        $query = AdManage::find()->with('adPosition');
+        $query = SystemGroup::find();
 
         $provider_params = [
             'query' => $query,
@@ -34,21 +32,12 @@ class AdManageSearch extends AdManage {
             if ($this->keyword) {
                 $query->andWhere([
                     'or',
-                    ['like', 'c_title', $this->keyword],
-                    ['like', 'c_url', $this->keyword]
+                    ['like', 'c_title', $this->keyword]
                 ]);
             }
 
             if ($this->status) {
                 $query->andWhere(['c_status' => $this->status]);
-            }
-
-            if ($this->type) {
-                $query->andWhere(['c_type' => $this->type]);
-            }
-
-            if ($this->position_id) {
-                $query->andWhere(['c_position_id' => $this->position_id]);
             }
 
             $provider_params['pagination']['pageSize'] = $this->pagesize;

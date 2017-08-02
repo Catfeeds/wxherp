@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\ad\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\RefundmentDoc;
+use common\models\AdPosition;
 
-class RefundmentDocSearch extends RefundmentDoc {
+class AdPositionSearch extends AdPosition {
 
     public $pagesize = 10;
     public $keyword;
@@ -19,11 +19,11 @@ class RefundmentDocSearch extends RefundmentDoc {
     }
 
     public function search($params) {
-        $query = RefundmentDoc::find();
+        $query = AdPosition::find();
 
         $provider_params = [
             'query' => $query,
-            'sort' => ['defaultOrder' => ['c_id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['c_sort' => SORT_DESC, 'c_id' => SORT_DESC]],
             'pagination' => ['pageSize' => $this->pagesize],
         ];
 
@@ -32,9 +32,7 @@ class RefundmentDocSearch extends RefundmentDoc {
             if ($this->keyword) {
                 $query->andWhere([
                     'or',
-                    ['like', 'c_order_no', $this->keyword],
-                    ['like', 'c_admin_name', $this->keyword],
-                    ['like', 'c_user_name', $this->keyword],
+                    ['like', 'c_title', $this->keyword],
                     ['like', 'c_note', $this->keyword]
                 ]);
             }

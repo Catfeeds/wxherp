@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\user\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\Feedback;
+use common\models\AdminRole;
 
-class FeedbackSearch extends Feedback {
+class UserGroupSearch extends AdminRole {
 
     public $pagesize = 10;
     public $keyword;
@@ -19,11 +19,11 @@ class FeedbackSearch extends Feedback {
     }
 
     public function search($params) {
-        $query = Feedback::find();
+        $query = AdminRole::find();
 
         $provider_params = [
             'query' => $query,
-            'sort' => ['defaultOrder' => ['c_id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['c_sort' => SORT_DESC, 'c_id' => SORT_DESC]],
             'pagination' => ['pageSize' => $this->pagesize],
         ];
 
@@ -32,14 +32,7 @@ class FeedbackSearch extends Feedback {
             if ($this->keyword) {
                 $query->andWhere([
                     'or',
-                    ['like', 'c_mobile', $this->keyword],
-                    ['like', 'c_user_name', $this->keyword],
-                    ['like', 'c_full_name', $this->keyword],
-                    ['like', 'c_email', $this->keyword],
-                    ['like', 'c_phone', $this->keyword],
-                    ['like', 'c_title', $this->keyword],
-                    ['like', 'c_note', $this->keyword],
-                    ['like', 'c_admin_name', $this->keyword]
+                    ['like', 'c_title', $this->keyword]
                 ]);
             }
 

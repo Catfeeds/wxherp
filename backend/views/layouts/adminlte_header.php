@@ -23,10 +23,10 @@ use yii\helpers\Url;
                                 <?= isset(Yii::$app->user->identity->c_user_name) ? Yii::$app->user->identity->c_user_name : '游客'; ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="<?= Url::to(['site/my-password']) ?>" data-method="post"><i class="fa fa-lock"></i> 密码修改</a></li>
-                                <li><a href="<?= Url::to(['site/clear-cache']); ?>"><i class="fa fa-trash"></i> 清空缓存</a></li>
+                                <li><a href="<?= Url::to(['/site/my-password']) ?>" data-method="post"><i class="fa fa-lock"></i> 密码修改</a></li>
+                                <li><a href="<?= Url::to(['/site/clear-cache']); ?>"><i class="fa fa-trash"></i> 清空缓存</a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?= Url::to(['site/logout']) ?>" data-method="post"><i class="fa fa-power-off"></i> 安全退出</a></li>
+                                <li><a href="<?= Url::to(['/site/logout']) ?>" data-method="post"><i class="fa fa-power-off"></i> 安全退出</a></li>
                             </ul>
                         </li>
                     </ul>

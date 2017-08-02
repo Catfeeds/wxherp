@@ -6,8 +6,8 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use common\models\User;
 use common\models\UserAcount;
-use backend\forms\UserAcountForm;
-use backend\forms\UserSearch;
+use backend\modules\user\forms\UserAcountForm;
+use backend\modules\user\forms\UserSearch;
 use backend\controllers\_BackendController;
 
 class UserController extends _BackendController {

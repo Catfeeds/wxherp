@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\user\forms;
 
 use yii\data\ActiveDataProvider;
-use common\models\UserPointLog;
+use common\models\UserAcountLog;
 
-class UserPointLogSearch extends UserPointLog {
+class UserAcountLogSearch extends UserAcountLog {
 
     public $pagesize = 10;
     public $keyword;
@@ -14,12 +14,13 @@ class UserPointLogSearch extends UserPointLog {
     public function rules() {
         return [
             ['keyword', 'filter', 'filter' => 'trim'],
+            
             [['pagesize', 'type'], 'integer'],
         ];
     }
 
     public function search($params) {
-        $query = UserPointLog::find();
+        $query = UserAcountLog::find();
 
         $provider_params = [
             'query' => $query,

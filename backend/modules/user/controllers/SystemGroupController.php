@@ -5,7 +5,7 @@ namespace backend\modules\user\controllers;
 use Yii;
 use yii\web\NotFoundHttpException;
 use common\models\SystemGroup;
-use backend\forms\SystemGroupSearch;
+use backend\modules\user\forms\SystemGroupSearch;
 use backend\controllers\_BackendController;
 
 class SystemGroupController extends _BackendController {

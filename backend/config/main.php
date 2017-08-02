@@ -16,7 +16,7 @@ $config = [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_backend_identity', 'httpOnly' => true],
-            'loginUrl' => ['site/login'],
+            'loginUrl' => ['/site/login'],
         ],
         'session' => [
             'name' => '_backend_session',
@@ -35,14 +35,17 @@ $config = [
         'article' => [
             'class' => 'backend\modules\article\Module',
         ],
-        'adManage' => [
-            'class' => 'backend\modules\adManage\Module',
+        'ad' => [
+            'class' => 'backend\modules\ad\Module',
         ],
         'notity' => [
             'class' => 'backend\modules\notity\Module',
         ],
         'areas' => [
             'class' => 'backend\modules\areas\Module',
+        ],
+        'route' => [
+            'class' => 'backend\modules\route\Module',
         ],
         'payment' => [
             'class' => 'backend\modules\payment\Module',

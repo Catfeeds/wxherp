@@ -23,7 +23,7 @@ $create_type = isset($get['UserOperationLogSearch']['create_type']) ? $get['User
             <?= $form->field($searchModel, 'pagesize')->dropDownList(UserOperationLog::getPageSize(), ['prompt' => '选择页码', 'value' => $pagesize]) ?>
             <?= $form->field($searchModel, 'status')->dropDownList(UserOperationLog::getStatusText(), ['prompt' => '选择状态', 'value' => $status]) ?>
             <?= $form->field($searchModel, 'type')->dropDownList(UserOperationLog::getOperationType(), ['prompt' => '选择类型', 'value' => $type]) ?>
-            <?= $form->field($searchModel, 'create_type')->dropDownList(UserOperationLog::getCreateType(), ['prompt' => '选择来源类型', 'value' => $type]) ?>
+            <?= $form->field($searchModel, 'create_type')->dropDownList(UserOperationLog::getCreateType(), ['prompt' => '选择来源类型', 'value' => $create_type]) ?>
             <?= $form->field($searchModel, 'keyword')->textInput(['maxlength' => true, 'placeholder' => '请输入关键词', 'value' => $keyword]) ?>
             <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
@@ -70,13 +70,6 @@ $create_type = isset($get['UserOperationLogSearch']['create_type']) ? $get['User
                     }
                 ],
                 [
-                    'attribute' => 'c_status',
-                    'format' => 'raw',
-                    'value' => function($model) {
-                        return UserOperationLog::getStatusIcon($model->c_status);
-                    },
-                ],
-                [
                     'attribute' => 'c_data_before',
                     'format' => 'raw',
                     'value' => function($model) {
@@ -89,6 +82,13 @@ $create_type = isset($get['UserOperationLogSearch']['create_type']) ? $get['User
                     'value' => function($model) {
                         return $model->c_data_add ? '<span title="' . htmlentities(print_r(json_decode($model->c_data_add, true), true)) . '">移动鼠标查看</span>' : '--';
                     }
+                ],
+                [
+                    'attribute' => 'c_status',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return UserOperationLog::getStatusIcon($model->c_status);
+                    },
                 ],
                 [
                     'attribute' => 'c_create_time',
