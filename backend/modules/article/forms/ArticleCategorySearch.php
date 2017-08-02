@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\articlec\forms;
 
 use yii\data\ActiveDataProvider;
 use common\models\ArticleCategory;

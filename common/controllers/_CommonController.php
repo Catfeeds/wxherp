@@ -311,7 +311,7 @@ class _CommonController extends Controller {
                         $data['c_object_id'] = $object_id;
                         $data['c_object_type'] = $object_type;
                         $data['c_create_type'] = $create_type;
-                        $data['c_type'] = 1; //文件类型 1图片 2附件
+                        $data['c_type'] = Upload::UPLOAD_PICTURE;
                         Upload::add($data);
                         self::jsonEcho(['error' => 0, 'thumb' => Upload::getThumb($file_url), 'fileurl' => $file_url]);
                     }
@@ -368,8 +368,8 @@ class _CommonController extends Controller {
                         $data['c_extension'] = $model->file->extension;
                         $data['c_object_id'] = $object_id;
                         $data['c_object_type'] = $object_type;
-                        $data['c_create_type'] = $create_type; //用户类型 1后台 2前台
-                        $data['c_type'] = 2; //文件类型 1图片 2附件
+                        $data['c_create_type'] = $create_type;
+                        $data['c_type'] = Upload::UPLOAD_FILE;
                         Upload::add($data);
                         //thumb 缩略图地址 http://file.domain.com/thumb/200_200/2017/02/10/13/f944ff5cffc05852881c6a92f6b8e826.png
                         //fileurl 数据库保存地址 2017/02/10/13/f944ff5cffc05852881c6a92f6b8e826.png

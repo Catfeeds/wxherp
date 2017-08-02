@@ -3,6 +3,7 @@
 function multipleUpload(param) {
     var data = getCsrf();
     data.object_id = param.objectId;
+    data.object_type = param.objectType;
     var config = {
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: 'btn-select-' + param.name,
@@ -78,6 +79,7 @@ function multipleUpload(param) {
 function singleUpload(param) {
     var data = getCsrf();
     data.object_id = param.objectId;
+    data.object_type = param.objectType;
     var config = {
         runtimes: 'html5,flash,silverlight,html4',
         browse_button: 'btn-select-' + param.name,

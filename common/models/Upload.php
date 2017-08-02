@@ -61,9 +61,9 @@ class Upload extends _CommonModel {
             'c_path' => '上传路径',
             'c_extension' => '扩展名',
             'c_object_type' => '项目类型',
-            'c_type' => '附件类型 1图片 2附件',
+            'c_type' => '附件类型', // 1图片 2附件
             'c_create_type' => '来源类型', // 1PC 2H5 3IOS 4Andriod 8其他 9平台
-            'c_status' => '状态 2未使用 1正常',
+            'c_status' => '状态', // 2未使用 1正常
             'c_width' => '图片长度',
             'c_height' => '图片高度',
             'c_object_id' => '对象ID',
@@ -265,12 +265,12 @@ class Upload extends _CommonModel {
     /**
      * 更新上传文件
      * @param bool $is_insert 是否新增
-     * @param int $id 当前操作的ID
+     * @param int $object_id 对象ID
      * @param int $type 上传类型 1图片 2附件
      * @param string $field_name 自定义字段名
      * @param string $data 自定义字图片数据 
      */
-    public static function updateFile($is_insert, $id, $type = self::UPLOAD_PICTURE, $field_name = null, $data = null) {
+    public static function updateFile($is_insert, $object_id, $type = self::UPLOAD_PICTURE, $field_name = null, $data = null) {
         if ($data) {
             $file_list = $data;
             $old_file_list = [];
@@ -290,13 +290,13 @@ class Upload extends _CommonModel {
         $array_old = $old_file_list ? explode(',', $old_file_list) : []; //原始图片路径数组 新增时为空 编辑时可能有图片路径
         //新增
         if ($is_insert) {
-            return Upload::updateByPath($id, $array); //更新上传图片为已上传
+            return Upload::updateByPath($object_id, $array); //更新上传图片为已上传
         } else {
             $diff_array = array_diff($array, $array_old); //本次上传路径的差集
             $old_diff_array = array_diff($array_old, $array); //原始图片路径的差集
             //如果本次上传路径有差集，需要更新
             if ($file_list && $diff_array) {
-                if (!Upload::updateByPath($id, $diff_array)) {
+                if (!Upload::updateByPath($object_id, $diff_array)) {
                     return false;
                 }
             }
@@ -308,6 +308,21 @@ class Upload extends _CommonModel {
             }
         }
         return true;
+    }
+
+    /**
+     * 按对象的类型和ID删除
+     * @param type $object_type
+     * @param type $object_id
+     */
+    public static function deleteByCreateType($object_type, $object_id) {
+        $data = static::findAll(['c_object_type' => $object_type, 'c_object_id' => $object_id]);
+        if ($data) {
+            foreach ($data as $model) {
+                self::deleteThumb($model->c_path);
+                $data->delete();
+            }
+        }
     }
 
     /**

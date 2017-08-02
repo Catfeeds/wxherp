@@ -2,6 +2,9 @@
 
 namespace common\models;
 
+use Yii;
+use common\messages\Common;
+
 /**
  * This is the model class for table "{{%article_category}}".
  *
@@ -32,7 +35,11 @@ class ArticleCategory extends _CommonModel {
      */
     public function rules() {
         return [
-            [['c_title'], 'required'],
+            /**
+             * 过滤左右空格
+             */
+            [['c_title', 'c_short', 'c_seo', 'c_keyword', 'c_description', 'c_sort'], 'filter', 'filter' => 'trim'],
+            [['c_title', 'c_status', 'c_sort', 'c_parent_id'], 'required'],
             [['c_status', 'c_parent_id', 'c_sort', 'c_create_time'], 'integer'],
             [['c_update_time'], 'safe'],
             [['c_title'], 'string', 'max' => 50],
@@ -53,12 +60,57 @@ class ArticleCategory extends _CommonModel {
             'c_keyword' => '关键词',
             'c_description' => '描述',
             'c_picture' => '缩略图',
-            'c_status' => '状态 1正常 2无效',
+            'c_status' => '状态', // 1正常 2无效
             'c_parent_id' => '父级ID',
             'c_sort' => '排序',
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME); //本次新增图片路径
+            if (!$insert) {
+                if ($this->c_parent_id == $this->c_id) { //不可以选择自己为自己的父级
+                    $this->addError('c_parent_id', Yii::t('common', Common::COMMON_PARENT_ID));
+                    return false;
+                }
+                if (static::checkSub($this->c_id, $this->c_parent_id)) {//不可以选择自己子类为父级菜单
+                    $this->addError('c_parent_id', Yii::t('common', Common::COMMON_SUB_ID));
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 保存之后处理相关数据
+     * @param type $insert
+     * @param type $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        //图片处理
+        Upload::updateFile($insert, $this->c_id);
+    }
+
+    /**
+     * 删除之前处理相关数据
+     */
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            if (static::getSub($this->c_id)) {//请先删除本条记录的子类后再删除
+                $this->addError('c_parent_id', Yii::t('common', Common::COMMON_SUB_DELETE_FAIL));
+                return false;
+            } else {
+                Upload::deleteFile($this->c_picture, true);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

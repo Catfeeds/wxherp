@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use Yii;
+
 /**
  * This is the model class for table "{{%article}}".
  *
@@ -31,6 +33,8 @@ namespace common\models;
  * @property string $c_update_time
  */
 class Article extends _CommonModel {
+
+    public $album;
 
     /**
      * @inheritdoc
@@ -69,9 +73,9 @@ class Article extends _CommonModel {
             'c_description' => '描述',
             'c_author' => '作者',
             'c_source_url' => '来源网址',
-            'c_is_delete' => '是否删除 1已删除 2正常',
-            'c_source_type' => '来源类型 1原创 2转载',
-            'c_status' => '状态 1正常 2无效',
+            'c_is_delete' => '是否删除', // 1已删除 2正常
+            'c_source_type' => '来源类型', // 1原创 2转载
+            'c_status' => '状态', // 1正常 2无效
             'c_category_id' => '文章类别',
             'c_favorite_count' => '收藏数量',
             'c_comment_count' => '评论数量',
@@ -83,6 +87,61 @@ class Article extends _CommonModel {
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public static function getSourceType($type = null) {
+        $array = [1 => '原创', 2 => '转载'];
+        return self::getCommonStatus($array, $type);
+    }
+
+    public function getArticleText() {
+        return $this->hasOne(ArticleText::className(), ['c_article_id' => 'c_id']);
+    }
+
+    public function getArticleCategory() {
+        return $this->hasOne(ArticleCategory::className(), ['c_id' => 'c_category_id']);
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            //缩略图
+            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if ($insert) {
+                $this->c_user_id = Yii::$app->user->id;
+                $this->c_user_name = Yii::$app->user->identity->c_user_name;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 保存之后处理相关数据
+     * @param type $insert
+     * @param type $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        //相册
+        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::ALBUM_FILED_NAME);
+        //缩略图
+        Upload::updateFile($insert, $this->c_id);
+        //正文
+        ArticleText::addEdit($this->c_id, Yii::$app->request->post(self::EDITOR_FIELD_NAME));
+    }
+
+    /**
+     * 删除之前处理相关数据
+     */
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            //删除缩略图与相册
+            Upload::deleteByCreateType(self::OBJECT_ARTICLE, $this->c_id);
+            //删除正文
+            ArticleText::deleteAll(['c_object_id' => $this->c_id]);
+            return true;
+        }
+        return false;
     }
 
 }

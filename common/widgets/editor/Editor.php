@@ -7,19 +7,21 @@ use yii\base\Widget;
 use yii\helpers\Url;
 use common\widgets\editor\EditorAsset;
 use common\extensions\CheckRule;
+use common\models\_CommonModel;
 
 class Editor extends Widget {
 
     public $id = ''; //控件ID
-    public $name = 'editor_content'; //控件name
+    public $name = ''; //控件name
     public $value = ''; //控件默认值
     public $object_id = 0; //关联ID
     public $height = '300px'; //editor高度
-    public $upload_url = 'uploader/file'; //上传附件路由
+    public $upload_url = '/uploader/file'; //上传附件路由
     public $user_type = 1; //用户类型 1后台 2前台 前台需要再小部件写入 user_type=2
 
     public function run() {
-        if ($this->name && empty($this->id)) {
+        $this->name = $this->name ? $this->name : _CommonModel::EDITOR_FIELD_NAME;
+        if (empty($this->id)) {
             $this->id = $this->name;
         }
 

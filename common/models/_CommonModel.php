@@ -9,13 +9,18 @@ use common\extensions\Tree;
 
 class _CommonModel extends \yii\db\ActiveRecord {
 
+    //组件对象类型
+    const OBJECT_ARTICLE = 1; // 文章组件
     //上传控件字段名
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';
     const UPLOAD_FILE_FIELD_NAME = 'file';
     //接收上传内容默认字段名
     const PICTURE_FIELD_NAME = 'get_picture';
+    const ALBUM_FILED_NAME = 'get_album';
     const FILE_FIELD_NAME = 'get_file';
-    //KEY状态
+    //编辑器默认字段名
+    const EDITOR_FIELD_NAME = 'editor_content';
+    //常用状态
     const KEY_STATUS_NORMAL_INVALID = 1; // 1正常 2无效   
     const KEY_STATUS_YES_NO = 2; // 1是 2否
     const KEY_STATUS_OPEN_CLOSE = 2; // 1开启 2关闭

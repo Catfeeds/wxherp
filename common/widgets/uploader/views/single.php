@@ -18,7 +18,7 @@ $bundle = UploaderAsset::register($this);
     <a class="btn-select" id="btn-select-<?= $name ?>" style="<?= $value ? 'display:none' : '' ?>"><span>+</span></a> 
 </div>
 <?php
-$param = json_encode(['name' => $name, 'extensions' => $extensions, 'more' => $more, 'isFile' => $is_file, 'objectId' => $object_id, 'uploadUrl' => $upload_url, 'deleteUrl' => $delete_url, 'baseUrl' => $bundle->baseUrl]);
+$param = json_encode(['name' => $name, 'extensions' => $extensions, 'more' => $more, 'isFile' => $is_file, 'objectId' => $object_id, 'objectType' => $object_type, 'uploadUrl' => $upload_url, 'deleteUrl' => $delete_url, 'baseUrl' => $bundle->baseUrl]);
 $js = <<<EOT
     window.$name = $param;
     singleUpload($param);
