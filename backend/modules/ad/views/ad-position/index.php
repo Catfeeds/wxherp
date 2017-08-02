@@ -27,7 +27,7 @@ $status = isset($get['AdPositionSearch']['status']) ? $get['AdPositionSearch']['
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
             <?php SearchForm::end(); ?>
         </div>
-        <?php if (CheckRule::checkRole('ad-position/create')) { ?>
+        <?php if (CheckRule::checkRole('/ad/ad-position/create')) { ?>
             <div class="pull-right">
                 <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
             </div>
@@ -90,8 +90,8 @@ $status = isset($get['AdPositionSearch']['status']) ? $get['AdPositionSearch']['
                     'header' => '管理操作',
                     'template' => '<span class="pr20">{update}</span><span class="pr20">{delete}</span>',
                     'visibleButtons' => [
-                        'update' => CheckRule::checkRole('ad-position/update'),
-                        'delete' => CheckRule::checkRole('ad-position/delete'),
+                        'update' => CheckRule::checkRole('/ad/ad-position/update'),
+                        'delete' => CheckRule::checkRole('/ad/ad-position/delete'),
                     ]
                 ],
             ],

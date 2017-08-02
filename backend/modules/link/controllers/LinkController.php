@@ -1,24 +1,24 @@
 <?php
 
-namespace backend\modules\ad\controllers;
+namespace backend\modules\link\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use common\models\AdManage;
-use backend\modules\ad\forms\AdManageSearch;
+use common\models\Link;
+use backend\modules\link\forms\LinkSearch;
 use backend\controllers\_BackendController;
 
-class AdManageController extends _BackendController {
+class LinkController extends _BackendController {
 
     public function actionIndex() {
-        $searchModel = new AdManageSearch();
+        $searchModel = new LinkSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
     public function actionCreate() {
-        $model = new AdManage();
+        $model = new Link();
         if (Yii::$app->request->isPost) {
             if ($this->commonCreate($model)) {
                 return $this->refresh();
@@ -41,14 +41,14 @@ class AdManageController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            if ($this->commonDelete(AdManage::className(), $id)) {
+            if ($this->commonDelete(Link::className(), $id)) {
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
     }
 
     protected function findModel($id) {
-        if (($model = AdManage::findOne($id)) !== null) {
+        if (($model = Link::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

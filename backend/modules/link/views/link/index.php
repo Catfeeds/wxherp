@@ -5,34 +5,31 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use common\extensions\Util;
 use common\extensions\CheckRule;
-use common\models\AdPosition;
-use common\models\AdManage;
+use common\models\Link;
 use common\models\Upload;
 use backend\widgets\GridView;
 use backend\widgets\SearchForm;
 
-$this->title = '广告列表';
+$this->title = '链接列表';
 $get = Yii::$app->request->get();
-$pagesize = isset($get['AdManageSearch']['pagesize']) ? $get['AdManageSearch']['pagesize'] : '';
-$keyword = isset($get['AdManageSearch']['keyword']) ? trim($get['AdManageSearch']['keyword']) : '';
-$status = isset($get['AdManageSearch']['status']) ? $get['AdManageSearch']['status'] : '';
-$type = isset($get['AdManageSearch']['type']) ? $get['AdManageSearch']['type'] : '';
-$position_id = isset($get['AdManageSearch']['position_id']) ? $get['AdManageSearch']['position_id'] : '';
+$pagesize = isset($get['LinkSearch']['pagesize']) ? $get['LinkSearch']['pagesize'] : '';
+$keyword = isset($get['LinkSearch']['keyword']) ? trim($get['LinkSearch']['keyword']) : '';
+$status = isset($get['LinkSearch']['status']) ? $get['LinkSearch']['status'] : '';
+$type = isset($get['LinkSearch']['type']) ? $get['LinkSearch']['type'] : '';
 ?>
 <div class="box box-primary">
     <div class="box-header">
         <div class="pull-left">
             <?php $form = SearchForm::begin(); ?>
-            <?= $form->field($searchModel, 'pagesize')->dropDownList(AdManage::getPageSize(), ['prompt' => '选择页码', 'value' => $pagesize]) ?>
-            <?= $form->field($searchModel, 'status')->dropDownList(AdManage::getStatusText(), ['prompt' => '选择状态', 'value' => $status]) ?>
-            <?= $form->field($searchModel, 'type')->dropDownList(AdManage::getAdType(), ['prompt' => '选择类型', 'value' => $type]) ?>
-            <?= $form->field($searchModel, 'position_id')->dropDownList(AdPosition::getKeyValueCache(), ['prompt' => '选择广告位', 'value' => $position_id]) ?>
+            <?= $form->field($searchModel, 'pagesize')->dropDownList(Link::getPageSize(), ['prompt' => '选择页码', 'value' => $pagesize]) ?>
+            <?= $form->field($searchModel, 'status')->dropDownList(Link::getLinkStatus(), ['prompt' => '选择状态', 'value' => $status]) ?>
+            <?= $form->field($searchModel, 'type')->dropDownList(Link::getType(), ['prompt' => '选择类型', 'value' => $type]) ?>
             <?= $form->field($searchModel, 'keyword')->textInput(['maxlength' => true, 'placeholder' => '请输入关键词', 'value' => $keyword]) ?>
             <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
             <?php SearchForm::end(); ?>
         </div>
-        <?php if (CheckRule::checkRole('/ad/ad-manage/create')) { ?>
+        <?php if (CheckRule::checkRole('/link/link/create')) { ?>
             <div class="pull-right">
                 <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
             </div>
@@ -64,33 +61,24 @@ $position_id = isset($get['AdManageSearch']['position_id']) ? $get['AdManageSear
                     }
                 ],
                 [
-                    'attribute' => 'c_content',
+                    'attribute' => 'c_picture',
                     'format' => ['image', ['height' => 50]],
                     'value' => function ($model) {
-                if ($model->c_type == 2) {
-                    Upload::getThumb($model->c_content);
-                }
+                return Upload::getThumb($model->c_picture);
             }
-                ],
-                [
-                    'attribute' => 'c_position_id',
-                    'format' => 'raw',
-                    'value' => function($model) {
-                        return isset($model->adPosition->c_title) ? $model->adPosition->c_title : '--';
-                    },
                 ],
                 [
                     'attribute' => 'c_type',
                     'format' => 'raw',
                     'value' => function($model) {
-                        return AdManage::getAdType($model->c_type);
+                        return Link::getType($model->c_type);
                     },
                 ],
                 [
                     'attribute' => 'c_status',
                     'format' => 'raw',
                     'value' => function($model) {
-                        return AdManage::getStatusIcon($model->c_status);
+                        return Link::getStatus($model->c_status);
                     },
                 ],
                 [
@@ -102,8 +90,8 @@ $position_id = isset($get['AdManageSearch']['position_id']) ? $get['AdManageSear
                     'header' => '管理操作',
                     'template' => '<span class="pr20">{update}</span><span class="pr20">{delete}</span>',
                     'visibleButtons' => [
-                        'update' => CheckRule::checkRole('/ad/ad-manage/update'),
-                        'delete' => CheckRule::checkRole('/ad/ad-manage/delete')
+                        'update' => CheckRule::checkRole('/link/link/update'),
+                        'delete' => CheckRule::checkRole('/link/link/delete')
                     ]
                 ],
             ],

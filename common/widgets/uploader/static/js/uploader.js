@@ -16,7 +16,7 @@ function multipleUpload(param) {
         multi_selection: true, //是否可以在文件浏览对话框中选择多个文件
         filters: [{title: '选择文件', extensions: param.extensions}]//文件限制
     };
-    
+
     var uploader = new plupload.Uploader(config);
     uploader.init();
     uploader.bind('BeforeUpload', function (uploader, file) {
@@ -168,7 +168,7 @@ $(function () {
                     url: param.deleteUrl,
                     data: data,
                     success: function (result) {
-                        if (result.status === 1) {
+                        if (result.status === 0) {
                             if (param.more) {
                                 var upload_list = $('#upload-list-' + name).val();//获取文件路径
                                 var array = upload_list.split(',');//为空就新建数组对象

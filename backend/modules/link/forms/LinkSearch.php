@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\link\forms;
 
 use yii\data\ActiveDataProvider;
 use common\models\Link;
