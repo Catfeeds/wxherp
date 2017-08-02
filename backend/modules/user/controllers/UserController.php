@@ -60,7 +60,7 @@ class UserController extends _BackendController {
 
     public function actionUpdatePassword($id) {
         $model = $this->findModel($id);
-        $model->setScenario('update-password');
+        $model->setScenario('setting-password');
         if ($model->load(Yii::$app->request->post())) {
             if ($model->updateLoginPassword()) {
                 $this->flashSuccess();

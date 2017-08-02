@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => '用户列表', 'url' => ['index']]
     <?= $form->field($acount, 'user_id')->hiddenInput(['value' => $model->c_user_id])->label(false); ?>
     <div class="box-body">
         <div class="form-group">
-            <label class="col-lg-2 control-label">用户账户</label>
+            <label class="col-lg-2 control-label">用户名</label>
             <div class="col-lg-7">
                 <p class="form-control-static"><?= $model->user->c_user_name ?></p>
             </div>

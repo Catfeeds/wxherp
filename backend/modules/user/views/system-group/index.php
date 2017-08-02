@@ -26,7 +26,7 @@ $status = isset($get['SystemGroupSearch']['status']) ? $get['SystemGroupSearch']
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
             <?php SearchForm::end(); ?>
         </div>
-        <?php if (CheckRule::checkRole('admin-role/create')) { ?>
+        <?php if (CheckRule::checkRole('/user/system-group/create')) { ?>
             <div class="pull-right">
                 <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
             </div>
@@ -66,8 +66,8 @@ $status = isset($get['SystemGroupSearch']['status']) ? $get['SystemGroupSearch']
                     'header' => '管理操作',
                     'template' => '<span class="pr20">{update}</span><span class="pr20">{delete}</span>',
                     'visibleButtons' => [
-                        'update' => CheckRule::checkRole('admin-role/update'),
-                        'delete' => CheckRule::checkRole('admin-role/delete'),
+                        'update' => CheckRule::checkRole('/user/system-group/update'),
+                        'delete' => CheckRule::checkRole('/user/system-group/delete'),
                     ]
                 ],
             ],

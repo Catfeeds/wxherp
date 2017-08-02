@@ -34,7 +34,7 @@ $create_type = isset($get['UserSearch']['create_type']) ? $get['UserSearch']['cr
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
             <?php SearchForm::end(); ?>
         </div>
-        <?php if (CheckRule::checkRole('user/create')) { ?>
+        <?php if (CheckRule::checkRole('/user/user/create')) { ?>
             <div class="pull-right">
                 <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
             </div>
@@ -151,11 +151,11 @@ $create_type = isset($get['UserSearch']['create_type']) ? $get['UserSearch']['cr
                         },
                             ],
                             'visibleButtons' => [
-                                'amount' => CheckRule::checkRole('user/amount'),
-                                'update' => CheckRule::checkRole('user/update'),
-                                'update-password' => CheckRule::checkRole('user/update-password'),
+                                'amount' => CheckRule::checkRole('/user/user/amount'),
+                                'update' => CheckRule::checkRole('/user/user/update'),
+                                'update-password' => CheckRule::checkRole('/user/user/update-password'),
                                 'delete' => function ($model) {
-                                    return CheckRule::checkRole('user/delete') && $model->c_status == User::STATUS_YES;
+                                    return CheckRule::checkRole('/user/user/delete') && $model->c_status == User::STATUS_YES;
                                 },
                             ]
                         ],

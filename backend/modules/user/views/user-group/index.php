@@ -10,7 +10,7 @@ $this->title = '用户组列表';
 ?>
 <div class="box box-primary">
     <div class="box-header">
-        <?php if (CheckRule::checkRole('user-group/create')) { ?>
+        <?php if (CheckRule::checkRole('/user/user-group/create')) { ?>
             <div class="pull-right">
                 <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
             </div>
@@ -41,8 +41,8 @@ $this->title = '用户组列表';
                     'header' => '管理操作',
                     'template' => '<span class="pr20">{delete}</span><span class="pr20">{update}</span>',
                     'visibleButtons' => [
-                        'delete' => CheckRule::checkRole('user-group/delete'),
-                        'update' => CheckRule::checkRole('user-group/update')
+                        'delete' => CheckRule::checkRole('/user/user-group/delete'),
+                        'update' => CheckRule::checkRole('/user/user-group/update')
                     ]
                 ],
             ],

@@ -22,7 +22,7 @@ if ($model->isNewRecord) {
             <?= $form->field($model, 'new_password_confirm')->textInput(['maxlength' => true]) ?>
         <?php } else { ?>
             <div class="form-group">
-                <label class="col-lg-2 control-label">账号</label>
+                <label class="col-lg-2 control-label">用户名</label>
                 <div class="col-lg-7">
                     <p class="form-control-static"><?= $model->c_user_name ?></p>
                 </div>
