@@ -23,20 +23,20 @@ $config = [
         ],
     ],
     'modules' => [
+        'ad' => [
+            'class' => 'backend\modules\ad\Module',
+        ],
+        'article' => [
+            'class' => 'backend\modules\article\Module',
+        ],
+        'link' => [
+            'class' => 'backend\modules\link\Module',
+        ],
         'user' => [
             'class' => 'backend\modules\user\Module',
         ],
         'shop' => [
             'class' => 'backend\modules\shop\Module',
-        ],
-        'link' => [
-            'class' => 'backend\modules\link\Module',
-        ],
-        'article' => [
-            'class' => 'backend\modules\article\Module',
-        ],
-        'ad' => [
-            'class' => 'backend\modules\ad\Module',
         ],
         'notity' => [
             'class' => 'backend\modules\notity\Module',

@@ -9,14 +9,19 @@ use common\extensions\Tree;
 
 class _CommonModel extends \yii\db\ActiveRecord {
 
-    //组件对象类型
-    const OBJECT_ARTICLE = 1; // 文章组件
+    //组件对象类型 再多上传附件有效
+    const OBJECT_AD = 1; // 广告组件
+    const OBJECT_AD_MORE = 11; // 广告组件
+    const OBJECT_ARTICLE = 2; // 文章组件
+    const OBJECT_ARTICLE_MORE = 21; // 文章组件
+    const OBJECT_LINK = 3; // 链接组件
+    const OBJECT_LINK_MORE = 31; // 链接组件
     //上传控件字段名
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';
     const UPLOAD_FILE_FIELD_NAME = 'file';
     //接收上传内容默认字段名
     const PICTURE_FIELD_NAME = 'get_picture';
-    const ALBUM_FILED_NAME = 'get_album';
+    const FILE_MORE_FILED_NAME = 'get_file_more';
     const FILE_FIELD_NAME = 'get_file';
     //编辑器默认字段名
     const EDITOR_FIELD_NAME = 'editor_content';

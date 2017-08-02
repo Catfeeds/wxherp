@@ -19,7 +19,7 @@ if ($model->isNewRecord) {
         <div class="form-group">
             <label class="col-lg-2 control-label">图片上传</label>
             <div class="col-lg-7">
-                <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id]); ?>
+                <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id, 'object_type' => Link::OBJECT_LINK]); ?>
             </div>
         </div>
         <?= $form->field($model, 'c_note')->textArea(['maxlength' => true, 'rows' => 3]) ?>

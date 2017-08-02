@@ -30,6 +30,11 @@ $category_id = isset($get['ArticleSearch']['category_id']) ? $get['ArticleSearch
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
             <?php SearchForm::end(); ?>
         </div>
+        <?php if (CheckRule::checkRole('/article/article/create')) { ?>
+            <div class="pull-right">
+                <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
+            </div>
+        <?php } ?>
     </div>
     <div class="box-body">
         <?php Pjax::begin(); ?> 
@@ -90,7 +95,11 @@ $category_id = isset($get['ArticleSearch']['category_id']) ? $get['ArticleSearch
                 [
                     'class' => 'backend\widgets\ActionColumn',
                     'header' => '管理操作',
-                    'template' => '<span class="pr20">{delete}</span>',
+                    'template' => '<span class="pr20">{update}</span><span class="pr20">{delete}</span>',
+                    'visibleButtons' => [
+                        'update' => CheckRule::checkRole('/article/article/update'),
+                        'delete' => CheckRule::checkRole('/article/article/delete')
+                    ]
                 ],
             ],
         ]);

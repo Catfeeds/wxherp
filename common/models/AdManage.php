@@ -110,9 +110,7 @@ class AdManage extends _CommonModel {
      */
     public function beforeDelete() {
         if (parent::beforeDelete()) {
-            if ($this->c_content && in_array($this->c_type, [2, 3])) {
-                Upload::deleteFile($this->c_content, true);
-            }
+            Upload::deleteByObject(self::OBJECT_AD, $this->c_id);
             return true;
         }
         return false;

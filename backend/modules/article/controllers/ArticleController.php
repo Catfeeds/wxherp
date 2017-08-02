@@ -17,6 +17,28 @@ class ArticleController extends _BackendController {
         return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
+    public function actionCreate() {
+        $model = new Article();
+        if (Yii::$app->request->isPost) {
+            if ($this->commonCreate($model)) {
+                return $this->refresh();
+            }
+        }
+
+        return $this->render('create', ['model' => $model]);
+    }
+
+    public function actionUpdate($id) {
+        $model = $this->findModel($id);
+        if (Yii::$app->request->isPost) {
+            if ($this->commonUpdate($model)) {
+                return $this->refresh();
+            }
+        }
+
+        return $this->render('update', ['model' => $model]);
+    }
+
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
             if ($this->commonDelete(Article::className(), $id)) {

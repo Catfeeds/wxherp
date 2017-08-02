@@ -95,7 +95,7 @@ class Link extends _CommonModel {
      */
     public function beforeDelete() {
         if (parent::beforeDelete()) {
-            Upload::deleteFile($this->c_picture, true);
+            Upload::deleteByObject(self::OBJECT_LINK, $this->c_id);
             return true;
         }
         return false;

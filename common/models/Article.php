@@ -48,7 +48,11 @@ class Article extends _CommonModel {
      */
     public function rules() {
         return [
-            [['c_user_name', 'c_title'], 'required'],
+            /**
+             * 过滤左右空格
+             */
+            [['c_title', 'c_short', 'c_author', 'c_video', 'c_picture', 'c_seo', 'c_keyword', 'c_description', 'c_source_url', 'c_sort'], 'filter', 'filter' => 'trim'],
+            [['c_title', 'c_category_id'], 'required'],
             [['c_is_delete', 'c_source_type', 'c_status', 'c_category_id', 'c_favorite_count', 'c_comment_count', 'c_step_count', 'c_favor_count', 'c_user_id', 'c_sort', 'c_hits', 'c_create_time'], 'integer'],
             [['c_update_time'], 'safe'],
             [['c_user_name'], 'string', 'max' => 20],
@@ -123,7 +127,7 @@ class Article extends _CommonModel {
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
         //相册
-        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::ALBUM_FILED_NAME);
+        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //缩略图
         Upload::updateFile($insert, $this->c_id);
         //正文
@@ -135,10 +139,12 @@ class Article extends _CommonModel {
      */
     public function beforeDelete() {
         if (parent::beforeDelete()) {
-            //删除缩略图与相册
-            Upload::deleteByCreateType(self::OBJECT_ARTICLE, $this->c_id);
+            //删除缩略图
+            Upload::deleteByObject(self::OBJECT_ARTICLE, $this->c_id);
+            //删除相册
+            Upload::deleteByObject(self::OBJECT_ARTICLE_MORE, $this->c_id);
             //删除正文
-            ArticleText::deleteAll(['c_object_id' => $this->c_id]);
+            ArticleText::deleteAll(['c_article_id' => $this->c_id]);
             return true;
         }
         return false;

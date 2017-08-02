@@ -21,13 +21,13 @@ if ($model->isNewRecord) {
         <div class="field-admanage-c_picture form-group"<?= $model->c_type == 2 ? '' : ' style="display:none"' ?>>
             <label class="col-lg-2 control-label">图片上传</label>
             <div class="col-lg-7">
-                <?= Uploader::widget(['value' => $model->c_content, 'object_id' => $model->c_id]); ?>
+                <?= Uploader::widget(['value' => $model->c_content, 'object_id' => $model->c_id, 'object_type' => AdManage::OBJECT_AD]); ?>
             </div>
         </div>
         <div class="field-admanage-c_flash form-group"<?= $model->c_type == 3 ? '' : ' style="display:none"' ?>>
             <label class="col-lg-2 control-label">Flash上传</label>
             <div class="col-lg-7">
-                <?= Uploader::widget(['is_file' => true, 'value' => $model->c_content, 'object_id' => $model->c_id]); ?>
+                <?= Uploader::widget(['is_file' => true, 'value' => $model->c_content, 'object_id' => $model->c_id, 'object_type' => AdManage::OBJECT_AD]); ?>
             </div>
         </div>
         <?= $form->field($model, 'c_content', ['options' => ['class' => 'form-group', 'style' => $model->c_type == 4 ? '' : 'display:none']])->textArea(['maxlength' => true, 'rows' => 3]) ?>

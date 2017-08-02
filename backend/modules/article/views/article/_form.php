@@ -5,7 +5,7 @@ use common\widgets\uploader\Uploader;
 use common\widgets\editor\Editor;
 use common\models\Article;
 use common\models\ArticleCategory;
-use common\models\CommonAlbum;
+use common\models\Upload;
 use backend\widgets\ActiveForm;
 
 $album = '';
@@ -13,7 +13,7 @@ if ($model->isNewRecord) {
     $model->c_status = $model->c_source_type = 1;
     $model->c_sort = 0;
 } else {
-    $_album = CommonAlbum::getColumn('c_path', ['c_type' => Article::TYPE_ARTICLE, 'c_object_id' => $model->c_id]);
+    $_album = Upload::getColumn('c_path', ['c_object_type' => Article::OBJECT_ARTICLE, 'c_object_id' => $model->c_id]);
     if ($_album) {
         $album = implode(',', $_album);
     }
@@ -40,13 +40,13 @@ if ($model->isNewRecord) {
             <div class="form-group">
                 <label class="col-lg-2 control-label">文章缩略图</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => $model->c_picture, 'user_id' => $model->c_user_id, 'object_id' => $model->c_id]); ?>
+                    <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE]); ?>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-lg-2 control-label">文章相册</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['more' => true, 'name' => 'common_album', 'value' => $album, 'user_id' => $model->c_user_id]); ?>
+                    <?= Uploader::widget(['value' => $album, 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE_MORE]); ?>
                 </div>
             </div>
         </div>
