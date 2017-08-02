@@ -1,24 +1,24 @@
 <?php
 
-namespace backend\modules\ad\controllers;
+namespace backend\modules\notity\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use common\models\AdPosition;
-use backend\modules\ad\forms\AdPositionSearch;
+use common\models\NotityTemplate;
+use backend\modules\notity\forms\NotityTemplateSearch;
 use backend\controllers\_BackendController;
 
-class AdPositionController extends _BackendController {
+class NotityTemplateController extends _BackendController {
 
     public function actionIndex() {
-        $searchModel = new AdPositionSearch();
+        $searchModel = new NotityTemplateSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
     public function actionCreate() {
-        $model = new AdPosition();
+        $model = new NotityTemplate();
         if (Yii::$app->request->isPost) {
             if ($this->commonCreate($model)) {
                 return $this->refresh();
@@ -41,14 +41,14 @@ class AdPositionController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            if ($this->commonDelete(AdPosition::className(), $id)) {
+            if ($this->commonDelete(NotityTemplate::className(), $id)) {
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
     }
 
     protected function findModel($id) {
-        if (($model = AdPosition::findOne($id)) !== null) {
+        if (($model = NotityTemplate::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

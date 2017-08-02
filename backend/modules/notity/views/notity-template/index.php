@@ -5,31 +5,30 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use common\extensions\Util;
 use common\extensions\CheckRule;
-use common\models\Link;
-use common\models\Upload;
+use common\models\NotityTemplate;
 use backend\widgets\GridView;
 use backend\widgets\SearchForm;
 
-$this->title = '链接列表';
+$this->title = '消息模板列表';
 $get = Yii::$app->request->get();
-$pagesize = isset($get['LinkSearch']['pagesize']) ? $get['LinkSearch']['pagesize'] : '';
-$keyword = isset($get['LinkSearch']['keyword']) ? trim($get['LinkSearch']['keyword']) : '';
-$status = isset($get['LinkSearch']['status']) ? $get['LinkSearch']['status'] : '';
-$type = isset($get['LinkSearch']['type']) ? $get['LinkSearch']['type'] : '';
+$pagesize = isset($get['NotityTemplateSearch']['pagesize']) ? $get['NotityTemplateSearch']['pagesize'] : '';
+$keyword = isset($get['NotityTemplateSearch']['keyword']) ? trim($get['NotityTemplateSearch']['keyword']) : '';
+$status = isset($get['NotityTemplateSearch']['status']) ? $get['NotityTemplateSearch']['status'] : '';
+$type = isset($get['NotityTemplateSearch']['type']) ? $get['NotityTemplateSearch']['type'] : '';
 ?>
 <div class="box box-primary">
     <div class="box-header">
         <div class="pull-left">
             <?php $form = SearchForm::begin(); ?>
-            <?= $form->field($searchModel, 'pagesize')->dropDownList(Link::getPageSize(), ['prompt' => '选择页码', 'value' => $pagesize]) ?>
-            <?= $form->field($searchModel, 'status')->dropDownList(Link::getStatus(), ['prompt' => '选择状态', 'value' => $status]) ?>
-            <?= $form->field($searchModel, 'type')->dropDownList(Link::getType(), ['prompt' => '选择类型', 'value' => $type]) ?>
+            <?= $form->field($searchModel, 'pagesize')->dropDownList(NotityTemplate::getPageSize(), ['prompt' => '选择页码', 'value' => $pagesize]) ?>
+            <?= $form->field($searchModel, 'status')->dropDownList(NotityTemplate::getStatusText(), ['prompt' => '选择状态', 'value' => $status]) ?>
+            <?= $form->field($searchModel, 'type')->dropDownList(NotityTemplate::getType(), ['prompt' => '选择消息类型', 'value' => $type]) ?>
             <?= $form->field($searchModel, 'keyword')->textInput(['maxlength' => true, 'placeholder' => '请输入关键词', 'value' => $keyword]) ?>
             <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
             <?= Html::a('重置', Url::to(['index']), ['class' => 'btn btn-default']) ?>
             <?php SearchForm::end(); ?>
         </div>
-        <?php if (CheckRule::checkRole('/link/link/create')) { ?>
+        <?php if (CheckRule::checkRole('notity-template/create')) { ?>
             <div class="pull-right">
                 <?= Html::a('<i class="fa fa-plus"></i> 新增', Url::to(['create']), ['class' => 'btn btn-success']) ?>
             </div>
@@ -54,31 +53,45 @@ $type = isset($get['LinkSearch']['type']) ? $get['LinkSearch']['type'] : '';
                     }
                 ],
                 [
-                    'attribute' => 'c_url',
-                    'format' => 'raw',
-                    'value' => function($model) use($keyword) {
-                        return $keyword ? Util::highlight($keyword, $model->c_url) : $model->c_url;
-                    }
-                ],
-                [
-                    'attribute' => 'c_picture',
-                    'format' => ['image', ['height' => 50]],
-                    'value' => function ($model) {
-                return Upload::getThumb($model->c_picture);
-            }
-                ],
-                [
                     'attribute' => 'c_type',
                     'format' => 'raw',
                     'value' => function($model) {
-                        return Link::getType($model->c_type);
+                        return NotityTemplate::getType($model->c_type);
+                    },
+                ],
+                [
+                    'attribute' => 'c_email_status',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return NotityTemplate::getStatusIcon($model->c_email_status);
+                    },
+                ],
+                [
+                    'attribute' => 'c_sms_status',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return NotityTemplate::getStatusIcon($model->c_sms_status);
+                    },
+                ],
+                [
+                    'attribute' => 'c_web_status',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return NotityTemplate::getStatusIcon($model->c_web_status);
+                    },
+                ],
+                [
+                    'attribute' => 'c_app_status',
+                    'format' => 'raw',
+                    'value' => function($model) {
+                        return NotityTemplate::getStatusIcon($model->c_app_status);
                     },
                 ],
                 [
                     'attribute' => 'c_status',
                     'format' => 'raw',
                     'value' => function($model) {
-                        return Link::getStatus($model->c_status);
+                        return NotityTemplate::getStatusIcon($model->c_status);
                     },
                 ],
                 [
@@ -90,8 +103,8 @@ $type = isset($get['LinkSearch']['type']) ? $get['LinkSearch']['type'] : '';
                     'header' => '管理操作',
                     'template' => '<span class="pr20">{update}</span><span class="pr20">{delete}</span>',
                     'visibleButtons' => [
-                        'update' => CheckRule::checkRole('/link/link/update'),
-                        'delete' => CheckRule::checkRole('/link/link/delete')
+                        'update' => CheckRule::checkRole('notity-template/update'),
+                        'delete' => CheckRule::checkRole('notity-template/delete')
                     ]
                 ],
             ],

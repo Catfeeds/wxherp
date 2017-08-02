@@ -27,29 +27,23 @@ class SystemRouteSearch extends SystemRoute {
             'pagination' => ['pageSize' => $this->pagesize],
         ];
 
-        $parent_id = isset($params['parent_id']) ? (int) $params['parent_id'] : 0;
-
         if ($this->load($params) && $this->validate()) {
 
-            if (empty($this->status) && empty($this->keyword)) {
-                $query->andWhere(['c_parent_id' => $parent_id]);
-            } else {
-                if ($this->keyword) {
-                    $query->andWhere([
-                        'or',
-                        ['like', 'c_title', $this->keyword],
-                        ['like', 'c_route', $this->keyword]
-                    ]);
-                }
+            if ($this->keyword) {
+                $query->andWhere([
+                    'or',
+                    ['like', 'c_title', $this->keyword],
+                    ['like', 'c_route', $this->keyword]
+                ]);
+            }
 
-                if ($this->status) {
-                    $query->andWhere(['c_status' => $this->status]);
-                }
+            if ($this->status) {
+                $query->andWhere(['c_status' => $this->status]);
             }
 
             $provider_params['pagination']['pageSize'] = $this->pagesize;
         } else {
-            $query->andWhere(['c_parent_id' => $parent_id]);
+            $query->andWhere(['c_parent_id' => (int) Yii::$app->request->get('parent_id')]);
         }
 
         $provider_params['query'] = $query;

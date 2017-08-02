@@ -1,24 +1,24 @@
 <?php
 
-namespace backend\modules\ad\controllers;
+namespace backend\modules\areas\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use common\models\AdPosition;
-use backend\modules\ad\forms\AdPositionSearch;
+use common\models\Areas;
+use backend\modules\areas\forms\AreasSearch;
 use backend\controllers\_BackendController;
 
-class AdPositionController extends _BackendController {
+class AreasController extends _BackendController {
 
     public function actionIndex() {
-        $searchModel = new AdPositionSearch();
+        $searchModel = new AreasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
     }
 
     public function actionCreate() {
-        $model = new AdPosition();
+        $model = new Areas();
         if (Yii::$app->request->isPost) {
             if ($this->commonCreate($model)) {
                 return $this->refresh();
@@ -41,14 +41,25 @@ class AdPositionController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            if ($this->commonDelete(AdPosition::className(), $id)) {
-                return $this->redirect(Yii::$app->request->referrer);
-            }
+            return $this->commonDelete(Areas::className(), $id);
         }
     }
 
+    public function actionMake() {
+        if (Yii::$app->request->isPost) {
+            $result = Areas::make();
+            if ($result === true) {
+                $this->flashSuccess();
+            } else {
+                $this->flashError($result);
+            }
+        }
+
+        return $this->redirect(['index']);
+    }
+
     protected function findModel($id) {
-        if (($model = AdPosition::findOne($id)) !== null) {
+        if (($model = Areas::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

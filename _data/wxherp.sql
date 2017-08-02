@@ -3859,9 +3859,12 @@ INSERT INTO `t_system_route` VALUES ('300', '欢迎页面', '/site/index', '', '
 INSERT INTO `t_system_route` VALUES ('301', '密码修改', '/site/my-password', 'lock', '30', '8', '1', '1501565813', '2017-08-01 14:14:24');
 INSERT INTO `t_system_route` VALUES ('302', '系统设置', '/config/index', '', '30', '7', '1', '1501568318', '2017-08-01 14:18:38');
 
-INSERT INTO `t_system_route` VALUES ('310', '消息模板列表', 'notity/notity-template/index', '', '31', '9', '1', '0', '2017-04-14 15:49:12');
-INSERT INTO `t_system_route` VALUES ('311', '消息模板新增', 'notity/notity-template/create', '', '31', '8', '1', '0', '2017-03-17 10:38:30');
-INSERT INTO `t_system_route` VALUES ('312', '消息模板编辑', 'notity/notity-template/update', '', '31', '7', '2', '0', '2017-03-17 10:38:52');
+INSERT INTO `t_system_route` VALUES ('310', '消息模板列表', '/notity/notity-template/index', '', '31', '9', '1', '0', '2017-04-14 15:49:12');
+INSERT INTO `t_system_route` VALUES ('311', '消息模板新增', '/notity/notity-template/create', '', '31', '8', '1', '0', '2017-03-17 10:38:30');
+INSERT INTO `t_system_route` VALUES ('312', '消息模板编辑', '/notity/notity-template/update', '', '31', '7', '2', '0', '2017-03-17 10:38:52');
+INSERT INTO `t_system_route` VALUES ('313', '短信日志', '/notity/sms-log/index', '', '31', '6', '1', '1482396033', '2017-04-14 15:48:41');
+INSERT INTO `t_system_route` VALUES ('314', '邮件日志', '/notity/email-log/index', '', '31', '5', '1', '1482396033', '2017-04-14 15:48:43');
+
 
 INSERT INTO `t_system_route` VALUES ('320', '地区列表', '/areas/areas/index', '', '32', '9', '1', '1431423162', '2017-04-14 15:49:06');
 INSERT INTO `t_system_route` VALUES ('321', '地区新增', '/areas/areas/create', '', '32', '8', '1', '1431423162', '2016-02-26 16:44:13');

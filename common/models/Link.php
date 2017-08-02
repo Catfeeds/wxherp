@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use Yii;
+
 /**
  * This is the model class for table "{{%link}}".
  *
@@ -50,13 +52,53 @@ class Link extends _CommonModel {
             'c_url' => '链接',
             'c_picture' => '图片',
             'c_note' => '备注',
-            'c_type' => '链接类型 1友情链接 2常用网址 3媒体合作',
-            'c_status' => '状态 1已审核 2待审核 3审核失败',
+            'c_type' => '链接类型', // 1友情链接 2常用网址 3媒体合作
+            'c_status' => '状态', // 1已审核 2待审核 3审核失败
             'c_sort' => '排序',
             'c_hits' => '点击次数',
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public static function getType($type = null) {
+        $array = [1 => '友情链接', 2 => '常用链接', 3 => '合作伙伴'];
+        return self::getCommonStatus($array, $type);
+    }
+
+    public static function getStatus($type = null) {
+        $array = [1 => '已审核', 2 => '待审核', 3 => '审核失败'];
+        return self::getCommonStatus($array, $type);
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME); //本次新增图片路径
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 保存之后处理相关数据
+     * @param type $insert
+     * @param type $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        //图片处理
+        Upload::updateFile($insert, $this->c_id);
+    }
+
+    /**
+     * 删除之前处理相关数据
+     */
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            Upload::deleteFile($this->c_picture, true);
+            return true;
+        }
+        return false;
     }
 
 }

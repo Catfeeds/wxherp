@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\forms;
+namespace backend\modules\notity\forms;
 
 use yii\data\ActiveDataProvider;
 use common\models\SmsLog;

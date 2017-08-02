@@ -24,7 +24,7 @@ if ($model->isNewRecord) {
         </div>
         <?= $form->field($model, 'c_note')->textArea(['maxlength' => true, 'rows' => 3]) ?>
         <?= $form->field($model, 'c_sort')->textInput(['maxlength' => true]) ?>
-        <?= $form->field($model, 'c_status')->radioList(Link::getLinkStatus()) ?>
+        <?= $form->field($model, 'c_status')->radioList(Link::getStatus()) ?>
     </div>
     <div class="modal-footer">
         <?= Html::submitButton($model->isNewRecord ? '新增' : '编辑', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

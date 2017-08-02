@@ -54,15 +54,27 @@ class SmsLog extends _CommonModel {
             'c_sms_model' => '返回结果',
             'c_sms_code' => '错误码',
             'c_sms_msg' => '错误描述',
-            'c_param' => '模板替换参数  JSON格式',
+            'c_param' => '模板替换参数 JSON格式',
             'c_body' => '短信内容',
             'c_type' => '消息类型',
-            'c_status' => '状态 1成功 2失败 3未发送',
+            'c_status' => '状态', // 1成功 2失败 3未发送
             'c_user_id' => '用户ID',
-            'c_send_time' => '预约发送时间 可以用去定时发送',
+            'c_send_time' => '预约发送时间', // 可以用去定时发送
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public static function add($type, $mobile, $body, $param) {
+        $model = new SmsLog();
+        $model->c_type = $type;
+        $model->c_mobile = $mobile;
+        $model->c_body = $body;
+        $model->c_param = json_encode($param, JSON_UNESCAPED_UNICODE);
+        $model->c_user_id = isset($param['user_id']) ? $param['user_id'] : 0;
+        $model->c_create_time = time();
+        $model->c_status = 3;
+        return $model->save();
     }
 
 }
