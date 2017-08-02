@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Widget;
 use yii\helpers\Url;
 use common\extensions\CheckRule;
+use common\models\_CommonModel;
 
 class Uploader extends Widget {
 
@@ -17,9 +18,9 @@ class Uploader extends Widget {
     public $more = false;
 
     public function run() {
-        $upload_url = $this->is_file ? 'uploader/file' : 'uploader/picture'; //上传附件路由
-        $delete_url = 'uploader/delete'; //删除附件路由
-        $var['name'] = $this->name ? $this->name : ( $this->is_file ? 'file_list' : 'picture_list');
+        $upload_url = $this->is_file ? '/uploader/file' : '/uploader/picture'; //上传附件路由
+        $delete_url = '/uploader/delete'; //删除附件路由
+        $var['name'] = $this->name ? $this->name : ( $this->is_file ? _CommonModel::FILE_FIELD_NAME : _CommonModel::PICTURE_FIELD_NAME);
         $var['value'] = $this->value;
         $var['upload_url'] = ($this->user_type === 1 && CheckRule::checkRole($upload_url)) || $this->user_type === 2 ? Url::to([$upload_url]) : false; //是否需要显示上传按钮
         $var['delete_url'] = ($this->user_type === 1 && CheckRule::checkRole($delete_url)) || $this->user_type === 2 ? Url::to([$delete_url]) : false; //是否需要显示删除按钮

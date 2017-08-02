@@ -51,13 +51,18 @@ class AdPosition extends _CommonModel {
             'c_height' => '图片高度',
             'c_width' => '图片高度',
             'c_count' => '广告显示数量',
-            'c_type' => '类型 1系统广告位 2自定义广告位',
-            'c_is_count' => '是否统计点击 1统计 2不统计',
-            'c_status' => '状态 1正常 2无效',
+            'c_type' => '类型', // 1系统广告位 2自定义广告位
+            'c_is_count' => '是否统计点击', // 1统计 2不统计
+            'c_status' => '状态', // 1正常 2无效
             'c_sort' => '排序',
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public static function getAdPositionType($type = null) {
+        $array = [1 => '系统广告位', 2 => '自定义广告位'];
+        return self::getCommonStatus($array, $type);
     }
 
 }
