@@ -40,7 +40,9 @@ class UserGroupController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            return $this->commonDelete(UserGroup::className(), $id);
+            if ($this->commonDelete(UserGroup::className(), $id)) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
     }
 

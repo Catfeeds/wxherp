@@ -40,7 +40,9 @@ class SystemRouteController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            return $this->commonDelete(SystemRoute::className(), $id);
+            if ($this->commonDelete(SystemRoute::className(), $id)) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
     }
 

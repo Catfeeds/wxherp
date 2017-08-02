@@ -41,7 +41,9 @@ class AreasController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            return $this->commonDelete(Areas::className(), $id);
+            if ($this->commonDelete(Areas::className(), $id)) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
     }
 

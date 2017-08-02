@@ -2,23 +2,12 @@
 
 namespace backend\modules\areas;
 
-/**
- * areas module definition class
- */
-class Module extends \yii\base\Module
-{
-    /**
-     * @inheritdoc
-     */
+class Module extends \yii\base\Module {
+
     public $controllerNamespace = 'backend\modules\areas\controllers';
 
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
+    public function init() {
         parent::init();
-
-        // custom initialization code goes here
     }
+
 }

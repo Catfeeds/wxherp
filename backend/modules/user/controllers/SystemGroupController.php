@@ -41,7 +41,9 @@ class SystemGroupController extends _BackendController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            return $this->commonDelete(SystemGroup::className(), $id);
+            if ($this->commonDelete(SystemGroup::className(), $id)) {
+                return $this->redirect(Yii::$app->request->referrer);
+            }
         }
     }
 
