@@ -3806,8 +3806,9 @@ INSERT INTO `t_system_route` VALUES ('3', '系统', '/site/index', '', '0', '7',
 INSERT INTO `t_system_route` VALUES ('30', '系统管理', '', '', '3', '99', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('31', '消息模板', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('32', '地区管理', '', '', '3', '97', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('33', '路由管理', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
-INSERT INTO `t_system_route` VALUES ('34', '授权认证管理', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('33', '路由管理', '', '', '3', '96', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('34', '授权认证管理', '', '', '3', '95', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('35', '支付方式管理', '', '', '3', '94', '1', '1501565750', '2017-08-01 14:20:16');
 
 INSERT INTO `t_system_route` VALUES ('100', '用户列表', '/user/user/index', '', '10', '9', '1', '1443409950', '2017-04-14 15:48:11');
 INSERT INTO `t_system_route` VALUES ('101', '用户新增', '/user/user/create', '', '10', '8', '1', '1436160659', '2017-01-26 19:51:20');
@@ -3868,9 +3869,9 @@ INSERT INTO `t_system_route` VALUES ('283', '反馈删除', '/feedback/feedback/
 
 INSERT INTO `t_system_route` VALUES ('290', '附件列表', '/upload/upload/index', '', '29', '9', '1', '1443409950', '2017-04-14 15:49:13');
 INSERT INTO `t_system_route` VALUES ('291', '附件删除', '/upload/upload/delete', '', '29', '8', '2', '1436164328', '2015-09-25 14:28:52');
-INSERT INTO `t_system_route` VALUES ('292', '图片上传', '/uploader/picture', '', '29', '7', '2', '1436169223', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('293', '附件上传', '/uploader/file', '', '29', '6', '2', '1436169223', '2017-01-25 06:31:32');
-INSERT INTO `t_system_route` VALUES ('294', '附件删除', '/uploader/delete', '', '29', '5', '2', '1436169223', '2017-01-25 06:31:32');
+INSERT INTO `t_system_route` VALUES ('292', '公共图片上传', '/uploader/picture', '', '29', '7', '2', '1436169223', '2017-01-25 06:31:32');
+INSERT INTO `t_system_route` VALUES ('293', '公共附件上传', '/uploader/file', '', '29', '6', '2', '1436169223', '2017-01-25 06:31:32');
+INSERT INTO `t_system_route` VALUES ('294', '公共附件删除', '/uploader/delete', '', '29', '5', '2', '1436169223', '2017-01-25 06:31:32');
 
 INSERT INTO `t_system_route` VALUES ('300', '欢迎页面', '/site/index', '', '30', '9', '1', '1501565777', '2017-08-01 14:14:46');
 INSERT INTO `t_system_route` VALUES ('301', '密码修改', '/site/my-password', 'lock', '30', '8', '1', '1501565813', '2017-08-01 14:14:24');
@@ -3897,7 +3898,8 @@ INSERT INTO `t_system_route` VALUES ('333', '路由删除', '/route/system-route
 INSERT INTO `t_system_route` VALUES ('340', '授权认证列表', '/oauth/oauth/index', '', '34', '9', '1', '0', '2017-04-14 15:49:12');
 INSERT INTO `t_system_route` VALUES ('341', '授权认证编辑', '/oauth/oauth/update', '', '34', '8', '2', '0', '2017-03-17 10:38:52');
 
-
+INSERT INTO `t_system_route` VALUES ('350', '支付方式列表', '/payment/payment/index', '', '35', '9', '1', '1431423162', '2017-04-14 15:48:48');
+INSERT INTO `t_system_route` VALUES ('351', '支付方式编辑', '/payment/payment/update', '', '35', '8', '2', '1431423162', '2016-02-26 16:44:13');
 
 -- ----------------------------
 -- Table structure for `t_upload`
@@ -4269,6 +4271,35 @@ CREATE TABLE `t_user_withdrawals` (
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='提现记录';
 
+DROP TABLE IF EXISTS `t_payment`;
+CREATE TABLE `t_payment` (
+  `c_id` int(10) unsigned NOT NULL COMMENT 'ID',
+  `c_pay_id` varchar(50) NOT NULL DEFAULT '' COMMENT '支付标识',
+  `c_title` varchar(50) NOT NULL DEFAULT '' COMMENT '支付名称',
+  `c_logo` varchar(255) NOT NULL DEFAULT '' COMMENT '支付方式logo图片路径',
+  `c_url` varchar(255) NOT NULL DEFAULT '' COMMENT '官方网址',
+  `c_description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
+  `c_content` text COMMENT '支付说明',
+  `c_poundage` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '手续费',
+  `c_poundage_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '手续费方式 1按商品总额的百分比 2按固定金额',
+  `c_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '类型 1线上 2线下',
+  `c_status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '安装状态 1正常 2无效',
+  `c_client_type` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '客户端类型 1PC端 2移动端 3通用',
+  `c_sort` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  PRIMARY KEY (`c_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='支付方式表';
+
+-- ----------------------------
+-- Records of t_payment
+-- ----------------------------
+INSERT INTO `t_payment` VALUES ('0', 'offline', '线下支付', 'pay_offline.gif', '', '线下付款结算', '', '0.00', '0', '2', '1', '3', '98', '0', '2017-02-21 20:29:49');
+INSERT INTO `t_payment` VALUES ('1', 'balance', '预存款支付', 'pay_deposit.gif', '', '预存款是客户在您网站上的虚拟资金帐户，在个人用户中心可以充值获得。', '', '0.00', '1', '1', '1', '1', '99', '0', '2017-03-30 09:40:06');
+INSERT INTO `t_payment` VALUES ('2', 'alipay_direct', '支付宝即时到帐', 'pay_alipay.gif', 'http://www.alipay.com', '即时到帐支付方式，买家的交易资金直接打入卖家支付宝账户，快速回笼交易资金。', '', '0.00', '1', '1', '1', '1', '96', '0', '2017-03-08 21:50:02');
+INSERT INTO `t_payment` VALUES ('3', 'alipay_wap', '支付宝手机网站支付', 'pay_wap_alipay.png', 'http://www.alipay.com', '支付宝的手机网站支付方式。需要企业账号单独签约设置密钥。不能与电脑版本的支付宝混用。', '', '0.00', '1', '1', '1', '2', '95', '0', '2017-03-08 21:16:53');
+INSERT INTO `t_payment` VALUES ('4', 'wechat_wap', '微信移动支付', 'pay_wap_wechat.png', 'https://mp.weixin.qq.com', '微信商城专用支付接口。必须在微信客户端中使用。', '', '0.00', '1', '1', '1', '2', '94', '0', '2017-03-08 21:17:00');
+INSERT INTO `t_payment` VALUES ('5', 'wechat_scan', '微信二维码支付', 'pay_scan_wechat.gif', 'https://mp.weixin.qq.com', '微信二维码支付接口。', '支付说明', '0.00', '1', '1', '1', '1', '93', '0', '2017-03-08 21:57:19');
 -- ----------------------------
 -- Records of t_user_withdrawals
 -- ----------------------------
