@@ -43,7 +43,9 @@ if ($model->isNewRecord) {
                     </div>
                 </div>
             </div>
+            <?= $form->field($model, 'c_address')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_sponsor')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'c_max')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_status')->radioList(Event::getStatusText()) ?>
         </div>
         <div class="tab-pane" id="tab2">
@@ -64,7 +66,7 @@ if ($model->isNewRecord) {
             <div class="field-content-c_pc_content form-group">
                 <label class="col-lg-2 control-label">活动详情</label>
                 <div class="col-lg-7">
-                    <?= Editor::widget(['value' => isset($model->eventText->c_content) ? $model->eventText->c_content : '', 'object_id' => $model->c_id]); ?>
+                    <?= Editor::widget(['value' => isset($model->eventText->c_content) ? $model->eventText->c_content : '', 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT_EDITOR]); ?>
                 </div>
             </div>
         </div>

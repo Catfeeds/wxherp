@@ -26,7 +26,7 @@ if ($model->isNewRecord) {
     <li><a href="#tab4" data-toggle="tab">优化设置</a></li>
 </ul>
 <div class="box box-primary">
-    <?php $form = ActiveForm::begin(['options' => ['class' => 'form-horizontal editer_form']]); ?>
+    <?php $form = ActiveForm::begin(); ?>
     <div class="box-body tab-content">
         <div class="tab-pane active" id="tab1">
             <?= $form->field($model, 'c_title')->textInput(['maxlength' => true]) ?>
@@ -54,7 +54,7 @@ if ($model->isNewRecord) {
             <div class="field-content-c_pc_content form-group">
                 <label class="col-lg-2 control-label">文章正文</label>
                 <div class="col-lg-7">
-                    <?= Editor::widget(['value' => isset($model->articleText->c_content) ? $model->articleText->c_content : '', 'object_id' => $model->c_id]); ?>
+                    <?= Editor::widget(['value' => isset($model->articleText->c_content) ? $model->articleText->c_content : '', 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE_EDITOR]); ?>
                 </div>
             </div>
         </div>

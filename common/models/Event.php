@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use Yii;
+
 /**
  * This is the model class for table "{{%event}}".
  *
@@ -116,7 +118,9 @@ class Event extends _CommonModel {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             //保存缩略图
-            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if (Yii::$app->request->post(self::PICTURE_FIELD_NAME)) {
+                $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            }
             if ($insert) {
                 $this->c_user_id = Yii::$app->user->id;
             }
@@ -138,6 +142,10 @@ class Event extends _CommonModel {
         Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新缩略图
         Upload::updateFile($insert, $this->c_id);
+        //更新编辑器中的图片与文件
+        foreach (Yii::$app->params['editor_dir'] as $dir) {
+            Upload::updateByPath($this->c_id, $dir);
+        }
         //正文
         EventText::addEdit($this->c_id, Yii::$app->request->post(self::EDITOR_FIELD_NAME));
     }

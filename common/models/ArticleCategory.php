@@ -71,7 +71,10 @@ class ArticleCategory extends _CommonModel {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             //保存缩略图
-            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if (Yii::$app->request->post(self::PICTURE_FIELD_NAME)) {
+                $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            }
+
             if (!$insert) {
                 if ($this->c_parent_id == $this->c_id) { //不可以选择自己为自己的父级
                     $this->addError('c_parent_id', Yii::t('common', Common::COMMON_PARENT_ID));

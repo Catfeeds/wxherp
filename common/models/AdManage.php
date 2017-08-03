@@ -80,13 +80,16 @@ class AdManage extends _CommonModel {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             //保存缩略图
-            if ($this->c_type == 2) {
-                $this->c_content = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if (Yii::$app->request->post(self::PICTURE_FIELD_NAME)) {
+                if ($this->c_type == 2) {
+                    $this->c_content = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+                }
+                //保存flash
+                if ($this->c_type == 3) {
+                    $this->c_content = Yii::$app->request->post(self::FILE_FIELD_NAME);
+                }
             }
-            //保存flash
-            if ($this->c_type == 3) {
-                $this->c_content = Yii::$app->request->post(self::FILE_FIELD_NAME);
-            }
+
             return true;
         }
         return false;

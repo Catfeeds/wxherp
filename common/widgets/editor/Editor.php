@@ -11,13 +11,14 @@ use common\models\_CommonModel;
 
 class Editor extends Widget {
 
-    public $id = ''; //控件ID
-    public $object_id = 0; //项目对象ID
-    public $object_type = 0; //项目对象类型
-    public $create_type = _CommonModel::CREATE_ADMIN;
-    public $value = ''; //控件默认值
-    public $height = '300px'; //editor高度
-    public $upload_url = '/uploader/file'; //上传附件路由
+    public $id = ''; // 控件ID
+    public $name = '';
+    public $object_id = 0; // 项目对象ID
+    public $object_type = 0; // 项目对象类型
+    public $create_type = _CommonModel::CREATE_ADMIN; // 默认平台上传 前台为_CommonModel::CREATE_PC
+    public $value = ''; // 控件默认值
+    public $height = '300px'; // editor高度
+    public $upload_url = '/uploader/file'; // 上传附件路由
 
     public function run() {
         $this->name = $this->name ? $this->name : _CommonModel::EDITOR_FIELD_NAME;

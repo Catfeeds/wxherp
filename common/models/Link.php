@@ -74,7 +74,9 @@ class Link extends _CommonModel {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             //保存缩略图
-            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if (Yii::$app->request->post(self::PICTURE_FIELD_NAME)) {
+                $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            }
             return true;
         }
         return false;

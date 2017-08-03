@@ -107,7 +107,9 @@ class Article extends _CommonModel {
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
             //保存缩略图
-            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if (Yii::$app->request->post(self::PICTURE_FIELD_NAME)) {
+                $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            }
             if ($insert) {
                 $this->c_user_id = Yii::$app->user->id;
                 $this->c_user_name = Yii::$app->user->identity->c_user_name;

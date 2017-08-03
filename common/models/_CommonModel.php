@@ -9,17 +9,23 @@ use common\extensions\Tree;
 
 class _CommonModel extends \yii\db\ActiveRecord {
 
-    //组件类型 MORE相册有效
+    //广告组件
     const OBJECT_AD = 1; // 广告缩略图
     const OBJECT_AD_MORE = 11; // 广告相册
+    //文章组件
     const OBJECT_ARTICLE = 2; // 文章缩略图
     const OBJECT_ARTICLE_MORE = 21; // 文章相册
+    const OBJECT_ARTICLE_EDITOR = 22; // 编辑器图片与文件
+    //文章类别组件
     const OBJECT_ARTICLE_CATEGORY = 3; // 文章类别缩略图
     const OBJECT_ARTICLE_CATEGORY_MORE = 31; // 文章类别相册
+    //链接组件
     const OBJECT_LINK = 4; // 链接缩略图
     const OBJECT_LINK_MORE = 41; // 链接相册
+    //活动组件
     const OBJECT_EVENT = 5; // 活动缩略图
     const OBJECT_EVENT_MORE = 51; // 活动相册
+    const OBJECT_EVENT_EDITOR = 52; // 编辑器图片与文件
     //上传控件字段名
     const UPLOAD_EDITOR_FIELD_NAME = 'editor';
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';
