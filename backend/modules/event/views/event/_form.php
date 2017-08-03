@@ -31,6 +31,18 @@ if ($model->isNewRecord) {
         <div class="tab-pane active" id="tab1">
             <?= $form->field($model, 'c_title')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_type')->dropDownList(Event::getType(), ['prompt' => '选择类别']) ?>
+            <?= $form->datetime($model, 'c_start_time'); ?>
+            <?= $form->datetime($model, 'c_end_time'); ?>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">选择省市县</label>
+                <div class="col-lg-7">
+                    <div class="row">
+                        <?= $form->select($model, 'c_province_id') ?>
+                        <?= $form->select($model, 'c_city_id') ?>
+                        <?= $form->select($model, 'c_area_id') ?>
+                    </div>
+                </div>
+            </div>
             <?= $form->field($model, 'c_sponsor')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_status')->radioList(Event::getStatusText()) ?>
         </div>
@@ -50,7 +62,7 @@ if ($model->isNewRecord) {
         </div>
         <div class="tab-pane" id="tab3">
             <div class="field-content-c_pc_content form-group">
-                <label class="col-lg-2 control-label">活动正文</label>
+                <label class="col-lg-2 control-label">活动详情</label>
                 <div class="col-lg-7">
                     <?= Editor::widget(['value' => isset($model->eventText->c_content) ? $model->eventText->c_content : '', 'object_id' => $model->c_id]); ?>
                 </div>
@@ -68,3 +80,18 @@ if ($model->isNewRecord) {
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+$default = $model->isNewRecord ? '' : ',defVal: [' . $model->c_province_id . ',' . $model->c_city_id . ',' . $model->c_area_id . ']';
+$js = <<<EOT
+    var opts = {
+        data: districtData,
+        selClass: 'form-control',
+        minWidth: 0,
+        maxWidth: 0,
+        autoHide :true,
+        head: '请选择',
+        select: ['#event-c_province_id', '#event-c_city_id', '#event-c_area_id']$default
+    };
+    new LinkageSel(opts);
+EOT;
+common\assets\BackendAsset::addScript($js);

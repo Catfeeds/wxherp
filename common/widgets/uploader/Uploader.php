@@ -12,7 +12,7 @@ class Uploader extends Widget {
 
     public $object_id = 0; //项目对象ID
     public $object_type = 0; //项目对象类型
-    public $create_type = 1; //用户类型 1后台 2前台 前台需要再小部件写入 user_type=2
+    public $create_type = _CommonModel::CREATE_ADMIN;
     public $is_file = false; //false上传图片 true上传文件
     public $name = '';
     public $value = ''; //控件默认值

@@ -18,8 +18,8 @@
                         var find_str = ary[i] + '/';
                         if (url.indexOf(find_str) !== -1) {
                             //console.log(url.substring(url.indexOf(find_str)));
-                            var input = '<input name="content_' + ary[i] + '[]" type="hidden" value="' + url.substring(url.indexOf(find_str)) + '">';
-                            $('.editer_form').append(input);
+                            var input = '<input name="' + ary[i] + '[]" type="hidden" value="' + url.substring(url.indexOf(find_str)) + '">';
+                            $('#<?= $id; ?>').append(input);
                             break;
                         }
                     }

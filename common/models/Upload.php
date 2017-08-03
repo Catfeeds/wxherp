@@ -30,6 +30,7 @@ class Upload extends _CommonModel {
 
     const UPLOAD_PICTURE = 1;
     const UPLOAD_FILE = 2;
+    const UPLOAD_EDITOR = 3;
 
     /**
      * @inheritdoc
