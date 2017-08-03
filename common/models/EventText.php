@@ -44,4 +44,22 @@ class EventText extends _CommonModel {
         ];
     }
 
+    public static function addEdit($id, $content) {
+        $model = EventText::findOne($id);
+        if ($model) {
+            $model->c_content = $content;
+            return $model->save();
+        } else {
+            return self::add($id, $content);
+        }
+    }
+
+    private static function add($id, $content) {
+        $model = new EventText();
+        $model->c_event_id = $id;
+        $model->c_content = $content;
+        $model->c_create_time = time();
+        return $model->save();
+    }
+
 }

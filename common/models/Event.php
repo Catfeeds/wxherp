@@ -48,9 +48,13 @@ class Event extends _CommonModel {
      */
     public function rules() {
         return [
-            [['c_sponsor', 'c_title', 'c_address'], 'required'],
-            [['c_is_delete', 'c_sex', 'c_status', 'c_type', 'c_max', 'c_favorite_count', 'c_join_count', 'c_comment_count', 'c_favor_count', 'c_user_id', 'c_start_time', 'c_end_time', 'c_sort', 'c_hits', 'c_province_id', 'c_city_id', 'c_area_id', 'c_create_time'], 'integer'],
-            [['c_update_time'], 'safe'],
+            /**
+             * 过滤左右空格
+             */
+            [['c_sponsor', 'c_title', 'c_address'], 'filter', 'filter' => 'trim'],
+            [['c_sponsor', 'c_title', 'c_address', 'c_province_id', 'c_city_id', 'c_max', 'c_type', 'c_status'], 'required'],
+            [['c_is_delete', 'c_sex', 'c_status', 'c_type', 'c_max', 'c_favorite_count', 'c_join_count', 'c_comment_count', 'c_favor_count', 'c_user_id', 'c_sort', 'c_hits', 'c_province_id', 'c_city_id', 'c_area_id', 'c_create_time'], 'integer'],
+            [['c_update_time', 'c_start_time', 'c_end_time'], 'safe'],
             [['c_sponsor'], 'string', 'max' => 100],
             [['c_title', 'c_address', 'c_video', 'c_picture', 'c_seo', 'c_keyword', 'c_description'], 'string', 'max' => 255],
         ];
@@ -70,9 +74,9 @@ class Event extends _CommonModel {
             'c_seo' => '标题优化',
             'c_keyword' => '关键词',
             'c_description' => '描述',
-            'c_is_delete' => '是否删除 1已删除 2正常',
-            'c_sex' => '性别限制 1 男性 2女性 3不限',
-            'c_status' => '状态 1正常 2无效',
+            'c_is_delete' => '是否删除', // 1已删除 2正常
+            'c_sex' => '性别限制', // 1 男性 2女性 3不限
+            'c_status' => '状态', // 1正常 2无效
             'c_type' => '活动类型',
             'c_max' => '活动预计人数',
             'c_favorite_count' => '收藏数量',
@@ -90,6 +94,70 @@ class Event extends _CommonModel {
             'c_create_time' => '创建时间',
             'c_update_time' => '最后更新时间',
         ];
+    }
+
+    public static function getType($type = null) {
+        $array = [1 => '素时尚', 2 => '健康养生', 3 => '环保', 4 => '灵性', 5 => '关怀动物', 6 => '读书会', 7 => '电影分享', 8 => '培训讲座', 9 => '主题聚会', 10 => '其他'];
+        return self::getCommonStatus($array, $type);
+    }
+
+    public function getEventUser() {
+        return $this->hasMany(EventUser::className(), ['c_event_id' => 'c_id']);
+    }
+
+    public function getEventText() {
+        return $this->hasOne(EventText::className(), ['c_event_id' => 'c_id']);
+    }
+
+    public function getEventAlbum() {
+        return $this->hasMany(CommonAlbum::className(), ['c_event_id' => 'c_id']);
+    }
+
+    public function beforeSave($insert) {
+        if (parent::beforeSave($insert)) {
+            //保存缩略图
+            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
+            if ($insert) {
+                $this->c_user_id = Yii::$app->user->id;
+            }
+            $this->c_start_time = strtotime($this->c_start_time);
+            $this->c_end_time = strtotime($this->c_end_time);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 保存之后处理相关数据
+     * @param type $insert
+     * @param type $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes) {
+        parent::afterSave($insert, $changedAttributes);
+        parent::afterSave($insert, $changedAttributes);
+        //更新相册
+        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
+        //更新缩略图
+        Upload::updateFile($insert, $this->c_id);
+        //正文
+        EventText::addEdit($this->c_id, Yii::$app->request->post(self::EDITOR_FIELD_NAME));
+    }
+
+    /**
+     * 删除之前处理相关数据
+     */
+    public function beforeDelete() {
+        if (parent::beforeDelete()) {
+            //删除缩略图
+            Upload::deleteByObject(self::OBJECT_EVENT, $this->c_id);
+            //删除相册
+            Upload::deleteByObject(self::OBJECT_EVENT_MORE, $this->c_id);
+            //删除正文
+            EventText::deleteAll(['c_event_id' => $this->c_id]);
+            return true;
+        }
+
+        return false;
     }
 
 }

@@ -106,7 +106,7 @@ class Article extends _CommonModel {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            //缩略图
+            //保存缩略图
             $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
             if ($insert) {
                 $this->c_user_id = Yii::$app->user->id;
@@ -124,9 +124,9 @@ class Article extends _CommonModel {
      */
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        //相册
+        //更新相册
         Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
-        //缩略图
+        //更新缩略图
         Upload::updateFile($insert, $this->c_id);
         //正文
         ArticleText::addEdit($this->c_id, Yii::$app->request->post(self::EDITOR_FIELD_NAME));

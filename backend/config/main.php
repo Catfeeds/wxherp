@@ -32,6 +32,9 @@ $config = [
         'link' => [
             'class' => 'backend\modules\link\Module',
         ],
+        'event' => [
+            'class' => 'backend\modules\event\Module',
+        ],
         'user' => [
             'class' => 'backend\modules\user\Module',
         ],

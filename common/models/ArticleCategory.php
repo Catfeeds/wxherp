@@ -70,7 +70,8 @@ class ArticleCategory extends _CommonModel {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME); //本次新增图片路径
+            //保存缩略图
+            $this->c_picture = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
             if (!$insert) {
                 if ($this->c_parent_id == $this->c_id) { //不可以选择自己为自己的父级
                     $this->addError('c_parent_id', Yii::t('common', Common::COMMON_PARENT_ID));
@@ -93,7 +94,7 @@ class ArticleCategory extends _CommonModel {
      */
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        //图片处理
+        //更新缩略图
         Upload::updateFile($insert, $this->c_id);
     }
 
@@ -106,7 +107,8 @@ class ArticleCategory extends _CommonModel {
                 $this->addError('c_parent_id', Yii::t('common', Common::COMMON_SUB_DELETE_FAIL));
                 return false;
             } else {
-                Upload::deleteFile($this->c_picture, true);
+                //删除缩略图
+                Upload::deleteByObject(self::OBJECT_ARTICLE_CATEGORY, $this->c_id);
                 return true;
             }
         }

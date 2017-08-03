@@ -18,6 +18,8 @@ class _CommonModel extends \yii\db\ActiveRecord {
     const OBJECT_ARTICLE_CATEGORY_MORE = 31; // 文章类别相册
     const OBJECT_LINK = 4; // 链接缩略图
     const OBJECT_LINK_MORE = 41; // 链接相册
+    const OBJECT_EVENT = 5; // 活动缩略图
+    const OBJECT_EVENT_MORE = 51; // 活动相册
     //上传控件字段名
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';
     const UPLOAD_FILE_FIELD_NAME = 'file';

@@ -79,11 +79,11 @@ class AdManage extends _CommonModel {
 
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-            //图片处理
+            //保存缩略图
             if ($this->c_type == 2) {
                 $this->c_content = Yii::$app->request->post(self::PICTURE_FIELD_NAME);
             }
-            //flash处理
+            //保存flash
             if ($this->c_type == 3) {
                 $this->c_content = Yii::$app->request->post(self::FILE_FIELD_NAME);
             }
@@ -99,7 +99,7 @@ class AdManage extends _CommonModel {
      */
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        //图片或FLASH处理
+        //更新图片或FLASH
         if (in_array($this->c_type, [2, 3])) {
             Upload::updateFile($insert, $this->c_id, $this->c_type == 2 ? Upload::UPLOAD_PICTURE : Upload::UPLOAD_FILE);
         }
@@ -110,6 +110,7 @@ class AdManage extends _CommonModel {
      */
     public function beforeDelete() {
         if (parent::beforeDelete()) {
+            //删除缩略图
             Upload::deleteByObject(self::OBJECT_AD, $this->c_id);
             return true;
         }
