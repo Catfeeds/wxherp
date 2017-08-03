@@ -3,17 +3,17 @@
 use yii\helpers\Html;
 use common\widgets\uploader\Uploader;
 use common\widgets\editor\Editor;
-use common\models\Article;
-use common\models\ArticleCategory;
+use common\models\Event;
 use common\models\Upload;
 use backend\widgets\ActiveForm;
 
 $album = '';
 if ($model->isNewRecord) {
-    $model->c_status = $model->c_source_type = 1;
+    $model->c_status = 1;
     $model->c_sort = 0;
+    $model->c_sponsor = Yii::$app->user->identity->c_user_name;
 } else {
-    $_album = Upload::getColumn('c_path', ['c_object_id' => $model->c_id, 'c_object_type' => Article::OBJECT_ARTICLE]);
+    $_album = Upload::getColumn('c_path', ['c_object_id' => $model->c_id, 'c_object_type' => Event::OBJECT_EVENT_MORE]);
     if ($_album) {
         $album = implode(',', $_album);
     }
@@ -30,37 +30,34 @@ if ($model->isNewRecord) {
     <div class="box-body tab-content">
         <div class="tab-pane active" id="tab1">
             <?= $form->field($model, 'c_title')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'c_category_id')->dropDownList(ArticleCategory::formatDropDownList(), ['prompt' => '选择类别']) ?>
-            <?= $form->field($model, 'c_source_type')->radioList(Article::getSourceType()) ?>
-            <?= $form->field($model, 'c_author')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'c_source_url', ['options' => ['class' => 'form-group', 'style' => $model->c_source_type == 1 ? 'display:none' : '']])->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'c_status')->radioList(Article::getStatusText()) ?>
+            <?= $form->field($model, 'c_type')->dropDownList(Event::getType(), ['prompt' => '选择类别']) ?>
+            <?= $form->field($model, 'c_sponsor')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'c_status')->radioList(Event::getStatusText()) ?>
         </div>
         <div class="tab-pane" id="tab2">
             <div class="form-group">
-                <label class="col-lg-2 control-label">文章缩略图</label>
+                <label class="col-lg-2 control-label">活动缩略图</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE]); ?>
+                    <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT]); ?>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label">文章相册</label>
+                <label class="col-lg-2 control-label">活动相册</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => $album, 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE_MORE]); ?>
+                    <?= Uploader::widget(['value' => $album, 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT_MORE]); ?>
                 </div>
             </div>
         </div>
         <div class="tab-pane" id="tab3">
             <div class="field-content-c_pc_content form-group">
-                <label class="col-lg-2 control-label">文章正文</label>
+                <label class="col-lg-2 control-label">活动正文</label>
                 <div class="col-lg-7">
-                    <?= Editor::widget(['value' => isset($model->articleText->c_content) ? $model->articleText->c_content : '', 'object_id' => $model->c_id]); ?>
+                    <?= Editor::widget(['value' => isset($model->eventText->c_content) ? $model->eventText->c_content : '', 'object_id' => $model->c_id]); ?>
                 </div>
             </div>
         </div>
         <div class="tab-pane" id="tab4">
             <?= $form->field($model, 'c_sort')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'c_short')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_seo')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_keyword')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'c_description')->textArea(['maxlength' => true, 'rows' => 3]) ?>
@@ -71,19 +68,3 @@ if ($model->isNewRecord) {
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php
-$js = <<<EOT
-    $(function () {
-        function setShowHide(type) {
-            if (type === '1') {
-                $('.field-article-c_source_url').hide();
-            } else if (type === '2') {
-               $('.field-article-c_source_url').show();
-            } 
-        }
-        $('.field-article-c_source_type input').on('click', function () {
-            setShowHide($(this).val());
-        });
-    });
-EOT;
-common\assets\BackendAsset::addScript($js);

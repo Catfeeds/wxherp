@@ -1,7 +1,8 @@
 <?php
 
-namespace backend\modules\event\forms;
+namespace frontend\forms;
 
+use Yii;
 use yii\data\ActiveDataProvider;
 use common\models\Event;
 
@@ -20,11 +21,10 @@ class EventSearch extends Event {
     }
 
     public function search($params) {
-        $query = Event::find();
-
+        $query = Event::find()->where(['c_is_delete' => self::DELETE_NO, 'c_user_id' => Yii::$app->user->id]);
         $provider_params = [
             'query' => $query,
-            'sort' => ['defaultOrder' => ['c_sort' => SORT_DESC, 'c_id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => [ 'c_id' => SORT_DESC]],
             'pagination' => ['pageSize' => $this->pagesize],
         ];
 

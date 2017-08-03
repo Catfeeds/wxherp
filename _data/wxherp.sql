@@ -3798,6 +3798,8 @@ INSERT INTO `t_system_route` VALUES ('22', '广告管理', '', '', '2', '97', '1
 INSERT INTO `t_system_route` VALUES ('23', '广告位管理', '', '', '2', '96', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('24', '文章管理', '', '', '2', '95', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('25', '文章类别管理', '', '', '2', '94', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('26', '活动管理', '', '', '2', '93', '1', '1501565750', '2017-08-01 14:20:16');
+
 
 INSERT INTO `t_system_route` VALUES ('28', '反馈管理', '', '', '2', '0', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('29', '附件管理', '', '', '2', '0', '1', '1501565750', '2017-08-01 14:20:16');
@@ -3861,6 +3863,13 @@ INSERT INTO `t_system_route` VALUES ('250', '文章类别列表', '/article/arti
 INSERT INTO `t_system_route` VALUES ('251', '文章类别新增', '/article/article-category/create', '', '25', '8', '1', '1436171413', '2017-01-26 21:44:27');
 INSERT INTO `t_system_route` VALUES ('252', '文章类别编辑', '/article/article-category/update', '', '25', '7', '2', '1436171520', '2017-01-26 16:45:30');
 INSERT INTO `t_system_route` VALUES ('253', '文章类别删除', '/article/article-category/delete', '', '25', '6', '2', '1436171551', '2017-01-26 16:45:30');
+
+INSERT INTO `t_system_route` VALUES ('260', '活动列表', '/event/event/index', '', '26', '9', '1', '1443409950', '2017-04-14 15:49:13');
+INSERT INTO `t_system_route` VALUES ('261', '活动新增', '/event/event/create', '', '26', '8', '1', '1436160216', '2017-07-30 16:54:05');
+INSERT INTO `t_system_route` VALUES ('262', '活动编辑', '/event/event/update', '', '26', '7', '2', '1436164311', '2016-03-20 20:51:44');
+INSERT INTO `t_system_route` VALUES ('263', '活动删除', '/event/event/delete', '', '26', '6', '2', '1436164328', '2015-09-25 14:28:52');
+INSERT INTO `t_system_route` VALUES ('264', '活动用户列表', '/event/user/list', '', '26', '5', '1', '1443409950', '2017-04-14 15:49:13');
+INSERT INTO `t_system_route` VALUES ('265', '活动用户删除', '/event/user/delete', '', '26', '4', '1', '1443409950', '2017-04-14 15:49:13');
 
 INSERT INTO `t_system_route` VALUES ('280', '反馈列表', '/feedback/feedback/index', '', '28', '9', '1', '1443409950', '2017-04-14 15:49:13');
 INSERT INTO `t_system_route` VALUES ('281', '反馈查看', '/feedback/feedback/view', '', '28', '8', '2', '1436164328', '2015-09-25 14:28:52');

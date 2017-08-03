@@ -134,7 +134,6 @@ class Event extends _CommonModel {
      */
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        parent::afterSave($insert, $changedAttributes);
         //更新相册
         Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新缩略图

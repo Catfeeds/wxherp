@@ -1,14 +1,15 @@
 <?php
 
-namespace backend\modules\event\controllers;
+namespace frontend\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use common\models\Event;
-use backend\modules\event\forms\EventSearch;
-use backend\controllers\_BackendController;
+use common\models\CommonAlbum;
+use frontend\forms\EventSearch;
 
-class EventController extends _BackendController {
+class EventController extends _UserController {
 
     public function actionIndex() {
         $searchModel = new EventSearch();
@@ -19,29 +20,37 @@ class EventController extends _BackendController {
 
     public function actionCreate() {
         $model = new Event();
+
         if (Yii::$app->request->isPost) {
             if ($this->commonCreate($model)) {
-                return $this->refresh();
+                return $this->redirect(Url::to(['index']));
+            } else {
+                $this->flashError($model);
             }
         }
-
         return $this->render('create', ['model' => $model]);
     }
 
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        if (Yii::$app->request->isPost) {
-            if ($this->commonUpdate($model)) {
-                return $this->refresh();
+        if ($model->c_user_id == Yii::$app->user->id) {
+            if (Yii::$app->request->isPost) {
+                if ($this->commonUpdate($model)) {
+                    return $this->redirect(Url::to(['index']));
+                } else {
+                    $this->flashError($model);
+                }
             }
+            return $this->render('update', ['model' => $model]);
+        } else {
+            $this->flashError('无权限操作');
+            return $this->redirect(Url::to(['index']));
         }
-
-        return $this->render('update', ['model' => $model]);
     }
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            if ($this->commonDelete(Event::className(), $id)) {
+            if ($this->commonUpdateField(Event::className(), ['c_is_delete' => Event::DELETE_YES], ['c_id' => $id, 'c_user_id' => Yii::$app->user->id])) {
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }
