@@ -126,10 +126,10 @@ class Article extends _CommonModel {
      */
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        //更新相册
-        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新缩略图
         Upload::updateFile($insert, $this->c_id);
+        //更新相册
+        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新编辑器中的图片与文件
         foreach (Yii::$app->params['editor_dir'] as $dir) {
             Upload::updateByPath($this->c_id, $dir);
@@ -143,10 +143,8 @@ class Article extends _CommonModel {
      */
     public function beforeDelete() {
         if (parent::beforeDelete()) {
-            //删除缩略图
-            Upload::deleteByObject(self::OBJECT_ARTICLE, $this->c_id);
-            //删除相册
-            Upload::deleteByObject(self::OBJECT_ARTICLE_MORE, $this->c_id);
+            //删除缩略图 与 相册 与编辑器上传的图片与文件
+            Upload::deleteByObject([self::OBJECT_ARTICLE, self::OBJECT_ARTICLE_MORE, self::OBJECT_ARTICLE_EDITOR], $this->c_id);
             //删除正文
             ArticleText::deleteAll(['c_article_id' => $this->c_id]);
             return true;

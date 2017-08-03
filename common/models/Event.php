@@ -138,13 +138,13 @@ class Event extends _CommonModel {
      */
     public function afterSave($insert, $changedAttributes) {
         parent::afterSave($insert, $changedAttributes);
-        //更新相册
-        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新缩略图
         Upload::updateFile($insert, $this->c_id);
+        //更新相册
+        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新编辑器中的图片与文件
         foreach (Yii::$app->params['editor_dir'] as $dir) {
-            Upload::updateByPath($this->c_id, $dir);
+            Upload::updateByPath($this->c_id, Yii::$app->request->post($dir));
         }
         //正文
         EventText::addEdit($this->c_id, Yii::$app->request->post(self::EDITOR_FIELD_NAME));
@@ -155,10 +155,8 @@ class Event extends _CommonModel {
      */
     public function beforeDelete() {
         if (parent::beforeDelete()) {
-            //删除缩略图
-            Upload::deleteByObject(self::OBJECT_EVENT, $this->c_id);
-            //删除相册
-            Upload::deleteByObject(self::OBJECT_EVENT_MORE, $this->c_id);
+            //删除缩略图 与 相册 与编辑器上传的图片与文件
+            Upload::deleteByObject([self::OBJECT_EVENT, self::OBJECT_EVENT_MORE, self::OBJECT_EVENT_EDITOR], $this->c_id);
             //删除正文
             EventText::deleteAll(['c_event_id' => $this->c_id]);
             return true;
