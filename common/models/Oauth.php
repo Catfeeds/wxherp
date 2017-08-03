@@ -49,7 +49,7 @@ class Oauth extends _CommonModel {
             'c_api_key' => 'API key',
             'c_api_secret' => 'API secret 或 API id',
             'c_url' => '申请地址',
-            'c_status' => '状态 1正常 2无效',
+            'c_status' => '状态', // 1正常 2无效
             'c_sort' => '排序',
         ];
     }

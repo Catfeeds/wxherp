@@ -6,6 +6,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use common\models\Oauth;
+use backend\controllers\_BackendController;
 
 class OauthController extends _BackendController {
 
