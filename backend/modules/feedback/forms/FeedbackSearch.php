@@ -1,12 +1,11 @@
 <?php
 
-namespace backend\modules\route\forms;
+namespace backend\modules\feedback\forms;
 
-use Yii;
 use yii\data\ActiveDataProvider;
-use common\models\SystemRoute;
+use common\models\Feedback;
 
-class SystemRouteSearch extends SystemRoute {
+class FeedbackSearch extends Feedback {
 
     public $pagesize = 10;
     public $keyword;
@@ -20,11 +19,11 @@ class SystemRouteSearch extends SystemRoute {
     }
 
     public function search($params) {
-        $query = SystemRoute::find();
+        $query = Feedback::find();
 
         $provider_params = [
             'query' => $query,
-            'sort' => ['defaultOrder' => ['c_sort' => SORT_DESC, 'c_id' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['c_id' => SORT_DESC]],
             'pagination' => ['pageSize' => $this->pagesize],
         ];
 
@@ -33,8 +32,11 @@ class SystemRouteSearch extends SystemRoute {
             if ($this->keyword) {
                 $query->andWhere([
                     'or',
-                    ['like', 'c_title', $this->keyword],
-                    ['like', 'c_route', $this->keyword]
+                    ['like', 'c_mobile', $this->keyword],
+                    ['like', 'c_full_name', $this->keyword],
+                    ['like', 'c_email', $this->keyword],
+                    ['like', 'c_phone', $this->keyword],
+                    ['like', 'c_title', $this->keyword]
                 ]);
             }
 
@@ -43,11 +45,8 @@ class SystemRouteSearch extends SystemRoute {
             }
 
             $provider_params['pagination']['pageSize'] = $this->pagesize;
-        } else {
-            $query->andWhere(['c_parent_id' => (int) Yii::$app->request->get('parent_id')]);
+            $provider_params['query'] = $query;
         }
-
-        $provider_params['query'] = $query;
 
         return new ActiveDataProvider($provider_params);
     }

@@ -53,6 +53,12 @@ $config = [
         'upload' => [
             'class' => 'backend\modules\upload\Module',
         ],
+        'feedback' => [
+            'class' => 'backend\modules\feedback\Module',
+        ],
+        'oauth' => [
+            'class' => 'backend\modules\oauth\Module',
+        ],
     ],
     'params' => $params,
 ];

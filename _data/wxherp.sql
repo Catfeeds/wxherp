@@ -3535,37 +3535,23 @@ CREATE TABLE `t_event_user` (
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`c_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='参加活动用户表';
-
--- ----------------------------
--- Records of t_event_user
--- ----------------------------
-
--- ----------------------------
--- Table structure for `t_feedback`
--- ----------------------------
 DROP TABLE IF EXISTS `t_feedback`;
 CREATE TABLE `t_feedback` (
   `c_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `c_mobile` char(11) NOT NULL DEFAULT '' COMMENT '手机号',
   `c_user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户名',
   `c_full_name` varchar(20) NOT NULL DEFAULT '' COMMENT '姓名',
-  `c_system_name` varchar(20) NOT NULL DEFAULT '' COMMENT '管理员用户名',
   `c_email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱',
   `c_phone` varchar(50) NOT NULL DEFAULT '' COMMENT '联系电话',
   `c_title` varchar(50) NOT NULL DEFAULT '' COMMENT '主题',
-  `c_note` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   `c_sex` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '性别 1男 2女 3保密',
-  `c_reply_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '回复类型 0不用通知 1邮件通知 2短信通知 3电话回访',
   `c_is_delete` tinyint(1) unsigned NOT NULL DEFAULT '2' COMMENT '是否删除 1已删除 2正常',
   `c_status` tinyint(1) unsigned NOT NULL DEFAULT '2' COMMENT '状态 1已处理 2未处理 3处理中',
   `c_type` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '类型',
-  `c_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `c_system_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '管理员用户ID',
-  `c_reply_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '回复时间',
   `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `c_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='反馈表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='反馈联系表';
 
 -- ----------------------------
 -- Records of t_feedback
@@ -3576,11 +3562,15 @@ CREATE TABLE `t_feedback` (
 -- ----------------------------
 DROP TABLE IF EXISTS `t_feedback_text`;
 CREATE TABLE `t_feedback_text` (
+  `c_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `c_parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父级ID',
   `c_feedback_id` int(10) unsigned NOT NULL COMMENT 'ID',
+  `c_user_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `c_user_name` varchar(20) NOT NULL DEFAULT '' COMMENT '用户名',
   `c_content` text COMMENT '反馈内容',
-  `c_reply_content` text COMMENT '回复内容',
-  PRIMARY KEY (`c_feedback_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='反馈内容表';
+  `c_create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`c_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='反馈正文表';
 
 -- ----------------------------
 -- Records of t_feedback_text
@@ -3809,7 +3799,7 @@ INSERT INTO `t_system_route` VALUES ('23', '广告位管理', '', '', '2', '96',
 INSERT INTO `t_system_route` VALUES ('24', '文章管理', '', '', '2', '95', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('25', '文章类别管理', '', '', '2', '94', '1', '1501565750', '2017-08-01 14:20:16');
 
-
+INSERT INTO `t_system_route` VALUES ('28', '反馈管理', '', '', '2', '0', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('29', '附件管理', '', '', '2', '0', '1', '1501565750', '2017-08-01 14:20:16');
 
 INSERT INTO `t_system_route` VALUES ('3', '系统', '/site/index', '', '0', '7', '1', '1501565750', '2017-08-01 14:20:16');
@@ -3817,6 +3807,7 @@ INSERT INTO `t_system_route` VALUES ('30', '系统管理', '', '', '3', '99', '1
 INSERT INTO `t_system_route` VALUES ('31', '消息模板', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('32', '地区管理', '', '', '3', '97', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('33', '路由管理', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
+INSERT INTO `t_system_route` VALUES ('34', '授权认证管理', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
 
 INSERT INTO `t_system_route` VALUES ('100', '用户列表', '/user/user/index', '', '10', '9', '1', '1443409950', '2017-04-14 15:48:11');
 INSERT INTO `t_system_route` VALUES ('101', '用户新增', '/user/user/create', '', '10', '8', '1', '1436160659', '2017-01-26 19:51:20');
@@ -3870,11 +3861,16 @@ INSERT INTO `t_system_route` VALUES ('251', '文章类别新增', '/article/arti
 INSERT INTO `t_system_route` VALUES ('252', '文章类别编辑', '/article/article-category/update', '', '25', '7', '2', '1436171520', '2017-01-26 16:45:30');
 INSERT INTO `t_system_route` VALUES ('253', '文章类别删除', '/article/article-category/delete', '', '25', '6', '2', '1436171551', '2017-01-26 16:45:30');
 
-
+INSERT INTO `t_system_route` VALUES ('280', '反馈列表', '/feedback/feedback/index', '', '28', '9', '1', '1443409950', '2017-04-14 15:49:13');
+INSERT INTO `t_system_route` VALUES ('281', '反馈查看', '/feedback/feedback/view', '', '28', '8', '2', '1436164328', '2015-09-25 14:28:52');
+INSERT INTO `t_system_route` VALUES ('282', '反馈处理', '/feedback/feedback/operation', '', '28', '7', '2', '1436164003', '2017-01-26 16:43:55');
+INSERT INTO `t_system_route` VALUES ('283', '反馈删除', '/feedback/feedback/delete', '', '28', '6', '2', '1436164328', '2015-09-25 14:28:52');
 
 INSERT INTO `t_system_route` VALUES ('290', '附件列表', '/upload/upload/index', '', '29', '9', '1', '1443409950', '2017-04-14 15:49:13');
-INSERT INTO `t_system_route` VALUES ('291', '附件删除', '/upload/upload/delete', '', '29', '6', '2', '1436164328', '2015-09-25 14:28:52');
-
+INSERT INTO `t_system_route` VALUES ('291', '附件删除', '/upload/upload/delete', '', '29', '8', '2', '1436164328', '2015-09-25 14:28:52');
+INSERT INTO `t_system_route` VALUES ('292', '图片上传', '/uploader/picture', '', '29', '7', '2', '1436169223', '2017-01-25 06:31:32');
+INSERT INTO `t_system_route` VALUES ('293', '附件上传', '/uploader/file', '', '29', '6', '2', '1436169223', '2017-01-25 06:31:32');
+INSERT INTO `t_system_route` VALUES ('294', '附件删除', '/uploader/delete', '', '29', '5', '2', '1436169223', '2017-01-25 06:31:32');
 
 INSERT INTO `t_system_route` VALUES ('300', '欢迎页面', '/site/index', '', '30', '9', '1', '1501565777', '2017-08-01 14:14:46');
 INSERT INTO `t_system_route` VALUES ('301', '密码修改', '/site/my-password', 'lock', '30', '8', '1', '1501565813', '2017-08-01 14:14:24');
@@ -3898,7 +3894,8 @@ INSERT INTO `t_system_route` VALUES ('331', '路由新增', '/route/system-route
 INSERT INTO `t_system_route` VALUES ('332', '路由编辑', '/route/system-route/update', '', '33', '7', '2', '1436167646', '2016-04-10 23:00:40');
 INSERT INTO `t_system_route` VALUES ('333', '路由删除', '/route/system-route/delete', '', '33', '6', '2', '1436167681', '2016-04-10 23:00:55');
 
-
+INSERT INTO `t_system_route` VALUES ('340', '授权认证列表', '/oauth/oauth/index', '', '34', '9', '1', '0', '2017-04-14 15:49:12');
+INSERT INTO `t_system_route` VALUES ('341', '授权认证编辑', '/oauth/oauth/update', '', '34', '8', '2', '0', '2017-03-17 10:38:52');
 
 
 
