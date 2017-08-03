@@ -74,6 +74,11 @@ class Upload extends _CommonModel {
         ];
     }
 
+    public static function getType($type = null) {
+        $array = [self::UPLOAD_PICTURE => '图片', self::UPLOAD_FILE => '附件'];
+        return self::getCommonStatus($array, $type);
+    }
+
     //判断后缀是否是图片格式
     public static function isImages($file) {
         if ($file) {
@@ -84,13 +89,13 @@ class Upload extends _CommonModel {
     }
 
     //文件上传地址
-    public static function getUploadUrl() {
-        return rtrim(Yii::$app->params['domian_file'], '/') . '/';
+    public static function getUploadUrl($source_path = '') {
+        return rtrim(Yii::$app->params['domian_file'], '/') . '/' . $source_path;
     }
 
     //文件上传路径
-    public static function getUploadPath() {
-        return realpath(Yii::getAlias('@upload')) . DIRECTORY_SEPARATOR;
+    public static function getUploadPath($source_path = '') {
+        return realpath(Yii::getAlias('@upload')) . DIRECTORY_SEPARATOR . $source_path;
     }
 
     /**
@@ -101,9 +106,9 @@ class Upload extends _CommonModel {
      */
     public static function getFileUrl($source_path = '', $return_nopic = false) {
         if ($source_path) {
-            $path = self::getUploadPath() . $source_path;
+            $path = self::getUploadPath($source_path);
             if (is_file($path)) {
-                return self::getUploadUrl() . $source_path;
+                return self::getUploadUrl($source_path);
             }
         }
         return $return_nopic ? self::getNoPic() : false;
@@ -111,12 +116,12 @@ class Upload extends _CommonModel {
 
     //文件图片
     public static function getFilePic() {
-        return self::getUploadUrl() . 'default/filepic.png';
+        return self::getUploadUrl('default/filepic.png');
     }
 
-    //暂无图片或文件
-    public static function getNoPic($return_nopic = true) {
-        return $return_nopic ? self::getUploadUrl() . 'default/nopic.png' : Upload::getFilePic();
+    //暂无图片或暂无文件
+    public static function getNoPic($return_pictrue = true) {
+        return $return_pictrue ? self::getUploadUrl('default/nopic.png') : Upload::getFilePic();
     }
 
     /**
@@ -133,7 +138,7 @@ class Upload extends _CommonModel {
             if (is_file($default_path)) {//缩略图存在就直接返回URL 否则就从新从按配置生成缩略图
                 return $default_url;
             } else {//重新生成缩略图
-                $path = self::getUploadPath() . $source_path;
+                $path = self::getUploadPath($source_path);
                 if (is_file($path) && self::isImages($path)) {
                     //$mode 生成缩略图类型 THUMBNAIL_INSET按原图等比例缩略 THUMBNAIL_OUTBOUND按设置大小截取
                     $mode = Yii::$app->params['upload_thumb_type'] === '1' ? ManipulatorInterface::THUMBNAIL_INSET : ManipulatorInterface::THUMBNAIL_OUTBOUND;
@@ -152,7 +157,7 @@ class Upload extends _CommonModel {
      */
     private static function getThumbPath($source_path) {
         $size = self::getSize();
-        return self::getUploadPath() . 'thumb' . DIRECTORY_SEPARATOR . $size[0] . '_' . $size[1] . DIRECTORY_SEPARATOR . $source_path;
+        return self::getUploadPath('thumb' . DIRECTORY_SEPARATOR . $size[0] . '_' . $size[1] . DIRECTORY_SEPARATOR . $source_path);
     }
 
     /**
@@ -162,7 +167,7 @@ class Upload extends _CommonModel {
      */
     public static function getThumbUrl($source_path = '') {
         $size = self::getSize();
-        return self::getUploadUrl() . 'thumb/' . $size[0] . '_' . $size[1] . '/' . $source_path;
+        return self::getUploadUrl('thumb/' . $size[0] . '_' . $size[1] . '/' . $source_path);
     }
 
     /**
@@ -173,7 +178,7 @@ class Upload extends _CommonModel {
      */
     private static function getImagineThumb($source_path, $mode) {
         $size = self::getSize();
-        $path = self::getUploadPath() . $source_path;
+        $path = self::getUploadPath($source_path);
         $save_path = self::getThumbPath($source_path);
         Util::createDirList($save_path); //生成目录
         Image::thumbnail($path, $size[0], $size[1], $mode)->save($save_path);
@@ -187,22 +192,6 @@ class Upload extends _CommonModel {
         $width = isset(Yii::$app->params['upload_thumb_width']) && (int) Yii::$app->params['upload_thumb_width'] >= 50 && (int) Yii::$app->params['upload_thumb_width'] <= 500 ? (int) Yii::$app->params['upload_thumb_width'] : 200;
         $height = isset(Yii::$app->params['upload_thumb_height']) && (int) Yii::$app->params['upload_thumb_height'] >= 50 && (int) Yii::$app->params['upload_thumb_height'] <= 500 ? (int) Yii::$app->params['upload_thumb_height'] : 200;
         return [$width, $height];
-    }
-
-    /**
-     * 通过文件路径获取缩略图
-     * @param string $file_list 图片路径 可以是多个路径
-     * @param bool $get_one 是否获取第一个
-     */
-    public static function getFileList($file_list, $get_one = false) {
-        if ($file_list) {
-            $array = explode(',', $file_list);
-            if ($get_one) {
-                return $array[0];
-            }
-            return $array;
-        }
-        return false;
     }
 
     /**
@@ -220,7 +209,7 @@ class Upload extends _CommonModel {
         $dir = [$year, $month, $day, $hour, $filename . '.' . $extension];
         $fileurl = implode('/', $dir); //返回上传的URL
         $filepath = implode(DIRECTORY_SEPARATOR, $dir); //文件上传的路径
-        if (Util::createDirList(Upload::getUploadPath() . $filepath)) {//生成目录
+        if (Util::createDirList(Upload::getUploadPath($filepath))) {//生成目录
             return ['name' => $filename, 'url' => $fileurl, 'path' => $filepath];
         }
         return false;
@@ -352,7 +341,7 @@ class Upload extends _CommonModel {
                 }
             }
         }
-        $file = self::getUploadPath() . $path;
+        $file = self::getUploadPath($path);
         if (is_file($file)) {
             unlink($file); //删除原始文件
         }

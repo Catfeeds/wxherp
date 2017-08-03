@@ -9,13 +9,15 @@ use common\extensions\Tree;
 
 class _CommonModel extends \yii\db\ActiveRecord {
 
-    //组件对象类型 再多上传附件有效
-    const OBJECT_AD = 1; // 广告组件
-    const OBJECT_AD_MORE = 11; // 广告组件
-    const OBJECT_ARTICLE = 2; // 文章组件
-    const OBJECT_ARTICLE_MORE = 21; // 文章组件
-    const OBJECT_LINK = 3; // 链接组件
-    const OBJECT_LINK_MORE = 31; // 链接组件
+    //组件类型 MORE相册有效
+    const OBJECT_AD = 1; // 广告缩略图
+    const OBJECT_AD_MORE = 11; // 广告相册
+    const OBJECT_ARTICLE = 2; // 文章缩略图
+    const OBJECT_ARTICLE_MORE = 21; // 文章相册
+    const OBJECT_ARTICLE_CATEGORY = 3; // 文章类别缩略图
+    const OBJECT_ARTICLE_CATEGORY_MORE = 31; // 文章类别相册
+    const OBJECT_LINK = 4; // 链接缩略图
+    const OBJECT_LINK_MORE = 41; // 链接相册
     //上传控件字段名
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';
     const UPLOAD_FILE_FIELD_NAME = 'file';
@@ -310,6 +312,25 @@ class _CommonModel extends \yii\db\ActiveRecord {
             self::CREATE_API => 'API',
             self::CREATE_OTHER => '其他',
             self::CREATE_ADMIN => '平台'
+        ];
+        return self::getCommonStatus($array, $type);
+    }
+
+    /**
+     * 获取组件类型
+     * @param type $type
+     * @return type
+     */
+    public static function getObjectType($type = null) {
+        $array = [
+            self::OBJECT_AD => '广告缩略图',
+            self::OBJECT_AD_MORE => '广告相册',
+            self::OBJECT_ARTICLE => '文章缩略图',
+            self::OBJECT_ARTICLE_MORE => '文章相册',
+            self::OBJECT_ARTICLE_CATEGORY => '文章类别缩略图',
+            self::OBJECT_ARTICLE_CATEGORY_MORE => '文章类别相册',
+            self::OBJECT_LINK => '链接缩略图',
+            self::OBJECT_LINK_MORE => '链接相册'
         ];
         return self::getCommonStatus($array, $type);
     }

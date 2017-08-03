@@ -3809,6 +3809,9 @@ INSERT INTO `t_system_route` VALUES ('23', '广告位管理', '', '', '2', '96',
 INSERT INTO `t_system_route` VALUES ('24', '文章管理', '', '', '2', '95', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('25', '文章类别管理', '', '', '2', '94', '1', '1501565750', '2017-08-01 14:20:16');
 
+
+INSERT INTO `t_system_route` VALUES ('29', '附件管理', '', '', '2', '0', '1', '1501565750', '2017-08-01 14:20:16');
+
 INSERT INTO `t_system_route` VALUES ('3', '系统', '/site/index', '', '0', '7', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('30', '系统管理', '', '', '3', '99', '1', '1501565750', '2017-08-01 14:20:16');
 INSERT INTO `t_system_route` VALUES ('31', '消息模板', '', '', '3', '98', '1', '1501565750', '2017-08-01 14:20:16');
@@ -3866,6 +3869,11 @@ INSERT INTO `t_system_route` VALUES ('250', '文章类别列表', '/article/arti
 INSERT INTO `t_system_route` VALUES ('251', '文章类别新增', '/article/article-category/create', '', '25', '8', '1', '1436171413', '2017-01-26 21:44:27');
 INSERT INTO `t_system_route` VALUES ('252', '文章类别编辑', '/article/article-category/update', '', '25', '7', '2', '1436171520', '2017-01-26 16:45:30');
 INSERT INTO `t_system_route` VALUES ('253', '文章类别删除', '/article/article-category/delete', '', '25', '6', '2', '1436171551', '2017-01-26 16:45:30');
+
+
+
+INSERT INTO `t_system_route` VALUES ('290', '附件列表', '/upload/upload/index', '', '29', '9', '1', '1443409950', '2017-04-14 15:49:13');
+INSERT INTO `t_system_route` VALUES ('291', '附件删除', '/upload/upload/delete', '', '29', '6', '2', '1436164328', '2015-09-25 14:28:52');
 
 
 INSERT INTO `t_system_route` VALUES ('300', '欢迎页面', '/site/index', '', '30', '9', '1', '1501565777', '2017-08-01 14:14:46');

@@ -297,7 +297,7 @@ class _CommonController extends Controller {
 
                 if ($model->validate()) {
                     $info = Upload::getUploadInfo($model->picture->baseName, $model->picture->extension);
-                    $file_path = Upload::getUploadPath() . $info['path']; //文件上传的路径
+                    $file_path = Upload::getUploadPath($info['path']); //文件上传的路径
                     $file_url = $info['url']; //图片路径
                     Util::createDirList($file_path); //生成目录
                     $result = $model->picture->saveAs($file_path); //保存上传文件
@@ -349,13 +349,13 @@ class _CommonController extends Controller {
                 if ($model->validate()) {
                     $info = Upload::getUploadInfo($model->file->baseName, $model->file->extension);
                     $file_url = $info['url']; //返回上传的URL
-                    $file_path = Upload::getUploadPath() . $info['path']; //上传的文件路径
-                    $http_url = Upload::getUploadUrl() . $file_url;
+                    $file_path = Upload::getUploadPath($info['path']); //上传的文件路径
+                    $http_url = Upload::getUploadUrl($file_url);
 
                     if ($dir && in_array($dir, Yii::$app->params['editor_dir'])) {
                         $file_url = $dir . '/' . $file_url; //保存上传的URL
-                        $file_path = Upload::getUploadPath() . $dir . DIRECTORY_SEPARATOR . $info['path']; //编辑器存放的路径
-                        $http_url = Upload::getUploadUrl() . $file_url; //编辑器返回的上传绝对URL
+                        $file_path = Upload::getUploadPath($dir . DIRECTORY_SEPARATOR . $info['path']); //编辑器存放的路径
+                        $http_url = Upload::getUploadUrl($file_url); //编辑器返回的上传绝对URL
                     }
 
                     Util::createDirList($file_path); //生成目录

@@ -13,7 +13,7 @@ if ($model->isNewRecord) {
     $model->c_status = $model->c_source_type = 1;
     $model->c_sort = 0;
 } else {
-    $_album = Upload::getColumn('c_path', ['c_object_type' => Article::OBJECT_ARTICLE, 'c_object_id' => $model->c_id]);
+    $_album = Upload::getColumn('c_path', ['c_object_id' => $model->c_id, 'c_object_type' => Article::OBJECT_ARTICLE]);
     if ($_album) {
         $album = implode(',', $_album);
     }

@@ -34,8 +34,6 @@ use Yii;
  */
 class Article extends _CommonModel {
 
-    public $album;
-
     /**
      * @inheritdoc
      */

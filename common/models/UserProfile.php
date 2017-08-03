@@ -115,12 +115,12 @@ class UserProfile extends _CommonModel {
      */
     public static function getHead($get_path = false, $id = 0) {
         $picture = self::getHeadName($id);
-        $path = Upload::getUploadPath() . 'user_head' . DIRECTORY_SEPARATOR . $picture;
+        $path = Upload::getUploadPath('user_head' . DIRECTORY_SEPARATOR . $picture);
         if ($get_path) {
             return $path;
         }
         if (is_file($path)) {
-            return Upload::getUploadUrl() . 'user_head/' . $picture;
+            return Upload::getUploadUrl('user_head/' . $picture);
         }
         return self::getHeadNoPic();
     }
@@ -132,7 +132,7 @@ class UserProfile extends _CommonModel {
 
     //头像无图片
     private static function getHeadNoPic() {
-        return Upload::getUploadUrl() . 'default/default_user_head.png';
+        return Upload::getUploadUrl('default/default_user_head.png');
     }
 
     public static function base64Upload($base64) {

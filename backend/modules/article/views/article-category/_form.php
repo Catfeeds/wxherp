@@ -30,7 +30,7 @@ if ($model->isNewRecord) {
             <div class="form-group">
                 <label class="col-lg-2 control-label">图片上传</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id]); ?>
+                    <?= Uploader::widget(['value' => $model->c_picture, 'object_id' => $model->c_id, 'object_type' => ArticleCategory::OBJECT_ARTICLE_CATEGORY]); ?>
                 </div>
             </div>
         </div>
