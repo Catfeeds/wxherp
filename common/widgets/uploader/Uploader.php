@@ -18,10 +18,11 @@ class Uploader extends Widget {
     public $value = ''; //控件默认值
 
     public function run() {
+        $more = in_array($this->object_type, _CommonModel::getObjectMore()); // 判断是否多上传
         $upload_url = $this->is_file ? '/uploader/file' : '/uploader/picture'; //上传附件路由
         $delete_url = '/uploader/delete'; //删除附件路由
         //多文件上传未指定控件名会指定默认名
-        if ($this->object_type && empty($this->name)) {
+        if ($more && empty($this->name)) {
             $this->name = _CommonModel::FILE_MORE_FILED_NAME;
         }
         $var['name'] = $this->name ? $this->name : ( $this->is_file ? _CommonModel::FILE_FIELD_NAME : _CommonModel::PICTURE_FIELD_NAME);
@@ -32,8 +33,8 @@ class Uploader extends Widget {
         $var['object_type'] = $this->object_type;
         $var['is_file'] = $this->is_file;
         $var['extensions'] = $this->is_file ? '*' : implode(',', Yii::$app->params['image_extensions']);
-        $var['more'] = (bool) $this->object_type;
-        $template = $this->object_type ? 'multiple' : 'single';
+        $var['more'] = $more;
+        $template = $more ? 'multiple' : 'single';
         return $this->render($template, $var);
     }
 

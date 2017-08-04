@@ -299,6 +299,10 @@ class _CommonModel extends \yii\db\ActiveRecord {
         return Yii::$app->cache->set($name, $data, $cache_time);
     }
 
+    public static function getObjectMore() {
+        return [self::OBJECT_AD_MORE, self::OBJECT_ARTICLE_CATEGORY_MORE, self::OBJECT_ARTICLE_MORE, self::OBJECT_EVENT_MORE, self::OBJECT_LINK_MORE];
+    }
+
     /**
      * 分页
      * @return type
