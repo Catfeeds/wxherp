@@ -19,13 +19,13 @@ class BackendAsset extends AssetBundle {
         'chosen/chosen.min.css',
     ];
     public $js = [
+        'backend/js/adminlte.min.js',
         'layer/layer.js',
         'datetimepicker/datetimepicker.min.js',
         'chosen/chosen.jquery.min.js',
         'linkagesel/linkagesel.min.js',
         'linkagesel/district-level1.js',
         'linkagesel/district-all.js',
-        'backend/js/adminlte.min.js',
         'validator/jquery.validator.min.js?local=zh-CN',
         'js/jquery.birthday.js',
         'js/common.js',

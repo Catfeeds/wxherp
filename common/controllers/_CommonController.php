@@ -262,6 +262,27 @@ class _CommonController extends Controller {
     }
 
     /**
+     * 刷新
+     */
+    protected function ajaxRefresh() {
+        $this->ajaxSuccess(null, 6);
+    }
+
+    /**
+     * 跳转
+     */
+    protected function ajaxJump($url) {
+        $this->ajaxSuccess(null, 5, $url);
+    }
+
+    /**
+     * 跳转
+     */
+    protected function ajaxMsgJump($url, $msg = null) {
+        $this->ajaxSuccess($msg, 2, $url);
+    }
+
+    /**
      * JSON 
      * @param type $message
      * @param type $error 0成功 1错误 

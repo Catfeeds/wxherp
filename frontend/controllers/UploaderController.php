@@ -19,7 +19,7 @@ class UploaderController extends _UserController {
 
     public function actionPicture() {
         if (Yii::$app->params['upload_picture_status'] === '1') {
-            $this->pictureUpload(2);
+            $this->pictureUpload(Upload::CREATE_PC);
         } else {
             $this->jsonFormat('图片上传功能已关闭');
         }
@@ -27,7 +27,7 @@ class UploaderController extends _UserController {
 
     public function actionFile() {
         if (Yii::$app->params['upload_file_status'] === '1') {
-            $this->fileUpload(2);
+            $this->fileUpload(Upload::CREATE_PC);
         } else {
             $this->jsonFormat('附件上传功能已关闭');
         }

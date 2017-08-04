@@ -152,10 +152,14 @@ $create_type = isset($get['UserSearch']['create_type']) ? $get['UserSearch']['cr
                             ],
                             'visibleButtons' => [
                                 'amount' => CheckRule::checkRole('/user/user/amount'),
-                                'update' => CheckRule::checkRole('/user/user/update'),
-                                'update-password' => CheckRule::checkRole('/user/user/update-password'),
+                                'update' => function ($model) {
+                                    return CheckRule::checkRole('/user/user/update') && !CheckRule::checkSuperUser($model->c_id);
+                                },
+                                'update-password' => function ($model) {
+                                    return CheckRule::checkRole('/user/user/update-password') && !CheckRule::checkSuperUser($model->c_id);
+                                },
                                 'delete' => function ($model) {
-                                    return CheckRule::checkRole('/user/user/delete') && $model->c_status == User::STATUS_YES;
+                                    return CheckRule::checkRole('/user/user/delete') && $model->c_status == User::STATUS_YES && !CheckRule::checkSuperUser($model->c_id);
                                 },
                             ]
                         ],
