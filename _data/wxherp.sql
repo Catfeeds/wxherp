@@ -3869,7 +3869,7 @@ INSERT INTO `t_system_route` VALUES ('261', '活动新增', '/event/event/create
 INSERT INTO `t_system_route` VALUES ('262', '活动编辑', '/event/event/update', '', '26', '7', '2', '1436164311', '2016-03-20 20:51:44');
 INSERT INTO `t_system_route` VALUES ('263', '活动删除', '/event/event/delete', '', '26', '6', '2', '1436164328', '2015-09-25 14:28:52');
 INSERT INTO `t_system_route` VALUES ('264', '活动用户列表', '/event/user/list', '', '26', '5', '1', '1443409950', '2017-04-14 15:49:13');
-INSERT INTO `t_system_route` VALUES ('265', '活动用户删除', '/event/user/delete', '', '26', '4', '1', '1443409950', '2017-04-14 15:49:13');
+INSERT INTO `t_system_route` VALUES ('265', '活动用户删除', '/event/user/delete', '', '26', '4', '2', '1443409950', '2017-04-14 15:49:13');
 
 INSERT INTO `t_system_route` VALUES ('280', '反馈列表', '/feedback/feedback/index', '', '28', '9', '1', '1443409950', '2017-04-14 15:49:13');
 INSERT INTO `t_system_route` VALUES ('281', '反馈查看', '/feedback/feedback/view', '', '28', '8', '2', '1436164328', '2015-09-25 14:28:52');

@@ -31,7 +31,7 @@ class Editor extends Widget {
         $var['value'] = $this->value;
         $var['height'] = $this->height;
         $var['upload_url'] = ($this->create_type === _CommonModel::CREATE_ADMIN && CheckRule::checkRole($this->upload_url)) || $this->create_type === _CommonModel::CREATE_PC ? Url::to([$this->upload_url]) : false; //是否需要显示上传按钮
-        $var['param'] = [Yii::$app->request->csrfParam => Yii::$app->request->csrfToken, 'object_id' => $this->object_id, 'object_type' => $this->object_type];
+        $var['param'] = json_encode([Yii::$app->request->csrfParam => Yii::$app->request->csrfToken, 'object_id' => $this->object_id, 'object_type' => $this->object_type]);
 
         EditorAsset::register($this->view);
         return $this->render('editor', $var);

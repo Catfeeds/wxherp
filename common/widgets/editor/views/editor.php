@@ -5,7 +5,7 @@
         K.create('textarea[id="<?= $id; ?>"]', {
         filePostName :'UploadForm[file]', //上传的控件name
                 uploadJson: '<?= $upload_url; ?>',
-                extraFileUploadParams:<?= json_encode($param) ?>,
+                extraFileUploadParams:<?= $param ?>,
                 autoHeightMode:true,
                 afterCreate:function () {
                     this.sync();
