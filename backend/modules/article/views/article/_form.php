@@ -10,7 +10,6 @@ use backend\widgets\ActiveForm;
 
 if ($model->isNewRecord) {
     $model->c_status = $model->c_source_type = 1;
-    $model->c_sort = 0;
 }
 ?>
 <ul class="nav nav-tabs">

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use common\controllers\_CommonController;
+use common\models\_CommonModel;
 
 class _FrontendController extends _CommonController {
 
@@ -30,20 +31,20 @@ class _FrontendController extends _CommonController {
         }
     }
 
-    protected function commonCreate($model, $data = null) {
-        return $this->_commonCreate($model, $data, false);
+    protected function frontendCreate($model, $data = null) {
+        return $this->commonCreate($model, $data, _CommonModel::CREATE_PC);
     }
 
-    protected function commonUpdate($model, $data = null) {
-        return $this->_commonUpdate($model, $data, false);
+    protected function frontendUpdate($model, $data = null) {
+        return $this->commonUpdate($model, $data, _CommonModel::CREATE_PC);
     }
 
-    protected function commonUpdateField($model_name, $update, $where, $is_ajax = false) {
-        return $this->_commonUpdateField($model_name, $update, $where, $is_ajax, false);
+    protected function frontendUpdateField($model_name, $update, $where) {
+        return $this->commonUpdateField($model_name, $update, $where, _CommonModel::CREATE_PC);
     }
 
-    protected function commonDelete($model_name, $id = null) {
-        return $this->_commonDelete($model_name, $id, false);
+    protected function frontendDelete($model_name, $id = null) {
+        return $this->commonDelete($model_name, $id, _CommonModel::CREATE_PC);
     }
 
 }

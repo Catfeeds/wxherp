@@ -52,7 +52,7 @@ if ($model->isNewRecord) {
             <div class="form-group">
                 <label class="col-lg-2 control-label">活动相册</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => Upload::getPath($model->c_id, Event::OBJECT_ARTICLE_MORE), 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT_MORE]); ?>
+                    <?= Uploader::widget(['value' => Upload::getPath($model->c_id, Event::OBJECT_EVENT_MORE), 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT_MORE]); ?>
                 </div>
             </div>
         </div>

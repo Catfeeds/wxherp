@@ -13,7 +13,6 @@ use common\forms\RegisterMobile;
 use common\forms\FindPassword;
 use common\forms\FindPasswordValidate;
 use common\forms\UserLogin;
-use common\forms\UserLoginSms;
 
 class SiteController extends _FrontendController {
 
@@ -39,9 +38,7 @@ class SiteController extends _FrontendController {
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->login()) {
-                    $this->redirect(Url::to(['user/index']));
-                } else {
-                    $this->flashError($model);
+                    return $this->redirect(Url::to(['/user/index']));
                 }
             }
         }
@@ -49,24 +46,6 @@ class SiteController extends _FrontendController {
         $this->setLayout();
 
         return $this->render('login', ['model' => $model]);
-    }
-
-    public function actionLoginSms() {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new UserLoginSms();
-
-        if (Yii::$app->request->isPost) {
-            if ($model->load(Yii::$app->request->post())) {
-                if ($model->login()) {
-                    $this->redirect(Url::to(['user/index']));
-                } else {
-                    $this->flashError($model);
-                }
-            }
-        }
     }
 
     public function actionRegisterMobile() {
@@ -81,9 +60,7 @@ class SiteController extends _FrontendController {
                 $model->create_type = User::CREATE_PC;
                 $user = $model->register(true);
                 if ($user && Yii::$app->user->login($user)) {
-                    $this->redirect(Url::to(['register-success']));
-                } else {
-                    $this->flashError($model);
+                    return $this->redirect(Url::to(['register-success']));
                 }
             }
         }
@@ -105,9 +82,7 @@ class SiteController extends _FrontendController {
                 $model->create_type = User::CREATE_PC;
                 $user = $model->register();
                 if ($user && Yii::$app->user->login($user)) {
-                    $this->redirect(Url::to(['register-success']));
-                } else {
-                    $this->flashError($model);
+                    return $this->redirect(Url::to(['register-success']));
                 }
             }
         }
@@ -137,9 +112,7 @@ class SiteController extends _FrontendController {
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
-                    $this->redirect(Url::to(['find-password-validate', 'username' => $model->username]));
-                } else {
-                    $this->flashError($model);
+                    return $this->redirect(Url::to(['find-password-validate', 'username' => $model->username]));
                 }
             }
         }
@@ -154,9 +127,7 @@ class SiteController extends _FrontendController {
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->validate()) {
-                    $this->redirect(Url::to(['find-password-success']));
-                } else {
-                    $this->flashError($model);
+                    return $this->redirect(Url::to(['find-password-success']));
                 }
             }
         }

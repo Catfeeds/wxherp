@@ -21,12 +21,11 @@ class ArticleController extends _UserController {
         $model = new Article();
 
         if (Yii::$app->request->isPost) {
-            if ($this->commonCreate($model)) {
+            if ($this->frontendCreate($model)) {
                 return $this->redirect(Url::to(['index']));
-            } else {
-                $this->flashError($model);
             }
         }
+
         return $this->render('create', ['model' => $model]);
     }
 
@@ -34,12 +33,11 @@ class ArticleController extends _UserController {
         $model = $this->findModel($id);
         if ($model->c_user_id == Yii::$app->user->id) {
             if (Yii::$app->request->isPost) {
-                if ($this->commonUpdate($model)) {
+                if ($this->frontendUpdate($model)) {
                     return $this->redirect(Url::to(['index']));
-                } else {
-                    $this->flashError($model);
                 }
             }
+
             return $this->render('update', ['model' => $model]);
         } else {
             $this->flashError('无权限操作');
@@ -49,7 +47,7 @@ class ArticleController extends _UserController {
 
     public function actionDelete($id) {
         if (Yii::$app->request->isPost) {
-            if ($this->commonUpdateField(Article::className(), ['c_is_delete' => Article::DELETE_YES], ['c_id' => $id, 'c_user_id' => Yii::$app->user->id])) {
+            if ($this->frontendUpdateField(Article::className(), ['c_is_delete' => Article::DELETE_YES], ['c_id' => $id, 'c_user_id' => Yii::$app->user->id])) {
                 return $this->redirect(Yii::$app->request->referrer);
             }
         }

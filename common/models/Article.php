@@ -46,6 +46,7 @@ class Article extends _CommonModel {
      */
     public function rules() {
         return [
+            ['c_sort', 'default', 'value' => 0],
             /**
              * 过滤左右空格
              */

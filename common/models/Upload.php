@@ -307,7 +307,7 @@ class Upload extends _CommonModel {
      * @param type $object_id
      */
     public static function deleteByObject($object_type, $object_id) {
-        $data = static::findAll(['c_object_type' => $object_type, 'c_object_id' => $object_id]);
+        $data = Upload::findAll(['c_object_type' => $object_type, 'c_object_id' => $object_id]);
         if ($data) {
             foreach ($data as $model) {
                 self::_deleteFile($model->c_path);
