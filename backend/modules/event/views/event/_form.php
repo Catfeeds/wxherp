@@ -7,16 +7,10 @@ use common\models\Event;
 use common\models\Upload;
 use backend\widgets\ActiveForm;
 
-$album = '';
 if ($model->isNewRecord) {
     $model->c_status = 1;
     $model->c_sort = 0;
     $model->c_sponsor = Yii::$app->user->identity->c_user_name;
-} else {
-    $_album = Upload::getColumn('c_path', ['c_object_id' => $model->c_id, 'c_object_type' => Event::OBJECT_EVENT_MORE]);
-    if ($_album) {
-        $album = implode(',', $_album);
-    }
 }
 ?>
 <ul class="nav nav-tabs">
@@ -58,7 +52,7 @@ if ($model->isNewRecord) {
             <div class="form-group">
                 <label class="col-lg-2 control-label">活动相册</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => $album, 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT_MORE]); ?>
+                    <?= Uploader::widget(['value' => Upload::getPath($model->c_id, Event::OBJECT_ARTICLE_MORE), 'object_id' => $model->c_id, 'object_type' => Event::OBJECT_EVENT_MORE]); ?>
                 </div>
             </div>
         </div>

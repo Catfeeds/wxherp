@@ -300,6 +300,11 @@ class Upload extends _CommonModel {
         return true;
     }
 
+    public static function getPath($object_id, $object_type) {
+        $path = Upload::getColumn('c_path', ['c_object_id' => $object_id, 'c_object_type' => $object_type]);
+        return $path ? implode(',', $path) : '';
+    }
+
     /**
      * 按对象的类型和ID删除
      * @param type $object_type

@@ -8,15 +8,9 @@ use common\models\ArticleCategory;
 use common\models\Upload;
 use backend\widgets\ActiveForm;
 
-$album = '';
 if ($model->isNewRecord) {
     $model->c_status = $model->c_source_type = 1;
     $model->c_sort = 0;
-} else {
-    $_album = Upload::getColumn('c_path', ['c_object_id' => $model->c_id, 'c_object_type' => Article::OBJECT_ARTICLE]);
-    if ($_album) {
-        $album = implode(',', $_album);
-    }
 }
 ?>
 <ul class="nav nav-tabs">
@@ -46,7 +40,7 @@ if ($model->isNewRecord) {
             <div class="form-group">
                 <label class="col-lg-2 control-label">文章相册</label>
                 <div class="col-lg-7">
-                    <?= Uploader::widget(['value' => $album, 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE_MORE]); ?>
+                    <?= Uploader::widget(['value' => Upload::getPath($model->c_id, Article::OBJECT_ARTICLE_MORE), 'object_id' => $model->c_id, 'object_type' => Article::OBJECT_ARTICLE_MORE]); ?>
                 </div>
             </div>
         </div>
