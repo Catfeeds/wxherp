@@ -34,18 +34,18 @@ class _CommonModel extends \yii\db\ActiveRecord {
     const PICTURE_FIELD_NAME = 'get_picture';
     const FILE_MORE_FILED_NAME = 'get_file_more';
     const FILE_FIELD_NAME = 'get_file';
+    //编辑器默认字段名
+    const EDITOR_FIELD_NAME = 'editor_content';
     //上传文件类型
     const UPLOAD_TYPE_PICTURE = 1;
     const UPLOAD_TYPE_FILE = 2;
     const UPLOAD_TYPE_EDITOR = 3;
-    //编辑器默认字段名
-    const EDITOR_FIELD_NAME = 'editor_content';
     //常用状态
     const KEY_STATUS_NORMAL_INVALID = 1; // 1正常 2无效   
     const KEY_STATUS_YES_NO = 2; // 1是 2否
-    const KEY_STATUS_OPEN_CLOSE = 2; // 1开启 2关闭
-    const KEY_STATUS_VERIFY = 3; //1已验证 2未绑定 3待验证
-    const KEY_STATUS_RESULT = 4; //1成功 2失败 3未发送
+    const KEY_STATUS_OPEN_CLOSE = 3; // 1开启 2关闭
+    const KEY_STATUS_VERIFY = 4; //1已验证 2未绑定 3待验证
+    const KEY_STATUS_RESULT = 5; //1成功 2失败 3未发送
     //状态类型
     const STATUS_YES = 1; // 正常
     const STATUS_NO = 2; // 无效
@@ -329,6 +329,10 @@ class _CommonModel extends \yii\db\ActiveRecord {
         return self::getCommonStatus($array, $type);
     }
 
+    /**
+     * 项目多个上传
+     * @return type
+     */
     public static function getObjectMore() {
         return [self::OBJECT_AD_MORE, self::OBJECT_ARTICLE_CATEGORY_MORE, self::OBJECT_ARTICLE_MORE, self::OBJECT_EVENT_MORE, self::OBJECT_LINK_MORE];
     }
@@ -377,6 +381,32 @@ class _CommonModel extends \yii\db\ActiveRecord {
             self::DELETE_NO => '正常',
         ];
         return self::getCommonStatus($array, $type);
+    }
+
+    /**
+     * 格式化查询时间段
+     * @param type $time_field 搜索字段
+     * @param type $start_time 开始时间
+     * @param type $end_time 结束时间
+     * @return string
+     */
+    public static function formatSearchTime($time_field, $start_time = null, $end_time = null) {
+        $where = [];
+        if ($start_time && empty($end_time)) {
+            $where[] = ['>=', $time_field, strtotime($start_time)];
+        } elseif (empty($start_time) && $end_time) {
+            $where[] = ['<=', $time_field, strtotime($end_time) + 86400];
+        } elseif ($start_time && $end_time && $start_time < $end_time) {
+            $where[] = ['>=', $time_field, strtotime($start_time)];
+            $where[] = ['<=', $time_field, strtotime($end_time) + 86400];
+        } elseif ($start_time && $end_time && $start_time > $end_time) {//谁的日期大就当做结束日期，相反就是开始日期
+            $where[] = ['>=', $time_field, strtotime($end_time)];
+            $where[] = ['<=', $time_field, strtotime($start_time) + 86400];
+        } elseif ($start_time && $start_time == $end_time) {
+            $where[] = ['>=', $time_field, strtotime($start_time)];
+            $where[] = ['<=', $time_field, strtotime($start_time) + 86400];
+        }
+        return $where;
     }
 
     /**

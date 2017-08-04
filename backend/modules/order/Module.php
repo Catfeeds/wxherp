@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\modules\shop;
+namespace backend\modules\order;
 
 /**
- * shop module definition class
+ * order module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'backend\modules\shop\controllers';
+    public $controllerNamespace = 'backend\modules\order\controllers';
 
     /**
      * @inheritdoc

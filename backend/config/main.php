@@ -38,8 +38,11 @@ $config = [
         'user' => [
             'class' => 'backend\modules\user\Module',
         ],
-        'shop' => [
-            'class' => 'backend\modules\shop\Module',
+        'goods' => [
+            'class' => 'backend\modules\goods\Module',
+        ],
+        'order' => [
+            'class' => 'backend\modules\order\Module',
         ],
         'notity' => [
             'class' => 'backend\modules\notity\Module',
