@@ -34,6 +34,10 @@ class _CommonModel extends \yii\db\ActiveRecord {
     const PICTURE_FIELD_NAME = 'get_picture';
     const FILE_MORE_FILED_NAME = 'get_file_more';
     const FILE_FIELD_NAME = 'get_file';
+    //上传文件类型
+    const UPLOAD_TYPE_PICTURE = 1;
+    const UPLOAD_TYPE_FILE = 2;
+    const UPLOAD_TYPE_EDITOR = 3;
     //编辑器默认字段名
     const EDITOR_FIELD_NAME = 'editor_content';
     //常用状态
@@ -299,10 +303,6 @@ class _CommonModel extends \yii\db\ActiveRecord {
         return Yii::$app->cache->set($name, $data, $cache_time);
     }
 
-    public static function getObjectMore() {
-        return [self::OBJECT_AD_MORE, self::OBJECT_ARTICLE_CATEGORY_MORE, self::OBJECT_ARTICLE_MORE, self::OBJECT_EVENT_MORE, self::OBJECT_LINK_MORE];
-    }
-
     /**
      * 分页
      * @return type
@@ -327,6 +327,10 @@ class _CommonModel extends \yii\db\ActiveRecord {
             self::CREATE_ADMIN => '平台'
         ];
         return self::getCommonStatus($array, $type);
+    }
+
+    public static function getObjectMore() {
+        return [self::OBJECT_AD_MORE, self::OBJECT_ARTICLE_CATEGORY_MORE, self::OBJECT_ARTICLE_MORE, self::OBJECT_EVENT_MORE, self::OBJECT_LINK_MORE];
     }
 
     /**

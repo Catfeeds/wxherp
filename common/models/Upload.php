@@ -28,10 +28,6 @@ use common\extensions\Util;
  */
 class Upload extends _CommonModel {
 
-    const UPLOAD_PICTURE = 1;
-    const UPLOAD_FILE = 2;
-    const UPLOAD_EDITOR = 3;
-
     /**
      * @inheritdoc
      */
@@ -76,7 +72,7 @@ class Upload extends _CommonModel {
     }
 
     public static function getType($type = null) {
-        $array = [self::UPLOAD_PICTURE => '图片', self::UPLOAD_FILE => '附件'];
+        $array = [self::UPLOAD_TYPE_PICTURE => '图片', self::UPLOAD_TYPE_FILE => '文件', self::UPLOAD_TYPE_EDITOR => '编辑器'];
         return self::getCommonStatus($array, $type);
     }
 
@@ -260,7 +256,7 @@ class Upload extends _CommonModel {
      * @param string $field_name 自定义字段名
      * @param string $data 自定义字图片数据 
      */
-    public static function updateFile($is_insert, $object_id, $type = self::UPLOAD_PICTURE, $field_name = null, $data = null) {
+    public static function updateFile($is_insert, $object_id, $type = self::UPLOAD_TYPE_PICTURE, $field_name = null, $data = null) {
         if ($data) {
             $file_list = $data;
             $old_file_list = [];
@@ -269,21 +265,21 @@ class Upload extends _CommonModel {
                 $name = $field_name; //上传字段名称
                 $old_name = 'old_' . $field_name; //原始上传字段名称
             } else {
-                $name = $type == self::UPLOAD_PICTURE ? self::PICTURE_FIELD_NAME : self::FILE_FIELD_NAME;
-                $old_name = $type == self::UPLOAD_PICTURE ? 'old_' . self::PICTURE_FIELD_NAME : 'old_' . self::FILE_FIELD_NAME;
+                $name = $type == self::UPLOAD_TYPE_PICTURE ? self::PICTURE_FIELD_NAME : self::FILE_FIELD_NAME;
+                $old_name = $type == self::UPLOAD_TYPE_PICTURE ? 'old_' . self::PICTURE_FIELD_NAME : 'old_' . self::FILE_FIELD_NAME;
             }
             $file_list = Yii::$app->request->post($name); //本次新增图片路径
             $old_file_list = Yii::$app->request->post($old_name); //原始图片路径
         }
 
         $array = $file_list ? explode(',', $file_list) : []; //本次图片上传的路径数组
-        $array_old = $old_file_list ? explode(',', $old_file_list) : []; //原始图片路径数组 新增时为空 编辑时可能有图片路径
+        $old_array = $old_file_list ? explode(',', $old_file_list) : []; //原始图片路径数组 新增时为空 编辑时可能有图片路径
         //新增
         if ($is_insert) {
             return Upload::updateByPath($object_id, $array); //更新上传图片为已上传
         } else {
-            $diff_array = array_diff($array, $array_old); //本次上传路径的差集
-            $old_diff_array = array_diff($array_old, $array); //原始图片路径的差集
+            $diff_array = array_diff($array, $old_array); //本次上传路径的差集
+            $old_diff_array = array_diff($old_array, $array); //原始图片路径的差集
             //如果本次上传路径有差集，需要更新
             if ($file_list && $diff_array) {
                 if (!Upload::updateByPath($object_id, $diff_array)) {

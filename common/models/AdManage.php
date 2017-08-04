@@ -104,7 +104,7 @@ class AdManage extends _CommonModel {
         parent::afterSave($insert, $changedAttributes);
         //更新图片或FLASH
         if (in_array($this->c_type, [2, 3])) {
-            Upload::updateFile($insert, $this->c_id, $this->c_type == 2 ? Upload::UPLOAD_PICTURE : Upload::UPLOAD_FILE);
+            Upload::updateFile($insert, $this->c_id, $this->c_type == 2 ? Upload::UPLOAD_TYPE_PICTURE : Upload::UPLOAD_TYPE_FILE);
         }
     }
 

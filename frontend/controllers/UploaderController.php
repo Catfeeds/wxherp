@@ -14,7 +14,7 @@ class UploaderController extends _UserController {
         if (Yii::$app->request->isAjax) {
             $result = UserProfile::base64Upload(Yii::$app->request->post('data'));
         }
-        $result ? $this->ajaxJump(Url::to(['profile/head', 'time' => time()])) : $this->ajaxError();
+        $result ? $this->ajaxJump(Url::to(['/profile/head', 'time' => time()])) : $this->ajaxError();
     }
 
     public function actionPicture() {

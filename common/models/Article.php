@@ -129,7 +129,7 @@ class Article extends _CommonModel {
         //更新缩略图
         Upload::updateFile($insert, $this->c_id);
         //更新相册
-        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_PICTURE, self::FILE_MORE_FILED_NAME);
+        Upload::updateFile($insert, $this->c_id, Upload::UPLOAD_TYPE_PICTURE, self::FILE_MORE_FILED_NAME);
         //更新编辑器中的图片与文件
         foreach (Yii::$app->params['editor_dir'] as $dir) {
             Upload::updateByPath($this->c_id, Yii::$app->request->post($dir));
