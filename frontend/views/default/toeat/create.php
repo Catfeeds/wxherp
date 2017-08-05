@@ -1,4 +1,4 @@
 <?php
 
-$this->title = '新增活动';
-echo $this->render('_form', ['model' => $model, 'album' => '']);
+$this->title = '活动新增';
+echo $this->render('_form', ['model' => $model]);

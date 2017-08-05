@@ -1,0 +1,33 @@
+ALTER TABLE `ts_jj_comment`
+DROP COLUMN `kouwei`,
+DROP COLUMN `fuwu`,
+DROP COLUMN `huanjing`,
+DROP COLUMN `jiawei`,
+DROP COLUMN `avgcost`,
+DROP COLUMN `isscore`,
+DROP COLUMN `renshu`,
+DROP COLUMN `feiyong`,
+DROP COLUMN `updatetime`,
+DROP COLUMN `cookbook`,
+CHANGE COLUMN `id` `c_id`  int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID' FIRST ,
+CHANGE COLUMN `content` `c_content`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '评论内容' AFTER `c_id`,
+CHANGE COLUMN `overall` `c_point`  tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '评论分数' AFTER `c_content`,
+CHANGE COLUMN `isshow` `c_status`  tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '审核状态 1已审核 2未审核' AFTER `c_point`,
+CHANGE COLUMN `isdel` `c_is_delete`  tinyint(1) UNSIGNED NOT NULL DEFAULT 2 COMMENT '是否删除 1已删除 2正常' AFTER `c_status`,
+CHANGE COLUMN `pid` `c_parent_id`  int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父级ID' AFTER `c_is_delete`,
+CHANGE COLUMN `bid` `c_object_id`  int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '对象ID' AFTER `c_parent_id`,
+CHANGE COLUMN `uid` `c_user_id`  int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户ID' AFTER `c_object_id`,
+CHANGE COLUMN `addtime` `c_create_time`  int(10) UNSIGNED NOT NULL DEFAULT 0 AFTER `c_user_id`,
+CHANGE COLUMN `ip` `c_create_ip`  int(11) NOT NULL DEFAULT 0 COMMENT '评论IP' AFTER `c_create_time`,
+ADD COLUMN `c_user_name`  varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名' AFTER `c_id`,
+ADD COLUMN `c_type`  tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '类型' AFTER `c_content`,
+ADD COLUMN `c_step_count`  int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '点踩数量' AFTER `c_is_delete`,
+ADD COLUMN `c_favor_count`  int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '点赞数量' AFTER `c_step_count`,
+ADD COLUMN `c_update_time`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间' AFTER `c_create_ip`;
+
+UPDATE t_comment set c_type =1 
+
+UPDATE t_comment set c_create_ip=0
+
+// 通过c_user_id 更新c_user_name
+// 更新t_areas 邮政编码

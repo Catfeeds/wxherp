@@ -32,6 +32,13 @@ return [
             'class' => 'yii\redis\Session',
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'db2' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=sss',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+        ],
         'mailer' => require(__DIR__ . '/email.php'),
         'i18n' => [
             'translations' => [

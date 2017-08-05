@@ -23,10 +23,9 @@ class EventController extends _UserController {
         if (Yii::$app->request->isPost) {
             if ($this->frontendCreate($model)) {
                 return $this->redirect(Url::to(['index']));
-            } else {
-                $this->flashError($model);
             }
         }
+        
         return $this->render('create', ['model' => $model]);
     }
 
@@ -36,10 +35,9 @@ class EventController extends _UserController {
             if (Yii::$app->request->isPost) {
                 if ($this->frontendUpdate($model)) {
                     return $this->redirect(Url::to(['index']));
-                } else {
-                    $this->flashError($model);
                 }
             }
+            
             return $this->render('update', ['model' => $model]);
         } else {
             $this->flashError('无权限操作');

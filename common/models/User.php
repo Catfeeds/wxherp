@@ -64,14 +64,14 @@ class User extends _CommonModel implements IdentityInterface {
             [['c_user_name', 'c_mobile', 'c_email', 'old_password', 'new_password', 'old_pay_password', 'new_pay_password'], 'trim'],
             //用户名
             ['c_user_name', 'required', 'on' => ['mobile_register', 'email_register', 'system_create']],
-            ['c_user_name', 'string', 'length' => [3, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['mobile_register', 'email_register', 'system_create']],
+            ['c_user_name', 'string', 'length' => [2, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['mobile_register', 'email_register', 'system_create']],
             ['c_user_name', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'email_register', 'system_create']],
             //手机号
-            ['c_mobile', 'match', 'pattern' => '/^1[3578][0-9]{9}$/', 'message' => '{attribute}格式错误', 'on' => ['mobile_register', 'system_create','system_update']],
-            ['c_mobile', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'system_create','system_update']],
+            ['c_mobile', 'match', 'pattern' => '/^1[3578][0-9]{9}$/', 'message' => '{attribute}格式错误', 'on' => ['mobile_register', 'system_create', 'system_update']],
+            ['c_mobile', 'unique', 'message' => '{attribute}已存在', 'on' => ['mobile_register', 'system_create', 'system_update']],
             //邮箱
-            ['c_email', 'email', 'message' => '{attribute}格式错误', 'on' => ['email_register', 'system_create','system_update']],
-            ['c_email', 'unique', 'message' => '{attribute}已存在', 'on' => ['email_register', 'system_create','system_update']],
+            ['c_email', 'email', 'message' => '{attribute}格式错误', 'on' => ['email_register', 'system_create', 'system_update']],
+            ['c_email', 'unique', 'message' => '{attribute}已存在', 'on' => ['email_register', 'system_create', 'system_update']],
             //原登录密码
             ['old_password', 'required', 'on' => ['change-password', 'setting-pay-password', 'validate-password']],
             ['old_password', 'string', 'length' => [6, 20], 'tooLong' => '{attribute}长度最多为{max}个字符', 'tooShort' => '{attribute}长度最少为{min}个字符', 'on' => ['change-password', 'setting-pay-password', 'validate-password']],
@@ -95,7 +95,7 @@ class User extends _CommonModel implements IdentityInterface {
             /**/
             [['c_user_group_id', 'c_system_group_id', 'c_mobile_verify', 'c_email_verify', 'c_status', 'c_create_type', 'c_login_total', 'c_last_login_time', 'c_reg_date', 'c_reg_ip', 'c_last_ip', 'c_create_time'], 'integer'],
             [['c_update_time'], 'safe'],
-            [['c_login_random', 'c_pay_random'], 'string', 'max' => 4],
+            [['c_login_random', 'c_pay_random'], 'string', 'max' => 5],
             [['c_mobile'], 'string', 'max' => 11],
             [['c_login_password', 'c_pay_password', 'c_auth_key'], 'string', 'max' => 32],
             [['c_access_token'], 'string', 'max' => 43],
@@ -256,7 +256,7 @@ class User extends _CommonModel implements IdentityInterface {
      * @param type $password
      */
     public function settingLoginPassword() {
-        $random_str = Yii::$app->security->generateRandomString(4);
+        $random_str = Yii::$app->security->generateRandomString(5);
         $this->c_login_random = $random_str;
         $this->c_login_password = self::generatePassword($this->new_password, $random_str);
     }
@@ -266,7 +266,7 @@ class User extends _CommonModel implements IdentityInterface {
      * @param type $password
      */
     public function settingPayPassword() {
-        $random_str = Yii::$app->security->generateRandomString(4);
+        $random_str = Yii::$app->security->generateRandomString(5);
         $this->c_pay_random = $random_str;
         $this->c_pay_password = self::generatePassword($this->new_pay_password, $random_str);
     }
@@ -351,7 +351,7 @@ class User extends _CommonModel implements IdentityInterface {
     }
 
     public static function findIdentityByAccessToken($token, $type = null) {
-        if (static::apiTokenIsValid($token)) {
+        if (is_null($type) && static::apiTokenIsValid($token)) {
             return User::findOne(['c_access_token' => $token, 'c_status' => self::STATUS_YES]);
         } else {
             throw new \yii\web\UnauthorizedHttpException('token is invalid.');

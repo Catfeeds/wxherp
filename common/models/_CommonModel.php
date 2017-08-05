@@ -9,23 +9,35 @@ use common\extensions\Tree;
 
 class _CommonModel extends \yii\db\ActiveRecord {
 
-    //广告组件
-    const OBJECT_AD = 1; // 广告缩略图
-    const OBJECT_AD_MORE = 11; // 广告相册
-    //文章组件
-    const OBJECT_ARTICLE = 2; // 文章缩略图
-    const OBJECT_ARTICLE_MORE = 21; // 文章相册
-    const OBJECT_ARTICLE_EDITOR = 22; // 编辑器图片与文件
-    //文章类别组件
-    const OBJECT_ARTICLE_CATEGORY = 3; // 文章类别缩略图
-    const OBJECT_ARTICLE_CATEGORY_MORE = 31; // 文章类别相册
-    //链接组件
-    const OBJECT_LINK = 4; // 链接缩略图
-    const OBJECT_LINK_MORE = 41; // 链接相册
+    //餐厅组件
+    const OBJECT_RESTAURANT = 1; // 缩略图
+    const OBJECT_RESTAURANT_MORE = 11; // 相册
+    const OBJECT_RESTAURANT_EDITOR = 12; // 编辑器图片与文件
+    //商家组件
+    const OBJECT_STORE = 2; // 缩略图
+    const OBJECT_STORE_MORE = 21; // 相册
+    const OBJECT_STORE_EDITOR = 22; // 编辑器图片与文件
+    //试吃组件
+    const OBJECT_TOEAT = 3; // 缩略图
+    const OBJECT_TOEAT_MORE = 31; // 相册
+    const OBJECT_TOEAT_EDITOR = 32; // 编辑器图片与文件
     //活动组件
-    const OBJECT_EVENT = 5; // 活动缩略图
-    const OBJECT_EVENT_MORE = 51; // 活动相册
-    const OBJECT_EVENT_EDITOR = 52; // 编辑器图片与文件
+    const OBJECT_EVENT = 4; // 缩略图
+    const OBJECT_EVENT_MORE = 41; // 相册
+    const OBJECT_EVENT_EDITOR = 42; // 编辑器图片与文件
+    //文章组件
+    const OBJECT_ARTICLE = 5; // 缩略图
+    const OBJECT_ARTICLE_MORE = 51; // 相册
+    const OBJECT_ARTICLE_EDITOR = 52; // 编辑器图片与文件
+    //文章类别组件
+    const OBJECT_ARTICLE_CATEGORY = 6; // 缩略图
+    const OBJECT_ARTICLE_CATEGORY_MORE = 61; // 相册
+    //广告组件
+    const OBJECT_AD = 7; // 缩略图
+    const OBJECT_AD_MORE = 71; // 相册
+    //链接组件
+    const OBJECT_LINK = 8; // 缩略图
+    const OBJECT_LINK_MORE = 81; // 相册
     //上传控件字段名
     const UPLOAD_EDITOR_FIELD_NAME = 'editor';
     const UPLOAD_PICTURE_FIELD_NAME = 'picture';

@@ -9,14 +9,14 @@ use common\models\Event;
 use frontend\widgets\GridView;
 use frontend\widgets\SearchForm;
 
-$this->title = '我的活动';
+$this->title = '我发布的活动';
 $get = Yii::$app->request->get();
 $keyword = isset($get['EventSearch']['keyword']) ? trim($get['EventSearch']['keyword']) : '';
 $status = isset($get['EventSearch']['status']) ? $get['EventSearch']['status'] : '';
 $type = isset($get['EventSearch']['type']) ? $get['EventSearch']['type'] : '';
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><div class="pull-right"><a href="<?= Url::to(['create']); ?>"><i class="fa fa-plus-circle"></i> 新增活动</a></div><i class="fa fa-calendar-o"></i> 我的活动</div>
+    <div class="panel-heading"><div class="pull-right"><a href="<?= Url::to(['create']); ?>"><i class="fa fa-plus-circle"></i> 新增</a></div><i class="fa fa-calendar-o"></i> <?= $this->title ?></div>
     <div class="panel-body">
         <?php $form = SearchForm::begin(); ?>
         <?= $form->field($searchModel, 'status')->dropDownList(Event::getStatusText(), ['prompt' => '选择状态', 'value' => $status]) ?>
@@ -71,7 +71,7 @@ $type = isset($get['EventSearch']['type']) ? $get['EventSearch']['type'] : '';
                 ],
                 [
                     'attribute' => 'c_create_time',
-                    'format' => ['date', 'php:Y-m-d H:i:s']
+                    'format' => ['date', 'php:Y-m-d H:i']
                 ],
                 [
                     'class' => 'frontend\widgets\ActionColumn',
