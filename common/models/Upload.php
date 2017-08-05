@@ -60,7 +60,7 @@ class Upload extends _CommonModel {
             'c_object_type' => '项目类型',
             'c_type' => '附件类型', // 1图片 2附件
             'c_create_type' => '来源类型', // 1PC 2H5 3IOS 4Andriod 8其他 9平台
-            'c_status' => '状态', // 2未使用 1正常
+            'c_status' => '状态', // 1正常 2无效
             'c_width' => '图片长度',
             'c_height' => '图片高度',
             'c_object_id' => '对象ID',

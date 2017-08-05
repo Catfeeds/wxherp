@@ -15,6 +15,7 @@ class AdManageSearch extends AdManage {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status', 'type', 'position_id'], 'integer'],
         ];

@@ -58,6 +58,7 @@ class _CommonModel extends \yii\db\ActiveRecord {
     const KEY_STATUS_OPEN_CLOSE = 3; // 1开启 2关闭
     const KEY_STATUS_VERIFY = 4; //1已验证 2未绑定 3待验证
     const KEY_STATUS_RESULT = 5; //1成功 2失败 3未发送
+    const KEY_STATUS_DELETE = 6; //1已删除 2正常
     //状态类型
     const STATUS_YES = 1; // 正常
     const STATUS_NO = 2; // 无效
@@ -383,19 +384,6 @@ class _CommonModel extends \yii\db\ActiveRecord {
     }
 
     /**
-     * 获取删除类型
-     * @param type $type
-     * @return type
-     */
-    public static function getDeleteType($type = null) {
-        $array = [
-            self::DELETE_YES => '已删除',
-            self::DELETE_NO => '正常',
-        ];
-        return self::getCommonStatus($array, $type);
-    }
-
-    /**
      * 格式化查询时间段
      * @param type $time_field 搜索字段
      * @param type $start_time 开始时间
@@ -510,13 +498,27 @@ class _CommonModel extends \yii\db\ActiveRecord {
         return self::getStatusIcon($type, self::KEY_STATUS_RESULT);
     }
 
+    /**
+     * 获取删除状态
+     * @param type $type
+     * @return type
+     */
+    public static function getStatusDeleteText($type = null) {
+        return self::getStatusText($type, self::KEY_STATUS_DELETE);
+    }
+
+    public static function getStatusDeleteIcon($type = null) {
+        return self::getStatusIcon($type, self::KEY_STATUS_DELETE);
+    }
+
     private static function _getStatusListIcon($key) {
         $array = [
             self::KEY_STATUS_NORMAL_INVALID => [self::STATUS_YES => ['正常', 'check-circle', 'text-success'], self::STATUS_NO => ['无效', 'times-circle', 'text-danger']],
             self::KEY_STATUS_YES_NO => [self::STATUS_YES => ['是', 'check-circle', 'text-success'], self::STATUS_NO => ['否', 'times-circle', 'text-danger']],
             self::KEY_STATUS_OPEN_CLOSE => [self::STATUS_YES => ['开启', 'check-circle', 'text-success'], self::STATUS_NO => ['关闭', 'times-circle', 'text-danger']],
             self::KEY_STATUS_VERIFY => [self::STATUS_YES => ['已验证', 'check-circle', 'text-success'], self::STATUS_NO => ['未绑定', 'times-circle', 'text-danger'], self::STATUS_WAIT => ['待验证', 'hourglass', 'text-primary']],
-            self::KEY_STATUS_RESULT => [self::STATUS_YES => ['成功', 'check-circle', 'text-success'], self::STATUS_NO => ['失败', 'times-circle', 'text-danger'], self::STATUS_WAIT => ['未发送', 'hourglass', 'text-primary']]
+            self::KEY_STATUS_RESULT => [self::STATUS_YES => ['成功', 'check-circle', 'text-success'], self::STATUS_NO => ['失败', 'times-circle', 'text-danger'], self::STATUS_WAIT => ['未发送', 'hourglass', 'text-primary']],
+            self::KEY_STATUS_DELETE => [self::STATUS_NO => ['正常', 'check-circle', 'text-success'], self::STATUS_YES => ['已删除', 'times-circle', 'text-danger']]
         ];
         return isset($array[$key]) ? $array[$key] : false;
     }
@@ -527,7 +529,8 @@ class _CommonModel extends \yii\db\ActiveRecord {
             self::KEY_STATUS_YES_NO => [self::STATUS_YES => '是', self::STATUS_NO => '否'],
             self::KEY_STATUS_OPEN_CLOSE => [self::STATUS_YES => '开启', self::STATUS_NO => '关闭'],
             self::KEY_STATUS_VERIFY => [self::STATUS_YES => '已验证', self::STATUS_NO => '未绑定', self::STATUS_WAIT => '待验证'],
-            self::KEY_STATUS_RESULT => [self::STATUS_YES => '成功', self::STATUS_NO => '失败', self::STATUS_WAIT => '未发送']
+            self::KEY_STATUS_RESULT => [self::STATUS_YES => '成功', self::STATUS_NO => '失败', self::STATUS_WAIT => '未发送'],
+            self::KEY_STATUS_DELETE => [self::STATUS_NO => '正常', self::STATUS_YES => '已删除']
         ];
         return isset($array[$key]) ? $array[$key] : false;
     }

@@ -15,6 +15,7 @@ class UserOperationLogSearch extends UserOperationLog {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status', 'type', 'create_type'], 'integer'],
         ];

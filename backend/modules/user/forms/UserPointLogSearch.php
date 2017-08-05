@@ -13,6 +13,7 @@ class UserPointLogSearch extends UserPointLog {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'type'], 'integer'],
         ];

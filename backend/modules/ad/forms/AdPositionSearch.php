@@ -13,6 +13,7 @@ class AdPositionSearch extends AdPosition {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status'], 'integer'],
         ];

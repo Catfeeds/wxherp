@@ -15,6 +15,7 @@ class ArticleSearch extends Article {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status', 'category_id'], 'integer'],
         ];

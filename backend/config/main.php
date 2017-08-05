@@ -23,26 +23,29 @@ $config = [
         ],
     ],
     'modules' => [
-        'ad' => [
-            'class' => 'backend\modules\ad\Module',
+        'restaurant' => [
+            'class' => 'backend\modules\restaurant\Module',
         ],
-        'article' => [
-            'class' => 'backend\modules\article\Module',
+        'store' => [
+            'class' => 'backend\modules\store\Module',
         ],
-        'link' => [
-            'class' => 'backend\modules\link\Module',
+        'toeat' => [
+            'class' => 'backend\modules\toeat\Module',
         ],
         'event' => [
             'class' => 'backend\modules\event\Module',
         ],
+        'article' => [
+            'class' => 'backend\modules\article\Module',
+        ],
         'user' => [
             'class' => 'backend\modules\user\Module',
         ],
-        'goods' => [
-            'class' => 'backend\modules\goods\Module',
+        'ad' => [
+            'class' => 'backend\modules\ad\Module',
         ],
-        'order' => [
-            'class' => 'backend\modules\order\Module',
+        'link' => [
+            'class' => 'backend\modules\link\Module',
         ],
         'notity' => [
             'class' => 'backend\modules\notity\Module',

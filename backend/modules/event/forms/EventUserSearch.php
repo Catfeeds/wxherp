@@ -14,6 +14,7 @@ class EventUserSearch extends EventUser {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status', 'type'], 'integer'],
         ];

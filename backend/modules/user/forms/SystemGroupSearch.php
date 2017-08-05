@@ -13,6 +13,7 @@ class SystemGroupSearch extends SystemGroup {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status'], 'integer'],
         ];

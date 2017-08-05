@@ -19,6 +19,7 @@ class UserSearch extends User {
 
     public function rules() {
         return [
+            ['pagesize', 'default', 'value' => 10],
             ['keyword', 'filter', 'filter' => 'trim'],
             [['pagesize', 'status', 'create_type', 'user_group_id', 'system_group_id'], 'integer'],
             [['start_time', 'end_time'], 'date']
